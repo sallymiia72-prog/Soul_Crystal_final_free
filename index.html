@@ -2224,18 +2224,225 @@ text-shadow:0 0 8px #000,0 0 18px rgba(0,0,0,.95),0 0 25px rgba(238,188,74,.35)
   .hero-title-bottom{font-size:clamp(21px,6.2vw,30px)!important;letter-spacing:.14em!important;}
 }
 
+
+
+/* === V35 MOBILE FIXES: title fit + smoother scrolling === */
+@media (max-width:700px){
+  html{scroll-behavior:auto!important;}
+  body:before{display:none!important;}
+  .glass{
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+  }
+  dialog::backdrop{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;}
+
+  /* Every block title must stay inside the phone viewport. */
+  .premium-block-title,
+  .same-field-title,
+  .matrix-title-restored,
+  .hs-title-only,
+  .formula-title-word,
+  .formula-energy-title{
+    box-sizing:border-box!important;
+    max-width:100%!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+  }
+  .matrix-title-restored{
+    font-size:clamp(23px,7vw,29px)!important;
+    line-height:1.08!important;
+    letter-spacing:.01em!important;
+    padding-left:4px!important;
+    padding-right:4px!important;
+  }
+  .premium-block-title,
+  .same-field-title.premium-block-title,
+  .hs-title-only.premium-block-title{
+    font-size:clamp(27px,8.2vw,34px)!important;
+    line-height:1.08!important;
+    letter-spacing:.018em!important;
+  }
+  .formula-title-word{
+    font-size:clamp(25px,7.2vw,36px)!important;
+    letter-spacing:.035em!important;
+  }
+  .formula-energy-title{
+    font-size:clamp(15px,4.45vw,19px)!important;
+    letter-spacing:.025em!important;
+    line-height:1.16!important;
+  }
+  .formula-energy-button{
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+}
+/* Pause visual animations while their whole block is off-screen. */
+.perf-paused,.perf-paused *{animation-play-state:paused!important;}
+
+
+
+/* === V36 LIVE SOUL CRYSTAL SPARK: bright moving glint clipped strictly to letters === */
+.hero-title-top{
+  position:relative!important;
+  isolation:isolate!important;
+}
+.hero-title-top::after{
+  content:attr(data-text)!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+  background:linear-gradient(105deg,
+    transparent 0%,
+    transparent 41%,
+    rgba(255,236,164,.18) 44%,
+    rgba(255,255,255,.96) 47%,
+    #ffffff 49.5%,
+    #fff3b8 52%,
+    rgba(255,214,112,.32) 55%,
+    transparent 59%,
+    transparent 100%)!important;
+  background-repeat:no-repeat!important;
+  background-size:260% 100%!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  filter:drop-shadow(0 0 3px rgba(255,255,255,.98)) drop-shadow(0 0 9px rgba(255,207,102,.82))!important;
+  animation:soulCrystalLiveSpark 3.2s ease-in-out infinite!important;
+  animation-play-state:running!important;
+  will-change:background-position,filter!important;
+}
+@keyframes soulCrystalLiveSpark{
+  0%{background-position:115% 50%;filter:drop-shadow(0 0 2px rgba(255,255,255,.65)) drop-shadow(0 0 6px rgba(255,207,102,.52))}
+  48%{background-position:-115% 50%;filter:drop-shadow(0 0 4px rgba(255,255,255,1)) drop-shadow(0 0 12px rgba(255,207,102,.9))}
+  52%{background-position:-115% 50%;filter:drop-shadow(0 0 4px rgba(255,255,255,1)) drop-shadow(0 0 12px rgba(255,207,102,.9))}
+  100%{background-position:115% 50%;filter:drop-shadow(0 0 2px rgba(255,255,255,.65)) drop-shadow(0 0 6px rgba(255,207,102,.52))}
+}
+
+
+
+
+/* === V39 SMOOTH RAINBOW WAVE: letters glow one after another, softly === */
+.hero-title-top{
+  position:relative!important;
+  display:inline-block!important;
+  line-height:1!important;
+  padding-bottom:14px!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+}
+.hero-title-top::after{
+  content:none!important;
+  display:none!important;
+}
+.hero-title-spark-layer{
+  position:relative!important;
+  inset:auto!important;
+  z-index:5!important;
+  display:inline-block!important;
+  white-space:nowrap!important;
+  pointer-events:none!important;
+  font:inherit!important;
+  font-size:inherit!important;
+  font-weight:inherit!important;
+  line-height:inherit!important;
+  letter-spacing:inherit!important;
+  text-align:inherit!important;
+}
+.hero-title-spark-layer .hero-spark-char,
+.hero-title-spark-layer .hero-spark-space{
+  display:inline-block!important;
+  font:inherit!important;
+  font-size:inherit!important;
+  font-weight:inherit!important;
+  line-height:inherit!important;
+  letter-spacing:inherit!important;
+}
+.hero-title-spark-layer .hero-spark-char{
+  --spark-color:#ffe08a;
+  color:#f1cf78!important;
+  -webkit-text-fill-color:#f1cf78!important;
+  transform-origin:center 60%!important;
+  animation:soulLetterWave 3.8s ease-in-out infinite alternate!important;
+  will-change:filter,transform,color,text-shadow;
+}
+.hero-title-spark-layer .hero-spark-space{
+  width:.34em!important;
+}
+.hero-title-spark-layer .hero-spark-char:nth-child(1){--spark-color:#ff5a5f;animation-delay:0.00s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(2){--spark-color:#ff9f43;animation-delay:0.16s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(3){--spark-color:#ffd93d;animation-delay:0.32s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(4){--spark-color:#8fe34f;animation-delay:0.48s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(6){--spark-color:#39d98a;animation-delay:0.64s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(7){--spark-color:#39c6ff;animation-delay:0.80s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(8){--spark-color:#4f7cff;animation-delay:0.96s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(9){--spark-color:#7f5cff;animation-delay:1.12s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(10){--spark-color:#b45cff;animation-delay:1.28s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(11){--spark-color:#ff5fc8;animation-delay:1.44s!important;}
+.hero-title-spark-layer .hero-spark-char:nth-child(12){--spark-color:#ff7a59;animation-delay:1.60s!important;}
+
+@keyframes soulLetterWave{
+  0%,38%,100%{
+    color:#f1cf78;
+    -webkit-text-fill-color:#f1cf78;
+    filter:brightness(1) saturate(1);
+    transform:translateY(0) scale(1);
+    text-shadow:0 0 0 rgba(255,255,255,0);
+  }
+  48%{
+    color:color-mix(in srgb,var(--spark-color) 72%,#ffe7a0 28%);
+    -webkit-text-fill-color:color-mix(in srgb,var(--spark-color) 72%,#ffe7a0 28%);
+    filter:brightness(1.18) saturate(1.18);
+    transform:translateY(-.4px) scale(1.008);
+    text-shadow:
+      0 0 2px color-mix(in srgb,var(--spark-color) 45%,transparent),
+      0 0 5px color-mix(in srgb,var(--spark-color) 35%,transparent);
+  }
+  56%{
+    color:var(--spark-color);
+    -webkit-text-fill-color:var(--spark-color);
+    filter:brightness(1.62) saturate(1.38);
+    transform:translateY(-1px) scale(1.028);
+    text-shadow:
+      0 0 2px rgba(255,255,255,.92),
+      0 0 8px var(--spark-color),
+      0 0 16px color-mix(in srgb,var(--spark-color) 78%,transparent);
+  }
+  64%{
+    color:color-mix(in srgb,var(--spark-color) 78%,#ffe7a0 22%);
+    -webkit-text-fill-color:color-mix(in srgb,var(--spark-color) 78%,#ffe7a0 22%);
+    filter:brightness(1.24) saturate(1.2);
+    transform:translateY(-.3px) scale(1.01);
+    text-shadow:
+      0 0 2px color-mix(in srgb,var(--spark-color) 45%,transparent),
+      0 0 6px color-mix(in srgb,var(--spark-color) 38%,transparent);
+  }
+  74%{
+    color:#f1cf78;
+    -webkit-text-fill-color:#f1cf78;
+    filter:brightness(1) saturate(1);
+    transform:translateY(0) scale(1);
+    text-shadow:0 0 0 rgba(255,255,255,0);
+  }
+}
+
+@media(max-width:700px){
+  .hero-title-top{padding-bottom:12px!important;}
+}
+
 </style>
 </head>
 <body>
 <div class="activation-veil" id="activationVeil"><div class="activation-symbol">SOUL</div></div>
 <main class="app">
   <header class="hero">
-    <h1 class="hero-product-title"><span class="hero-title-top" data-text="SOUL CRYSTAL">SOUL CRYSTAL</span><span class="hero-title-underline" aria-hidden="true"></span><span class="hero-title-bottom">ACTIVATOR</span></h1>
+    <h1 class="hero-product-title"><span class="hero-title-top" data-text="SOUL CRYSTAL"><span class="hero-title-spark-layer" aria-hidden="true"><span class="hero-spark-char">S</span><span class="hero-spark-char">O</span><span class="hero-spark-char">U</span><span class="hero-spark-char">L</span><span class="hero-spark-space">&nbsp;</span><span class="hero-spark-char">C</span><span class="hero-spark-char">R</span><span class="hero-spark-char">Y</span><span class="hero-spark-char">S</span><span class="hero-spark-char">T</span><span class="hero-spark-char">A</span><span class="hero-spark-char">L</span></span></span><span class="hero-title-underline" aria-hidden="true"></span><span class="hero-title-bottom">ACTIVATOR</span></h1>
     <p class="subtitle">Введите свою дату рождения, чтобы увидеть 12 граней своего Кристалла Души</p>
   </header>
 
   <section class="glass calc">
-    <input id="birthDate" value="" inputmode="numeric" pattern="[0-9]*" maxlength="10" autocomplete="off" placeholder="ДД.ММ.ГГГГ" aria-label="Дата рождения">
+    <input id="birthDate" value="" inputmode="numeric" maxlength="10" enterkeyhint="done" autocomplete="off" placeholder="ДД.ММ.ГГГГ" aria-label="Дата рождения">
     <button class="primary" id="calculate">Рассчитать</button>
     <div class="error" id="error"></div>
   </section>
@@ -2411,14 +2618,10 @@ text-shadow:0 0 8px #000,0 0 18px rgba(0,0,0,.95),0 0 25px rgba(238,188,74,.35)
 <g class="fd-runner"><circle r="7"></circle><circle r="3.2" fill="#fff"></circle></g><g class="fd-runner" style="animation-delay:-2.2s"><circle r="7"></circle><circle r="3.2" fill="#fff"></circle></g></svg>
       </section>
       <section class="formula-panels">
-        <article class="formula-energy-card formula-card-red"><button class="formula-energy-button" type="button" aria-expanded="false"
-onclick="const c=this.closest('.formula-energy-card'); const o=c.classList.toggle('open'); this.setAttribute('aria-expanded',String(o));"><div class="formula-energy-title">ЛИЧНАЯ СИЛА</div><span class="formula-chev"></span></button><div class="formula-details"><div class="formula-details-inner"><strong>Личная сила</strong> — энергия проявления в материи и социальной реализации.<br><br>Твоя энергия: <span class="formula-energy-value" id="formulaPersonalValue"></span><div id="formulaPersonalDesc" style="margin-top:10px"></div></div></div></article>
-        <article class="formula-energy-card formula-card-green"><button class="formula-energy-button" type="button" aria-expanded="false"
-onclick="const c=this.closest('.formula-energy-card'); const o=c.classList.toggle('open'); this.setAttribute('aria-expanded',String(o));"><div class="formula-energy-title">СИЛА ВЗАИМОДЕЙСТВИЯ</div><span class="formula-chev"></span></button><div class="formula-details"><div class="formula-details-inner"><strong>Сила взаимодействия</strong> — то, чем ты привлекателен и полезен людям.<br><br>Твоя энергия: <span class="formula-energy-value" id="formulaInteractionValue"></span><div id="formulaInteractionDesc" style="margin-top:10px"></div></div></div></article>
-        <article class="formula-energy-card formula-card-blue"><button class="formula-energy-button" type="button" aria-expanded="false"
-onclick="const c=this.closest('.formula-energy-card'); const o=c.classList.toggle('open'); this.setAttribute('aria-expanded',String(o));"><div class="formula-energy-title">ДУХОВНАЯ СИЛА</div><span class="formula-chev"></span></button><div class="formula-details"><div class="formula-details-inner"><strong>Духовная сила</strong> — энергия проявления на духовном плане.<br><br>Твоя энергия: <span class="formula-energy-value" id="formulaSpiritualValue"></span><div id="formulaSpiritualDesc" style="margin-top:10px"></div></div></div></article>
-        <article class="formula-energy-card formula-card-violet"><button class="formula-energy-button" type="button" aria-expanded="false"
-onclick="const c=this.closest('.formula-energy-card'); const o=c.classList.toggle('open'); this.setAttribute('aria-expanded',String(o));"><div class="formula-energy-title">ПРЕДНАЗНАЧЕНИЕ ДУШИ</div><span class="formula-chev"></span></button><div class="formula-details"><div class="formula-details-inner"><strong>Предназначение Души</strong> — уникальное соединение твоей личной, социальной и духовной силы.<br><br><span id="formulaPurposeText">Твоя индивидуальная формула проявится после расчёта.</span></div></div></article>
+        <article class="formula-energy-card formula-card-red"><button class="formula-energy-button" type="button" aria-expanded="false"><div class="formula-energy-title">ЛИЧНАЯ СИЛА</div><span class="formula-chev"></span></button><div class="formula-details"><div class="formula-details-inner"><strong>Личная сила</strong> — энергия проявления в материи и социальной реализации.<br><br>Твоя энергия: <span class="formula-energy-value" id="formulaPersonalValue"></span><div id="formulaPersonalDesc" style="margin-top:10px"></div></div></div></article>
+        <article class="formula-energy-card formula-card-green"><button class="formula-energy-button" type="button" aria-expanded="false"><div class="formula-energy-title">СИЛА ВЗАИМОДЕЙСТВИЯ</div><span class="formula-chev"></span></button><div class="formula-details"><div class="formula-details-inner"><strong>Сила взаимодействия</strong> — то, чем ты привлекателен и полезен людям.<br><br>Твоя энергия: <span class="formula-energy-value" id="formulaInteractionValue"></span><div id="formulaInteractionDesc" style="margin-top:10px"></div></div></div></article>
+        <article class="formula-energy-card formula-card-blue"><button class="formula-energy-button" type="button" aria-expanded="false"><div class="formula-energy-title">ДУХОВНАЯ СИЛА</div><span class="formula-chev"></span></button><div class="formula-details"><div class="formula-details-inner"><strong>Духовная сила</strong> — энергия проявления на духовном плане.<br><br>Твоя энергия: <span class="formula-energy-value" id="formulaSpiritualValue"></span><div id="formulaSpiritualDesc" style="margin-top:10px"></div></div></div></article>
+        <article class="formula-energy-card formula-card-violet"><button class="formula-energy-button" type="button" aria-expanded="false"><div class="formula-energy-title">ПРЕДНАЗНАЧЕНИЕ ДУШИ</div><span class="formula-chev"></span></button><div class="formula-details"><div class="formula-details-inner"><strong>Предназначение Души</strong> — уникальное соединение твоей личной, социальной и духовной силы.<br><br><span id="formulaPurposeText">Твоя индивидуальная формула проявится после расчёта.</span></div></div></article>
         <div class="formula-footer-line"></div>
       </section>
       <div id="code" hidden></div><div id="purpose" hidden>—</div>
@@ -2749,21 +2952,22 @@ function render(){
 }
 function formatBirthDateInput(value){
   const digits=(value||"").replace(/\D/g,"").slice(0,8);
-  if(digits.length<=2) return digits;
-  if(digits.length<=4) return digits.slice(0,2)+"."+digits.slice(2);
-  return digits.slice(0,2)+"."+digits.slice(2,4)+"."+digits.slice(4);
+  let out=digits.slice(0,2);
+  if(digits.length>2) out+="."+digits.slice(2,4);
+  if(digits.length>4) out+="."+digits.slice(4,8);
+  return out;
 }
-birthDate.addEventListener("input",()=>{
-  const pos=birthDate.selectionStart;
-  birthDate.value=formatBirthDateInput(birthDate.value);
-  const digits=birthDate.value.replace(/\D/g,"");
-  if(digits.length===8){
-    setTimeout(()=>birthDate.blur(),120);
-  }
-});
-birthDate.addEventListener("paste",()=>{
-  setTimeout(()=>{birthDate.value=formatBirthDateInput(birthDate.value)},0);
-});
+function syncBirthDateInput(){
+  const formatted=formatBirthDateInput(birthDate.value);
+  if(birthDate.value!==formatted) birthDate.value=formatted;
+  try{birthDate.setSelectionRange(formatted.length,formatted.length)}catch(_e){}
+}
+// Android/Samsung keyboards can commit text through different input paths,
+// so format after input, keyup and paste. The user types digits only; dots appear automatically.
+birthDate.addEventListener("input",syncBirthDateInput);
+birthDate.addEventListener("keyup",syncBirthDateInput);
+birthDate.addEventListener("paste",()=>setTimeout(syncBirthDateInput,0));
+birthDate.addEventListener("change",syncBirthDateInput);
 let __calcBusy=false;
 calculate.onclick=()=>{
   if(__calcBusy)return;
@@ -2784,7 +2988,7 @@ birthDate.onkeydown=e=>{
   }
 };
 close.onclick=()=>dlg.close();dlg.onclick=e=>{if(e.target===dlg)dlg.close()};
-premiumBtn.onclick=()=>alert("Переход к платной части будет подключён в следующем модуле.");
+premiumBtn.onclick=()=>alert("Доступно после оплаты");
 
 
 function setupMandalaShatter(){
@@ -2925,7 +3129,10 @@ document.querySelectorAll('.formula-energy-card').forEach(card=>{
   }
   function frame(t){
     requestAnimationFrame(frame);
-    if(t-lastFrame<96) return;
+    if(document.hidden) return;
+    const rect=hero.getBoundingClientRect();
+    if(rect.bottom < -120 || rect.top > window.innerHeight + 120) return;
+    if(t-lastFrame<120) return;
     lastFrame=t;
     ctx.setTransform(1,0,0,1,0,0);
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -3005,6 +3212,28 @@ document.querySelectorAll('.formula-energy-card').forEach(card=>{
   window.paintFormulaAmuletColors=paint;
 })();
 </script>
+
+
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  const targets=[
+    document.getElementById('matrixSection'),
+    document.getElementById('higherSelfBlock'),
+    document.getElementById('formulaPremiumBlock'),
+    ...document.querySelectorAll('.premium-mandala-wrap,.matrix-stage-card')
+  ].filter(Boolean);
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>entry.target.classList.toggle('perf-paused',!entry.isIntersecting));
+  },{rootMargin:'180px 0px',threshold:0.01});
+  targets.forEach(el=>io.observe(el));
+})();
+</script>
+
+
+
+
+
 
 </body>
 </html>
