@@ -6586,7 +6586,9 @@ shell.style.setProperty("--day-rgb",rgb);
   </details>
   <details>
     <summary>Контакти</summary>
-    <p>Продавець: ФОП Тетяна Чернова.</p>
+    <p><strong>Продавець:</strong> ФОП Чернова Тетяна Василівна.</p>
+    <p><strong>ЄДРПОУ:</strong> 2534419964.</p>
+    <p><strong>IBAN:</strong> UA663220010000026000380062752.</p>
     <p>Електронна пошта: <a href="mailto:salyama22@gmail.com">salyama22@gmail.com</a></p>
     <p>З питань оплати, доступу до продукту або технічної підтримки напишіть на вказану адресу.</p>
   </details>
@@ -6594,6 +6596,7 @@ shell.style.setProperty("--day-rgb",rgb);
     <summary>Умови придбання та надання доступу</summary>
     <p>До оплати покупець бачить назву цифрового продукту, його опис і ціну. Після успішної оплати доступ до придбаного цифрового матеріалу надається на сайті або шляхом завантаження сформованого файлу.</p>
     <p>Ціни на сайті зазначені в євро. Остаточна сума списання у гривні відображатиметься на захищеній сторінці оплати до підтвердження платежу.</p>
+    <p>Призначення платежу вказується згідно з актом виконаних робіт, інвойсом або контрактом.</p>
   </details>
   <details>
     <summary>Повернення коштів</summary>
@@ -9482,6 +9485,46 @@ if(downloadSoulAmulet) downloadSoulAmulet.addEventListener("click",downloadPurpo
     if(active==="uk")setLanguage("uk");
     new MutationObserver(items=>{if(active!=="uk"||busy)return;for(const item of items)item.addedNodes.forEach(n=>translateTree(n,UK));}).observe(document.body,{childList:true,subtree:true});
   });
+})();
+</script>
+<script>
+/* Public storefront guard: paid materials remain locked until acquiring is connected. */
+(()=>{
+  const PAID_CONTROLS=[
+    "#solarYearBuy",
+    "#purposeSoulBuy",
+    "#higherSelfBuy",
+    "#scwPayBtn",
+    "#soulmateBuy",
+    ".report-action",
+    ".mandala-image-action",
+    ".mandala-video-action",
+    ".mandala-bundle-action",
+    "[data-open-mandala]"
+  ].join(",");
+
+  function showPaymentPending(){
+    const uk=window.SoulI18n?.language==="uk";
+    const dialog=document.getElementById("paidPreviewDialog");
+    const kicker=dialog?.querySelector(".author-preview-kicker");
+    const title=document.getElementById("paidPreviewTitle");
+    const body=document.getElementById("paidPreviewBody");
+    if(!dialog||!title||!body)return;
+    if(kicker)kicker.textContent=uk?"Платний розділ":"Платный раздел";
+    title.textContent=uk?"Онлайн-оплата підключається":"Онлайн-оплата подключается";
+    body.innerHTML=uk
+      ? "<p><strong>Цей матеріал захищено.</strong></p><p>Повна персональна розшифровка відкриється тільки після успішної оплати. Зараз ми підключаємо безпечну оплату через monobank.</p>"
+      : "<p><strong>Этот материал защищён.</strong></p><p>Полная персональная расшифровка откроется только после успешной оплаты. Сейчас мы подключаем безопасную оплату через monobank.</p>";
+    dialog.showModal();
+  }
+
+  document.addEventListener("click",event=>{
+    const control=event.target.closest?.(PAID_CONTROLS);
+    if(!control)return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    showPaymentPending();
+  },true);
 })();
 </script>
 </body>
