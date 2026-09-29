@@ -10840,5 +10840,41 @@ document.addEventListener('DOMContentLoaded',()=>{
 <script>
   Object.assign(UK,{"Главное отличие":"Головна відмінність","Главный принцип метода":"Головний принцип методу","Главное отличие «Кристалла Души» от классической нумерологии":"Головна відмінність «Кристала Душі» від класичної нумерології","← Вернуться к разделам":"← Повернутися до розділів","ТВОЙ ВИБРАЦИОННЫЙ КОД ДУШИ":"ТВІЙ ВІБРАЦІЙНИЙ КОД ДУШІ","Активация кода Души":"Активація коду Душі","Медитация для сонастройки с твоим Кристаллом Души":"Медитація для співналаштування з твоїм Кристалом Душі"});
 </script>
+
+<script id="soul-ua-final-patch">
+(()=>{
+  function patchUA(){
+    const uk=document.documentElement.lang==="uk";
+    const pre=document.querySelector(".soul-method-preamble");
+    if(pre){
+      const ps=pre.querySelectorAll("p");
+      if(ps[0]) ps[0].innerHTML=uk
+        ? '<strong>Кристал Душі</strong> — це сакральне знання нового часу про Душу людини.'
+        : '<strong>Кристалл Души</strong> — это сакральное знание нового времени о Душе человека.';
+      if(ps[1]) ps[1].innerHTML=uk
+        ? 'На відміну від традиційної нумерології та астрології, які насамперед описують прояв людини в матриці, квантова нумерологія <strong>«Кристал Душі»</strong> розкриває якості самої Душі, її внутрішню структуру та істинний шлях реалізації людини.'
+        : 'В отличие от традиционной нумерологии и астрологии, которые прежде всего описывают проявление человека в матрице, квантовая нумерология <strong>«Кристалл Души»</strong> раскрывает качества самой Души, её внутреннюю структуру и истинный путь реализации человека.';
+      if(ps[2]) ps[2].innerHTML=uk
+        ? '<strong>Представляємо квантову інформаційну технологію «Активатор Кристала Душі».</strong>'
+        : '<strong>Представляем квантовую информационную технологию «Активатор Кристалла Души».</strong>';
+    }
+    const title=document.querySelector(".formula-title-word");
+    if(title){
+      const t=uk?"ТВІЙ ВІБРАЦІЙНИЙ КОД ДУШІ":"ТВОЙ ВИБРАЦИОННЫЙ КОД ДУШИ";
+      title.textContent=t; title.setAttribute("data-text",t);
+    }
+    const motto=document.querySelector(".formula-footer-motto");
+    if(motto)motto.textContent=uk?"ЗВУЧИ ✦ СЯЙ ✦ ПРОЯВЛЯЙСЯ":"ЗВУЧИ ✦ СИЯЙ ✦ ПРОЯВЛЯЙСЯ";
+    const copy=document.querySelector(".formula-footer-copy");
+    if(copy)copy.textContent=uk?"УСІМА ГРАНЯМИ СВОЄЇ УНІКАЛЬНОСТІ":"ВСЕМИ ГРАНЯМИ СВОЕЙ УНИКАЛЬНОСТИ";
+  }
+  document.addEventListener("DOMContentLoaded",()=>{
+    patchUA();
+    document.getElementById("soulLanguageSwitcher")?.addEventListener("click",()=>setTimeout(patchUA,30));
+    new MutationObserver(patchUA).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+  });
+})();
+</script>
+
 </body>
 </html>
