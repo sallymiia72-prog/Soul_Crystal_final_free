@@ -1,3 +1,4 @@
+// Cloudflare build trigger: main branch payment sync 2026-10-03
 const MONO_API = "https://api.monobank.ua/api/merchant";
 
 const PRODUCTS = Object.freeze({
