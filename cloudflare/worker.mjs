@@ -4,11 +4,13 @@ const MONO_API = "https://api.monobank.ua/api/merchant";
 const PRODUCTS = Object.freeze({
   solar: { code: "SOLAR", amount: 50000, name: "Соляр Душі — 12 місяців", displayPrice: "10 €" },
   formula: { code: "FORMULA", amount: 50000, name: "Повне розшифрування 12 енергій / Вібраційний код Душі", displayPrice: "10 €" },
-  higher: { code: "HIGHER", amount: 50000, name: "Вище Я — повна версія", displayPrice: "10 €" },
+  higher: { code: "HIGHER", amount: 50000, name: "Вище Я — розшифрування та активація", displayPrice: "10 €" },
   geography: { code: "GEOGRAPHY", amount: 25000, name: "Географія Душі — найкраще місце на поточний період", displayPrice: "5 €" },
-  soulmate: { code: "SOULMATE", amount: 100000, name: "Сумісність / спорідненість душ", displayPrice: "20 €" },
+  soulmate: { code: "SOULMATE", amount: 50000, name: "Призначення союзу / спорідненість душ", displayPrice: "10 €" },
+  crystal: { code: "CRYSTAL", amount: 50000, name: "Особистий Кристал Душі — повне розшифрування 12 граней", displayPrice: "10 €" },
   "mandala-image": { code: "MANDALA_IMAGE", amount: 100000, name: "Кристалічна Мандала — PNG / шпалери", displayPrice: "20 €" },
-  "mandala-video": { code: "MANDALA_VIDEO", amount: 250000, name: "Жива Кристалічна Мандала", displayPrice: "50 €" }
+  "mandala-video": { code: "MANDALA_VIDEO", amount: 200000, name: "Жива Кристалічна Мандала зі звучанням", displayPrice: "40 €" },
+  "mandala-bundle": { code: "MANDALA_BUNDLE", amount: 250000, name: "Повний комплект Кристалічних Мандал", displayPrice: "50 €" }
 });
 
 const PRODUCT_BY_CODE = Object.freeze(
@@ -109,8 +111,8 @@ async function checkInvoice(request, token) {
   const invoice = await monoRequest(`/invoice/status?invoiceId=${encodeURIComponent(invoiceId)}`, token, {
     method: "GET"
   });
-  const match = /^SC_([A-Z0-9_]+)_/.exec(String(invoice.reference || ""));
-  const product = match ? PRODUCT_BY_CODE[match[1]] : null;
+  const reference = String(invoice.reference || "");
+  const product = Object.values(PRODUCT_BY_CODE).find(item => reference.startsWith(`SC_${item.code}_`)) || null;
   const amountMatches = Boolean(product && invoice.ccy === 980 && invoice.amount === product.amount);
   const paid = invoice.status === "success" && amountMatches;
 
