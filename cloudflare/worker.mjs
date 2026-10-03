@@ -1,15 +1,13 @@
 const MONO_API = "https://api.monobank.ua/api/merchant";
 
 const PRODUCTS = Object.freeze({
-  solar: { code: "SOLAR", amount: 50000, name: "Соляр Душі — 12 періодів" },
-  formula: { code: "FORMULA", amount: 50000, name: "Повна Формула Душі" },
-  higher: { code: "HIGHER", amount: 50000, name: "Розшифрування Вищого Я" },
-  crystal: { code: "CRYSTAL", amount: 50000, name: "Особистий Кристал Душі" },
-  soulmate: { code: "SOULMATE", amount: 50000, name: "Призначення союзу" },
-  "mandala-image": { code: "MANDALA_IMAGE", amount: 100000, name: "Кристалічна Мандала — зображення" },
-  "mandala-video": { code: "MANDALA_VIDEO", amount: 200000, name: "Жива Кристалічна Мандала" },
-  "mandala-bundle": { code: "MANDALA_BUNDLE", amount: 250000, name: "Повний комплект Кристалічних Мандал" },
-  certificate: { code: "CERTIFICATE", amount: 150000, name: "Свідоцтво про народження Душі" }
+  solar: { code: "SOLAR", amount: 50000, name: "Соляр Душі — 12 місяців", displayPrice: "10 €" },
+  formula: { code: "FORMULA", amount: 50000, name: "Повне розшифрування 12 енергій / Вібраційний код Душі", displayPrice: "10 €" },
+  higher: { code: "HIGHER", amount: 50000, name: "Вище Я — повна версія", displayPrice: "10 €" },
+  geography: { code: "GEOGRAPHY", amount: 25000, name: "Географія Душі — найкраще місце на поточний період", displayPrice: "5 €" },
+  soulmate: { code: "SOULMATE", amount: 100000, name: "Сумісність / спорідненість душ", displayPrice: "20 €" },
+  "mandala-image": { code: "MANDALA_IMAGE", amount: 100000, name: "Кристалічна Мандала — PNG / шпалери", displayPrice: "20 €" },
+  "mandala-video": { code: "MANDALA_VIDEO", amount: 250000, name: "Жива Кристалічна Мандала", displayPrice: "50 €" }
 });
 
 const PRODUCT_BY_CODE = Object.freeze(
