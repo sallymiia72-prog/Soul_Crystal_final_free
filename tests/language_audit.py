@@ -5,7 +5,7 @@ from playwright.async_api import async_playwright
 HTML = Path(os.getenv("TEST_HTML", "index.html")).resolve()
 OUT = Path("language-test-results")
 OUT.mkdir(exist_ok=True)
-LANGS = ["ru", "ua", "en", "ru"]
+LANGS = ["ru", "uk", "en", "ru"]
 async def main():
     results=[]
     async with async_playwright() as p:
@@ -17,7 +17,7 @@ async def main():
             await page.goto(HTML.as_uri(), wait_until="domcontentloaded", timeout=120000)
             await page.wait_for_timeout(2500)
             for i,lang in enumerate(LANGS):
-                buttons=page.locator(f'[data-lang="{lang}"]')
+                buttons=page.locator(f'#soulLanguageSwitcher [data-lang="{lang}"]')
                 if await buttons.count():
                     await buttons.first.click(timeout=8000)
                 else:
