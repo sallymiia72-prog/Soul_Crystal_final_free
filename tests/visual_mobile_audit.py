@@ -13,7 +13,7 @@ html body #dayEnergyToggle .day-energy-left{min-width:0!important;flex:1 1 auto!
 html body #dayEnergyToggle .day-energy-title{font-size:13px!important;line-height:1.12!important;white-space:nowrap!important}
 html body #dayEnergyToggle .day-energy-button-label,html body #dayEnergyToggle #dayEnergyButtonDate{font-size:12px!important;line-height:1.1!important;white-space:nowrap!important}
 html body #dayEnergyToggle .day-energy-arrow{flex:0 0 25px!important;width:25px!important}
-html body #sc220-method-menu .sc220-method-links > button{font-family:Arial,Helvetica,sans-serif!important;font-size:21px!important;font-weight:700!important;line-height:1.15!important;letter-spacing:0!important;text-transform:none!important;min-height:64px!important;padding:12px 15px!important}
+html body #sc220-method-menu .sc220-method-links button, html body #sc220-method-menu .sc220-method-links button *{font-family:Arial,Helvetica,sans-serif!important;font-size:21px!important;font-weight:700!important;line-height:1.15!important;letter-spacing:0!important;text-transform:none!important;min-height:64px!important;padding:12px 15px!important}
 html body #activator-about .sc236-controls{gap:16px!important;row-gap:16px!important;margin-top:12px!important;padding-top:0!important}
 }</style>
 <script>try{history.scrollRestoration='manual'}catch(e){}</script>"""
@@ -41,6 +41,7 @@ with sync_playwright() as p:
   buttons=page.locator("#sc220-method-menu .sc220-method-links > button")
   report["buttons"]=buttons.evaluate_all("(els)=>els.map(e=>({text:e.innerText,font:getComputedStyle(e).fontSize,height:e.getBoundingClientRect().height}))")
   page.screenshot(path=str(out/"method.png"))
+ report["buttonDetails"]=buttons.evaluate_all("(els)=>els.map(e=>({html:e.outerHTML.slice(0,450),font:getComputedStyle(e).fontSize,children:[...e.querySelectorAll('*')].slice(0,3).map(x=>({tag:x.tagName,font:getComputedStyle(x).fontSize}))}))")
  report["startupScrollY"]=page.evaluate("() => window.scrollY")
  report["viewport"]=page.evaluate("()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,scrollY:scrollY})")
  browser.close()
