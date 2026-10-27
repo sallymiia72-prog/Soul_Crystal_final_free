@@ -41,6 +41,7 @@ with sync_playwright() as p:
   buttons=page.locator("#sc220-method-menu .sc220-method-links > button")
   report["buttons"]=buttons.evaluate_all("(els)=>els.map(e=>({text:e.innerText,font:getComputedStyle(e).fontSize,height:e.getBoundingClientRect().height}))")
   page.screenshot(path=str(out/"method.png"))
+ report["startupScrollY"]=page.evaluate("() => window.scrollY")
  report["viewport"]=page.evaluate("()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,scrollY:scrollY})")
  browser.close()
 server.shutdown()
@@ -49,3 +50,6 @@ print(json.dumps(report,ensure_ascii=False,indent=2))
 assert report["viewport"]["scrollWidth"]<=390,"Horizontal overflow"
 assert any(x["id"]=="dayEnergyToggle" and x["measure"] and x["measure"]["height"]<=60 for x in report["checks"]),"Forecast button not compact"
 assert not report["errors"],"JS errors"
+assert len(report.get("buttons",[]))>=5,"Method buttons missing"
+assert all(b["font"]=="21px" for b in report["buttons"][:5]),"Method fonts incorrect"
+assert report["startupScrollY"]<50,"Unexpected initial scroll"
