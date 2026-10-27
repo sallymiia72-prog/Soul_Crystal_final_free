@@ -56,6 +56,14 @@ with sync_playwright() as p:
  report["cssRuleLoaded"]=page.evaluate("()=>!!document.querySelector('#v278-mobile-test')")
  report["selectorDiagnostics"]=buttons.evaluate_all("(els)=>els.map(e=>({matches:e.matches('html body #sc220-method-menu .sc220-method-links button'),parent:e.parentElement?.outerHTML.slice(0,180),ancestor:e.closest('#sc220-method-menu')?.id,computed:getComputedStyle(e).fontSize}))")
  report["buttonDetails"]=buttons.evaluate_all("(els)=>els.map(e=>({html:e.outerHTML.slice(0,450),font:getComputedStyle(e).fontSize,children:[...e.querySelectorAll('*')].slice(0,3).map(x=>({tag:x.tagName,font:getComputedStyle(x).fontSize}))}))")
+ report["fontRootCause"]=page.evaluate("""() => {
+ const e=document.querySelector('button[data-sc220-panel="universe-architecture"]');
+ if(!e)return {missing:true};
+ const r=e.getBoundingClientRect(),cs=getComputedStyle(e);
+ const styles=[...document.querySelectorAll('style')];
+ return {font:cs.fontSize,styleFont:e.style.getPropertyValue('font-size'),stylePriority:e.style.getPropertyPriority('font-size'),selectorMatches:e.matches('html body button[data-sc220-panel]'),viewportMatch:matchMedia('(max-width:600px)').matches,styleCount:styles.length,auditStyles:styles.filter(x=>x.id==='v278-mobile-test').map(x=>({length:x.textContent.length,sheet:!!x.sheet,cssRules:x.sheet?.cssRules.length})),rect:{width:r.width,height:r.height},ancestor:e.parentElement?.className};
+ }""")
+ print("FONT ROOT CAUSE",json.dumps(report["fontRootCause"],ensure_ascii=False),flush=True)
  report["startupScrollY"]=page.evaluate("() => window.scrollY")
  report["viewport"]=page.evaluate("()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,scrollY:scrollY})")
  browser.close()
@@ -66,5 +74,5 @@ assert report["viewport"]["scrollWidth"]<=390,"Horizontal overflow"
 assert any(x["id"]=="dayEnergyToggle" and x["measure"] and x["measure"]["height"]<=60 for x in report["checks"]),"Forecast button not compact"
 assert not report["errors"],"JS errors"
 assert len(report.get("buttons",[]))>=5,"Method buttons missing"
-assert all(b["font"]=="21px" for b in report["buttons"][:5]),"Method fonts incorrect; inspect selectorDiagnostics"
+assert all(b["font"]=="21px" for b in report["buttons"][:5]),"Method fonts incorrect; inspect FONT ROOT CAUSE"
 assert report["startupScrollY"]<50,"Unexpected initial scroll"
