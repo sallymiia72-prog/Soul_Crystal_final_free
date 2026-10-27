@@ -41,6 +41,8 @@ with sync_playwright() as p:
  page.on("pageerror",lambda e:report["errors"].append(str(e)))
  page.goto("http://127.0.0.1:8765/index-visual-test.html",wait_until="domcontentloaded",timeout=90000)
  page.wait_for_timeout(1500)
+ # Apply scoped override after startup scripts and original styles.
+ page.add_style_tag(content='@media(max-width:600px){html body #sc220-method-menu .sc220-method-links > button[data-sc220-panel]{font-size:21px!important;line-height:1.15!important;font-weight:700!important;min-height:64px!important}}')
  page.screenshot(path=str(out/"initial.png"))
  for id in ["dayEnergyShell","dayEnergyToggle","sc220-method-menu"]:
   e=page.locator("#"+id)
