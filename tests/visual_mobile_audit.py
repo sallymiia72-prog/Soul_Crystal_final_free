@@ -17,6 +17,13 @@ html body #sc220-method-menu .sc220-method-links button, html body #sc220-method
 html body #activator-about .sc236-controls{gap:16px!important;row-gap:16px!important;margin-top:12px!important;padding-top:0!important}
 }</style>
 <script>try{history.scrollRestoration='manual'}catch(e){}</script>"""
+# Remove only the conflicting inline font declarations on method menu buttons in the TEST copy.
+import re
+def clean_method_button(m):
+    tag=m.group(0)
+    return re.sub(r'font-size\s*:\s*[^;"\\']+\s*!important\s*;?', '', tag, flags=re.I)
+html, inline_count=re.subn(r'<button\b(?=[^>]*data-sc220-panel=)[^>]*>',clean_method_button,html,flags=re.I)
+print("Method button tags inspected:",inline_count)
 Path("index-visual-test.html").write_text(html.replace("</body>",css+"</body>"),encoding="utf-8")
 class Quiet(SimpleHTTPRequestHandler):
  def log_message(self,*args): pass
