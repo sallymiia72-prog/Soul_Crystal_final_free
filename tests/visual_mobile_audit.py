@@ -21,7 +21,7 @@ html body #activator-about .sc236-controls{gap:16px!important;row-gap:16px!impor
 import re
 def clean_method_button(m):
     tag=m.group(0)
-    return re.sub(r'font-size\s*:\s*[^;"\\']+\s*!important\s*;?', '', tag, flags=re.I)
+    return re.sub(r"font-size\\s*:\\s*[^;]+!important\\s*;?", "", tag, flags=re.I)
 html, inline_count=re.subn(r'<button\b(?=[^>]*data-sc220-panel=)[^>]*>',clean_method_button,html,flags=re.I)
 print("Method button tags inspected:",inline_count)
 Path("index-visual-test.html").write_text(html.replace("</body>",css+"</body>"),encoding="utf-8")
