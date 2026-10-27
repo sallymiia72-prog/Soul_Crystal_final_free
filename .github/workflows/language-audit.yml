@@ -4,6 +4,7 @@ on:
     branches: [language-testing]
     paths:
       - 'tests/language_audit.py'
+      - 'tests/patch_v277_language.py'
       - '.github/workflows/language-audit.yml'
       - 'index.html'
   workflow_dispatch:
@@ -20,7 +21,8 @@ jobs:
           python-version: '3.12'
       - run: pip install playwright==1.55.0
       - run: python -m playwright install --with-deps chromium
-      - run: python tests/language_audit.py
+      - run: python tests/patch_v277_language.py
+      - run: TEST_HTML=index-language-fixed.html python tests/language_audit.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
