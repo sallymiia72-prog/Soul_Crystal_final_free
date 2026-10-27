@@ -28,7 +28,7 @@ legacy_font = "el.style.setProperty('font-size', '1.125em', 'important');"
 assert html.count(legacy_font)==1, "Legacy font assignment changed"
 html=html.replace(legacy_font, "/* font size now controlled by the scoped method-menu CSS */", 1)
 print("Method button tags inspected:",inline_count)
-Path("index-visual-test.html").write_text(html.replace("</head>",css+"</head>"),encoding="utf-8")
+Path("index-visual-test.html").write_text(html.replace("</head>",css+"</head>",1),encoding="utf-8")
 class Quiet(SimpleHTTPRequestHandler):
  def log_message(self,*args): pass
 server=ThreadingHTTPServer(("127.0.0.1",8765),Quiet)
@@ -52,6 +52,7 @@ with sync_playwright() as p:
   buttons=page.locator("#sc220-method-menu .sc220-method-links > button")
   report["buttons"]=buttons.evaluate_all("(els)=>els.map(e=>({text:e.innerText,font:getComputedStyle(e).fontSize,height:e.getBoundingClientRect().height}))")
   page.screenshot(path=str(out/"method.png"))
+ report["cssEnvironment"]=page.evaluate("()=>({viewport:innerWidth,media600:matchMedia('(max-width:600px)').matches,styles:[...document.querySelectorAll('#v278-mobile-test')].map(x=>({sheet:!!x.sheet,media:x.sheet?.cssRules?.[0]?.conditionText,ruleCount:x.sheet?.cssRules?.length})),buttonCount:document.querySelectorAll('button[data-sc220-panel]').length})")
  report["cssRuleLoaded"]=page.evaluate("()=>!!document.querySelector('#v278-mobile-test')")
  report["selectorDiagnostics"]=buttons.evaluate_all("(els)=>els.map(e=>({matches:e.matches('html body #sc220-method-menu .sc220-method-links button'),parent:e.parentElement?.outerHTML.slice(0,180),ancestor:e.closest('#sc220-method-menu')?.id,computed:getComputedStyle(e).fontSize}))")
  report["buttonDetails"]=buttons.evaluate_all("(els)=>els.map(e=>({html:e.outerHTML.slice(0,450),font:getComputedStyle(e).fontSize,children:[...e.querySelectorAll('*')].slice(0,3).map(x=>({tag:x.tagName,font:getComputedStyle(x).fontSize}))}))")
