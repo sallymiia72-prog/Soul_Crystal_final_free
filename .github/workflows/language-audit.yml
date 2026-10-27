@@ -5,6 +5,7 @@ on:
     paths:
       - 'tests/language_audit.py'
       - 'tests/activator_sections_audit.py'
+      - 'tests/activator_journey_audit.py'
       - 'tests/patch_v277_language.py'
       - '.github/workflows/language-audit.yml'
       - 'index.html'
@@ -25,6 +26,7 @@ jobs:
       - run: python tests/patch_v277_language.py
       - run: TEST_HTML=index-language-fixed.html python tests/language_audit.py
       - run: TEST_HTML=index-language-fixed.html python tests/activator_sections_audit.py
+      - run: TEST_HTML=index-language-fixed.html python tests/activator_journey_audit.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -32,3 +34,4 @@ jobs:
           path: |
             language-test-results/
             activator-test-results/
+            activator-journey-results/
