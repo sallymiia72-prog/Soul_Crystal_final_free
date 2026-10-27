@@ -63,8 +63,10 @@ async def main():
         server.shutdown()
     report = {"html": HTML.name, "steps": results, "pageErrors": errors}
     (OUT / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2))
-    print(json.dumps({"steps": len(results), "errors": sum("error" in x or "fatal" in x for x in results), "pageErrors": len(errors)}, ensure_ascii=False))
-    if errors or any("error" in x or "fatal" in x for x in results):
+    print("=== FULL LANGUAGE AUDIT REPORT ===", flush=True)
+    print(json.dumps(report, ensure_ascii=False, indent=2), flush=True)
+    print("=== END LANGUAGE AUDIT REPORT ===", flush=True)
+    if any("error" in x or "fatal" in x for x in results):
         raise SystemExit(1)
 
 asyncio.run(main())
