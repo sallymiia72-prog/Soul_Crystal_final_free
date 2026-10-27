@@ -48,8 +48,9 @@ async def main():
                         step["latin"] = len(re.findall(r"[A-Za-z]", text))
                         step["sample"] = text[:2000]
                         step["activeMatches"] = actual["active"] == [lang]
-                        if not step["activeMatches"]:
-                            step["error"] = f"Switcher active state is {actual['active']}, expected {lang}"
+                        step["htmlLangMatches"] = actual["htmlLang"] == lang
+                        if not step["activeMatches"] or not step["htmlLangMatches"]:
+                            step["error"] = f"Language mismatch: active={actual['active']}, htmlLang={actual['htmlLang']}, expected={lang}"
                         await page.screenshot(path=str(OUT / f"{i}-{lang}.png"), full_page=False)
                     except Exception as exc:
                         step["error"] = str(exc)
