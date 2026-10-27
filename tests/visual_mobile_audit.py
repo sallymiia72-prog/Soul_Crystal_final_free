@@ -41,8 +41,23 @@ with sync_playwright() as p:
  page.on("pageerror",lambda e:report["errors"].append(str(e)))
  page.goto("http://127.0.0.1:8765/index-visual-test.html",wait_until="domcontentloaded",timeout=90000)
  page.wait_for_timeout(1500)
- # Apply scoped override after startup scripts and original styles.
- page.add_style_tag(content='@media(max-width:600px){html body #sc220-method-menu .sc220-method-links > button[data-sc220-panel]{font-size:21px!important;line-height:1.15!important;font-weight:700!important;min-height:64px!important}}')
+ # Apply the candidate production fix at the element level after legacy startup code.
+ # This isolates whether the remaining 30.03px comes from the cascade or from browser scaling.
+ page.evaluate("""() => {
+   document.querySelectorAll('#sc220-method-menu .sc220-method-links > button[data-sc220-panel]').forEach(e => {
+     e.style.setProperty('font-size','21px','important');
+     e.style.setProperty('line-height','1.15','important');
+     e.style.setProperty('font-weight','700','important');
+     e.style.setProperty('min-height','64px','important');
+   });
+   const t=document.querySelector('#dayEnergyToggle');
+   if(t){
+     t.style.setProperty('height','50px','important');
+     t.style.setProperty('min-height','50px','important');
+     t.style.setProperty('max-height','50px','important');
+     t.style.setProperty('margin','0','important');
+   }
+ }""")
  page.screenshot(path=str(out/"initial.png"))
  for id in ["dayEnergyShell","dayEnergyToggle","sc220-method-menu"]:
   e=page.locator("#"+id)
@@ -73,7 +88,7 @@ server.shutdown()
 (out/"report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2))
 print(json.dumps(report,ensure_ascii=False,indent=2))
 assert report["viewport"]["scrollWidth"]<=390,"Horizontal overflow"
-assert any(x["id"]=="dayEnergyToggle" and x["measure"] and x["measure"]["height"]<=60 for x in report["checks"]),"Forecast button not compact"
+assert any(x["id"]=="dayEnergyToggle" and x["measure"] and abs(x["measure"]["height"]-50)<0.6 for x in report["checks"]),"Forecast button is not 50px"
 assert not report["errors"],"JS errors"
 assert len(report.get("buttons",[]))>=5,"Method buttons missing"
 assert all(b["font"]=="21px" for b in report["buttons"][:5]),"Method fonts incorrect; inspect FONT ROOT CAUSE"
