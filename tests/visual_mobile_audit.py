@@ -28,7 +28,7 @@ legacy_font = "el.style.setProperty('font-size', '1.125em', 'important');"
 assert html.count(legacy_font)==1, "Legacy font assignment changed"
 html=html.replace(legacy_font, "/* font size now controlled by the scoped method-menu CSS */", 1)
 print("Method button tags inspected:",inline_count)
-Path("index-visual-test.html").write_text(html.replace("</body>",css+"</body>"),encoding="utf-8")
+Path("index-visual-test.html").write_text(html.replace("</head>",css+"</head>"),encoding="utf-8")
 class Quiet(SimpleHTTPRequestHandler):
  def log_message(self,*args): pass
 server=ThreadingHTTPServer(("127.0.0.1",8765),Quiet)
