@@ -52,16 +52,21 @@ jobs:
                           req=route.request
                           if req.method=='POST':
                               results['paymentPost']=json.loads(req.post_data or '{}')
-                              await route.fulfill(status=200,content_type='application/json',body=json.dumps({'invoiceId':'test_invoice_123456','pageUrl':'https://example.com/fake-mono-checkout'}))
+                              await route.fulfill(status=200,content_type='application/json',body=json.dumps({'invoiceId':'test_invoice_123456','pageUrl':'http://127.0.0.1:PLACEHOLDER/index.html?mock_mono_return=1'}))
                           else:
                               results['paymentStatusRequested']=True
                               await route.fulfill(status=200,content_type='application/json',body=json.dumps({'invoiceId':'test_invoice_123456','status':'success','paid':True,'productId':'formula'}))
                       await page.route('https://soulcrystal.store/api/payment*',mock_payment)
                       await page.locator('#v144CodePay').click(timeout=10000)
-                      await page.wait_for_timeout(800)
+                      await page.wait_for_timeout(1200)
                       results['pendingAfterClick']=await page.evaluate("""()=>localStorage.getItem('soul_pending_invoice_v1')""")
+                      await page.goto(f'http://127.0.0.1:{server.server_port}/index.html?mock_mono_return=1',wait_until='domcontentloaded',timeout=120000)
+                      await page.wait_for_timeout(900)
                       await page.evaluate("""()=>{window.dispatchEvent(new Event('focus'))}""")
                       await page.wait_for_timeout(1700)
+                      await page.locator('#activatorOpenButton').click(timeout=12000)
+                      await page.locator('button.sc-main-group-tools[data-target="scToolsGroup"]').click(timeout=12000)
+                      await page.locator('#v72CodeActivationToggle').click(timeout=12000)
                       results['afterSimulatedPayment']=await page.evaluate("""()=>{let c=document.querySelector('#v72CodeActivationContent'),h=c?.querySelector('.host'),b=document.querySelector('#v144CodePay'),vis=e=>!!e&&getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0;return {access:localStorage.getItem('soul_paid_entitlements_v144_live'),hostVisible:vis(h),payVisible:vis(b)}}""")
                       with open('v320-payment-test.json','w') as f: json.dump(results,f,ensure_ascii=False,indent=2)
                       print('SIMULATED_PAYMENT_RESULT',json.dumps(results,ensure_ascii=False))
