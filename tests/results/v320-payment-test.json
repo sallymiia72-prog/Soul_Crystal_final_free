@@ -40,10 +40,11 @@
   "paymentPost": {
     "productId": "formula"
   },
+  "paymentStatusRequested": true,
   "pendingAfterClick": null,
   "afterSimulatedPayment": {
-    "access": null,
-    "hostVisible": false,
+    "access": "{\"formula\":1793227368460}",
+    "hostVisible": true,
     "payVisible": false
   }
 }
