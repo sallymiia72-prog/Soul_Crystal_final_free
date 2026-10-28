@@ -1,0 +1,49 @@
+{
+  "buttons": [
+    {
+      "selector": "#scToolsGroup > article.report-offer > button.next-offer-toggle",
+      "height": 72,
+      "width": 362
+    },
+    {
+      "selector": "#v72CodeActivationToggle",
+      "height": 72,
+      "width": 362
+    },
+    {
+      "selector": "#higherSelfRevealToggle",
+      "height": 72,
+      "width": 362
+    },
+    {
+      "selector": "#mandalaOffer > button.next-offer-toggle",
+      "height": 72,
+      "width": 362
+    },
+    {
+      "selector": "#soulMeditationOffer > button.next-offer-toggle",
+      "height": 72,
+      "width": 362
+    }
+  ],
+  "afterOpen": {
+    "display": "block",
+    "visible": true
+  },
+  "gate": {
+    "buttonExists": true,
+    "buttonVisible": true,
+    "buttonText": "ПОЛУЧИТЬ АКТИВАЦИЮ КОДА ДУШИ · 10 € / 500 грн",
+    "playerVisible": false,
+    "access": null
+  },
+  "paymentPost": {
+    "productId": "formula"
+  },
+  "pendingAfterClick": null,
+  "afterSimulatedPayment": {
+    "access": null,
+    "hostVisible": false,
+    "payVisible": false
+  }
+}
