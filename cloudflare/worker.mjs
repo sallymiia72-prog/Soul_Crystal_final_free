@@ -72,6 +72,7 @@ async function createInvoice(request, token, env) {
   const product = PRODUCTS[productId];
   if (!product) return json({ error: "UNKNOWN_PRODUCT" }, 400);
 
+  if (!env.PAYMENT_SESSIONS) return json({error:"SESSION_STORAGE_NOT_CONFIGURED"},503);
   const reference = `SC_${product.code}_${crypto.randomUUID().replace(/-/g, "")}`;
   const payload = {
     amount: product.amount,
@@ -93,7 +94,6 @@ async function createInvoice(request, token, env) {
     return json({ error: "INVALID_MONO_RESPONSE" }, 502);
   }
 
-  if (!env.PAYMENT_SESSIONS) return json({error:'SESSION_STORAGE_NOT_CONFIGURED'},503);
   const claim = crypto.randomUUID().replace(/-/g,'') + crypto.randomUUID().replace(/-/g,'');
   await env.PAYMENT_SESSIONS.put('invoice:'+invoice.invoiceId, JSON.stringify({claim,productId,reference,amount:product.amount}), {expirationTtl:7200});
   return json({
@@ -119,8 +119,8 @@ async function checkInvoice(request, token, env) {
   });
   const reference = String(invoice.reference || "");
   const product = Object.values(PRODUCT_BY_CODE).find(item => reference.startsWith(`SC_${item.code}_`)) || null;
-  const amountMatches = Boolean(product && invoice.ccy === 980 && invoice.amount === product.amount);
-  const paid = invoice.status === "success" && amountMatches && product.id===record.productId && invoice.reference===record.reference && invoice.amount===record.amount;
+  const amountMatches = Boolean(product && Number(invoice.ccy) === 980 && Number(invoice.amount) === product.amount);
+  const paid = invoice.status === "success" && amountMatches && product.id===record.productId && invoice.reference===record.reference && Number(invoice.amount)===record.amount;
   let extraHeaders={};
   if(paid){const session=crypto.randomUUID().replace(/-/g,'')+crypto.randomUUID().replace(/-/g,'');
     await env.PAYMENT_SESSIONS.put('session:'+session,JSON.stringify({productId:product.id,invoiceId}),{expirationTtl:2592000});
