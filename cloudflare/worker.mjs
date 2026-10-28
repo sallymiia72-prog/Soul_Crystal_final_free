@@ -60,7 +60,7 @@ async function monoRequest(path, token, options = {}) {
   return data;
 }
 
-async function createInvoice(request, token) {
+async function createInvoice(request, token, env) {
   let body = {};
   try {
     body = await request.json();
@@ -93,44 +93,67 @@ async function createInvoice(request, token) {
     return json({ error: "INVALID_MONO_RESPONSE" }, 502);
   }
 
+  if (!env.PAYMENT_SESSIONS) return json({error:'SESSION_STORAGE_NOT_CONFIGURED'},503);
+  const claim = crypto.randomUUID().replace(/-/g,'') + crypto.randomUUID().replace(/-/g,'');
+  await env.PAYMENT_SESSIONS.put('invoice:'+invoice.invoiceId, JSON.stringify({claim,productId,reference,amount:product.amount}), {expirationTtl:7200});
   return json({
     invoiceId: invoice.invoiceId,
     pageUrl: invoice.pageUrl,
     productId,
     amount: product.amount,
     currency: "UAH"
-  });
+  },200,{'Set-Cookie':`sc_invoice_claim=${claim}; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=7200`});
 }
 
-async function checkInvoice(request, token) {
+async function checkInvoice(request, token, env) {
   const invoiceId = String(new URL(request.url).searchParams.get("invoiceId") || "").trim();
   if (!/^[A-Za-z0-9_-]{6,100}$/.test(invoiceId)) {
     return json({ error: "INVALID_INVOICE_ID" }, 400);
   }
 
+  const record = await env.PAYMENT_SESSIONS?.get('invoice:'+invoiceId,{type:'json'});
+  const claim = (request.headers.get('Cookie')||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('sc_invoice_claim='))?.split('=')[1];
+  if(!record || !claim || record.claim!==claim) return json({error:'INVOICE_NOT_OWNED'},403);
   const invoice = await monoRequest(`/invoice/status?invoiceId=${encodeURIComponent(invoiceId)}`, token, {
     method: "GET"
   });
   const reference = String(invoice.reference || "");
   const product = Object.values(PRODUCT_BY_CODE).find(item => reference.startsWith(`SC_${item.code}_`)) || null;
   const amountMatches = Boolean(product && invoice.ccy === 980 && invoice.amount === product.amount);
-  const paid = invoice.status === "success" && amountMatches;
+  const paid = invoice.status === "success" && amountMatches && product.id===record.productId && invoice.reference===record.reference && invoice.amount===record.amount;
+  let extraHeaders={};
+  if(paid){const session=crypto.randomUUID().replace(/-/g,'')+crypto.randomUUID().replace(/-/g,'');
+    await env.PAYMENT_SESSIONS.put('session:'+session,JSON.stringify({productId:product.id,invoiceId}),{expirationTtl:2592000});
+    extraHeaders={'Set-Cookie':`sc_paid_session=${session}; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=2592000`};
+  }
 
   return json({
     invoiceId,
     status: invoice.status || "unknown",
     paid,
-    productId: amountMatches ? product.id : null
-  });
+    productId: paid ? product.id : null
+  },200,extraHeaders);
 }
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.pathname !== "/api/payment") {
-      return env.ASSETS.fetch(request);
+    if (url.pathname === '/api/entitlement/formula') {
+      const c=(request.headers.get('Cookie')||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('sc_paid_session='));
+      const session=c&&await env.PAYMENT_SESSIONS?.get('session:'+c.split('=')[1],{type:'json'});
+      return json({paid:session?.productId==='formula'});
     }
+    if (url.pathname === '/api/private/formula-activation') {
+      const c=(request.headers.get('Cookie')||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('sc_paid_session='));
+      const session=c&&await env.PAYMENT_SESSIONS?.get('session:'+c.split('=')[1],{type:'json'});
+      if(session?.productId!=='formula')return json({error:'PAYMENT_REQUIRED'},403);
+      if(!env.FORMULA_PRIVATE)return json({error:'PRIVATE_STORAGE_NOT_CONFIGURED'},503);
+      const obj=await env.FORMULA_PRIVATE.get('formula-activation.html');
+      if(!obj)return json({error:'PRIVATE_ASSET_NOT_FOUND'},404);
+      return new Response(obj.body,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'private, no-store'}});
+    }
+    if (url.pathname !== "/api/payment") return env.ASSETS.fetch(request);
     if (!requestIsSameOrigin(request)) {
       return json({ error: "ORIGIN_NOT_ALLOWED" }, 403);
     }
@@ -139,8 +162,8 @@ export default {
     if (!token) return json({ error: "PAYMENT_NOT_CONFIGURED" }, 503);
 
     try {
-      if (request.method === "POST") return await createInvoice(request, token);
-      if (request.method === "GET") return await checkInvoice(request, token);
+      if (request.method === "POST") return await createInvoice(request, token, env);
+      if (request.method === "GET") return await checkInvoice(request, token, env);
       return json({ error: "METHOD_NOT_ALLOWED" }, 405, { Allow: "GET, POST" });
     } catch (error) {
       console.error("Soul Crystal payment error", error);
