@@ -2,114 +2,38 @@
   "buttons": [
     {
       "selector": "#scToolsGroup > article.report-offer > button.next-offer-toggle",
-      "height": 0,
-      "width": 0,
-      "titleTop": 0,
-      "titleBottom": 0,
-      "text": "ЛИЧНЫЙ КРИСТАЛЛ ДУШИ"
+      "height": 72,
+      "width": 362
     },
     {
       "selector": "#v72CodeActivationToggle",
-      "height": 0,
-      "width": 0,
-      "titleTop": 0,
-      "titleBottom": 0,
-      "text": "ВИБРАЦИОННЫЙ КОД ДУШИ"
+      "height": 72,
+      "width": 362
     },
     {
       "selector": "#higherSelfRevealToggle",
-      "height": 0,
-      "width": 0,
-      "titleTop": 0,
-      "titleBottom": 0,
-      "text": "СВЯЗЬ С ВЫСШИМ Я⌄"
+      "height": 72,
+      "width": 362
     },
     {
       "selector": "#mandalaOffer > button.next-offer-toggle",
-      "height": 0,
-      "width": 0,
-      "titleTop": 0,
-      "titleBottom": 0,
-      "text": "КРИСТАЛЬНАЯ МАНДАЛА"
+      "height": 72,
+      "width": 362
     },
     {
       "selector": "#soulMeditationOffer > button.next-offer-toggle",
-      "height": 0,
-      "width": 0,
-      "titleTop": 0,
-      "titleBottom": 0,
-      "text": "МЕДИТАЦИЯ «РАЗГОВОР С ДУШОЙ»"
+      "height": 72,
+      "width": 362
     }
   ],
-  "navigation": [
-    {
-      "selector": "#activatorOpenButton",
-      "exists": true,
-      "visible": true,
-      "hiddenAncestors": []
-    },
-    {
-      "selector": "button.sc-main-group-tools",
-      "exists": true,
-      "visible": false,
-      "hiddenAncestors": [
-        {
-          "tag": "MAIN",
-          "id": "activator",
-          "hidden": false,
-          "display": "none",
-          "visibility": "visible"
-        }
-      ]
-    },
-    {
-      "selector": "#scToolsGroup",
-      "exists": true,
-      "visible": false,
-      "hiddenAncestors": [
-        {
-          "tag": "DIV",
-          "id": "scToolsGroup",
-          "hidden": true,
-          "display": "none",
-          "visibility": "visible"
-        },
-        {
-          "tag": "MAIN",
-          "id": "activator",
-          "hidden": false,
-          "display": "none",
-          "visibility": "visible"
-        }
-      ]
-    },
-    {
-      "selector": "#v72CodeActivationToggle",
-      "exists": true,
-      "visible": false,
-      "hiddenAncestors": [
-        {
-          "tag": "DIV",
-          "id": "scToolsGroup",
-          "hidden": true,
-          "display": "none",
-          "visibility": "visible"
-        },
-        {
-          "tag": "MAIN",
-          "id": "activator",
-          "hidden": false,
-          "display": "none",
-          "visibility": "visible"
-        }
-      ]
-    }
-  ],
+  "afterOpen": {
+    "display": "block",
+    "visible": true
+  },
   "gate": {
     "buttonExists": true,
-    "buttonVisible": false,
+    "buttonVisible": true,
     "buttonText": "ПОЛУЧИТЬ АКТИВАЦИЮ КОДА ДУШИ · 10 € / 500 грн",
-    "hostVisible": false,
     "playerVisible": false,
     "access": null
   }
