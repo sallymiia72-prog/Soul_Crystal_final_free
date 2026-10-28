@@ -144,6 +144,17 @@ export default {
       const session=c&&await env.PAYMENT_SESSIONS?.get('session:'+c.split('=')[1],{type:'json'});
       return json({paid:session?.productId==='formula'});
     }
+    if (url.pathname.startsWith('/api/private/formula-audio/')) {
+      const c=(request.headers.get('Cookie')||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('sc_paid_session='));
+      const session=c&&await env.PAYMENT_SESSIONS?.get('session:'+c.split('=')[1],{type:'json'});
+      if(session?.productId!=='formula')return json({error:'PAYMENT_REQUIRED'},403);
+      if(!env.FORMULA_PRIVATE)return json({error:'PRIVATE_STORAGE_NOT_CONFIGURED'},503);
+      const track=url.pathname.split('/').pop();
+      if(!/^t[012]\\.mp3$/.test(track))return json({error:'INVALID_TRACK'},404);
+      const obj=await env.FORMULA_PRIVATE.get(track);
+      if(!obj)return json({error:'PRIVATE_ASSET_NOT_FOUND'},404);
+      return new Response(obj.body,{headers:{'Content-Type':'audio/mpeg','Cache-Control':'private, no-store','Accept-Ranges':'none'}});
+    }
     if (url.pathname === '/api/private/formula-activation') {
       const c=(request.headers.get('Cookie')||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('sc_paid_session='));
       const session=c&&await env.PAYMENT_SESSIONS?.get('session:'+c.split('=')[1],{type:'json'});
