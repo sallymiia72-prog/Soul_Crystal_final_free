@@ -37,14 +37,10 @@
     "playerVisible": false,
     "access": null
   },
-  "paymentPost": {
-    "productId": "formula"
-  },
-  "paymentStatusRequested": true,
   "pendingAfterClick": null,
   "afterSimulatedPayment": {
-    "access": "{\"formula\":1793227368460}",
-    "hostVisible": true,
-    "payVisible": false
+    "access": null,
+    "hostVisible": false,
+    "payVisible": true
   }
 }

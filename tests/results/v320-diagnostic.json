@@ -36,15 +36,5 @@
     "buttonText": "ПОЛУЧИТЬ АКТИВАЦИЮ КОДА ДУШИ · 10 € / 500 грн",
     "playerVisible": false,
     "access": null
-  },
-  "paymentPost": {
-    "productId": "formula"
-  },
-  "paymentStatusRequested": true,
-  "pendingAfterClick": null,
-  "afterSimulatedPayment": {
-    "access": "{\"formula\":1793227368460}",
-    "hostVisible": true,
-    "payVisible": false
   }
 }
