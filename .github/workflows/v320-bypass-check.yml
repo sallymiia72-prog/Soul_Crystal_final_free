@@ -1,0 +1,41 @@
+name: V320 unpaid access bypass check
+on:
+  push:
+    branches: [language-testing]
+    paths: ['.github/workflows/v320-bypass-check.yml']
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Verify unpaid access cannot be forged
+        run: |
+          cat > /tmp/test_bypass.py <<'PY'
+          import asyncio,json,threading
+          from http.server import ThreadingHTTPServer,SimpleHTTPRequestHandler
+          from playwright.async_api import async_playwright
+          async def main():
+              server=ThreadingHTTPServer(('127.0.0.1',0),SimpleHTTPRequestHandler)
+              threading.Thread(target=server.serve_forever,daemon=True).start()
+              async with async_playwright() as p:
+                  browser=await p.chromium.launch(headless=True)
+                  page=await browser.new_page(viewport={'width':390,'height':844})
+                  await page.add_init_script("""localStorage.setItem('soul_paid_entitlements_v144_live',JSON.stringify({formula:Date.now()}))""")
+                  await page.goto(f'http://127.0.0.1:{server.server_port}/index.html',wait_until='domcontentloaded',timeout=120000)
+                  await page.locator('#activatorOpenButton').click(timeout=15000)
+                  await page.locator('button.sc-main-group-tools[data-target="scToolsGroup"]').click(timeout=15000)
+                  await page.locator('#v72CodeActivationToggle').click(timeout=15000)
+                  await page.wait_for_timeout(800)
+                  result=await page.evaluate("""()=>{let c=document.querySelector('#v72CodeActivationContent'),h=c?.querySelector('.host'),p=document.querySelector('#v144CodePay');let visible=e=>!!e&&getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0;return {hostVisible:visible(h),paymentButtonVisible:visible(p),forgedAccess:localStorage.getItem('soul_paid_entitlements_v144_live')}}""")
+                  print('BYPASS_RESULT='+json.dumps(result,ensure_ascii=False))
+                  await browser.close()
+                  assert not result['hostVisible'],'SECURITY FAILURE: paid activation unlocked by forged localStorage without Monobank payment'
+          asyncio.run(main())
+          PY
+          python /tmp/test_bypass.py
