@@ -52,7 +52,7 @@ jobs:
                           req=route.request
                           if req.method=='POST':
                               results['paymentPost']=json.loads(req.post_data or '{}')
-                              await route.fulfill(status=200,content_type='application/json',body=json.dumps({'invoiceId':'test_invoice_123456','pageUrl':'http://127.0.0.1:PLACEHOLDER/index.html?mock_mono_return=1'}))
+                              await route.fulfill(status=200,content_type='application/json',body=json.dumps({'invoiceId':'test_invoice_123456','pageUrl':f'http://127.0.0.1:{server.server_port}/index.html?mock_mono_return=1'}))
                           else:
                               results['paymentStatusRequested']=True
                               await route.fulfill(status=200,content_type='application/json',body=json.dumps({'invoiceId':'test_invoice_123456','status':'success','paid':True,'productId':'formula'}))
