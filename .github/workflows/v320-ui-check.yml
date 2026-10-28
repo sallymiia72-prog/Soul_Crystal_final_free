@@ -1,0 +1,57 @@
+name: V320 mobile buttons and formula gate
+on:
+  push:
+    branches: [language-testing]
+    paths: ['.github/workflows/v320-ui-check.yml', 'index.html']
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Test mobile layout and unpaid activation
+        run: |
+          cat > /tmp/check.py <<'PY'
+          import asyncio, json, threading
+          from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+          from playwright.async_api import async_playwright
+          class Quiet(SimpleHTTPRequestHandler):
+              def log_message(self,*a): pass
+          async def main():
+              server=ThreadingHTTPServer(('127.0.0.1',0),Quiet)
+              threading.Thread(target=server.serve_forever,daemon=True).start()
+              results={}
+              async with async_playwright() as p:
+                  browser=await p.chromium.launch(headless=True,args=['--no-sandbox'])
+                  page=await browser.new_page(viewport={'width':390,'height':844},device_scale_factor=1)
+                  try:
+                      await page.goto(f'http://127.0.0.1:{server.server_port}/index.html',wait_until='domcontentloaded',timeout=120000)
+                      await page.wait_for_timeout(2500)
+                      selectors=['#scToolsGroup > article.report-offer > button.next-offer-toggle','#v72CodeActivationToggle','#higherSelfRevealToggle','#mandalaOffer > button.next-offer-toggle','#soulMeditationOffer > button.next-offer-toggle']
+                      results['buttons']=await page.evaluate("""sels=>sels.map(sel=>{let e=document.querySelector(sel);if(!e)return {selector:sel,missing:true};let r=e.getBoundingClientRect();let text=e.querySelector('.next-offer-title,.title')||e;let t=text.getBoundingClientRect();return {selector:sel,height:Math.round(r.height),width:Math.round(r.width),titleTop:Math.round(t.top-r.top),titleBottom:Math.round(t.bottom-r.top),text:text.textContent.trim().slice(0,80)}})""",selectors)
+                      await page.locator('#v72CodeActivationToggle').click(timeout=10000)
+                      await page.wait_for_timeout(1800)
+                      results['gate']=await page.evaluate("""()=>{let c=document.querySelector('#v72CodeActivationContent'),b=document.querySelector('#v144CodePay'),h=c?.querySelector('.host'),player=c?.querySelector('.sc-act-player');let vis=e=>!!e&&getComputedStyle(e).display!=='none'&&getComputedStyle(e).visibility!=='hidden'&&e.getBoundingClientRect().height>0;return {buttonExists:!!b,buttonVisible:vis(b),buttonText:b?.textContent,hostVisible:vis(h),playerVisible:vis(player),access:localStorage.getItem('soul_paid_entitlements_v144_live')}}""")
+                      await page.screenshot(path='v320-mobile.png',full_page=True,timeout=120000)
+                      print(json.dumps(results,ensure_ascii=False,indent=2))
+                      assert results['gate']['buttonVisible'], 'Payment button not visible before payment'
+                      assert not results['gate']['playerVisible'], 'Activation player visible without payment'
+                      heights=[b['height'] for b in results['buttons'] if not b.get('missing')]
+                      assert len(heights)==5 and max(heights)-min(heights)<=2, 'Buttons have different heights'
+                  finally:
+                      await browser.close()
+                      server.shutdown()
+          asyncio.run(main())
+          PY
+          python /tmp/check.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v320-mobile-screenshot
+          path: v320-mobile.png
