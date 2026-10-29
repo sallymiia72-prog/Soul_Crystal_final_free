@@ -1,0 +1,89 @@
+name: V323 formula payment and security checks
+on:
+  push:
+    branches: [language-testing]
+    paths: ['.github/workflows/v323-formula-check.yml', 'index.html']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Verify V323 gate, unpaid protection and mocked payment
+        run: |
+          cat > /tmp/check_v323.py <<'PY'
+          import asyncio, json, threading, re
+          from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+          from playwright.async_api import async_playwright
+          html=open('index.html',encoding='utf-8').read()
+          assert 'FORMULA_ENTITLEMENT' in html, 'Uploaded index.html does not contain V323 server entitlement code'
+          assert "dataset.formulaServerPaid" in html, 'V323 server-verified activation gate missing'
+          assert "const paid=()=>!!access().formula;" not in html, 'Legacy localStorage activation gate remains'
+          assert '/api/private/formula-audio/t0.mp3' in html, 'Private audio URL missing'
+          class Handler(SimpleHTTPRequestHandler):
+              def log_message(self,*args): pass
+          async def main():
+              server=ThreadingHTTPServer(('127.0.0.1',0),Handler)
+              threading.Thread(target=server.serve_forever,daemon=True).start()
+              results={}
+              async with async_playwright() as p:
+                  browser=await p.chromium.launch(headless=True,args=['--no-sandbox'])
+                  page=await browser.new_page(viewport={'width':390,'height':844})
+                  await page.add_init_script("""localStorage.setItem('soul_paid_entitlements_v144_live',JSON.stringify({formula:Date.now()}))""")
+                  async def entitlement_unpaid(route):
+                      await route.fulfill(status=200,content_type='application/json',body='{"paid":false}')
+                  await page.route('**/api/entitlement/formula*',entitlement_unpaid)
+                  await page.goto(f'http://127.0.0.1:{server.server_port}/index.html',wait_until='domcontentloaded',timeout=120000)
+                  await page.locator('#activatorOpenButton').click(timeout=20000)
+                  await page.locator('button.sc-main-group-tools[data-target="scToolsGroup"]').click(timeout=20000)
+                  await page.locator('#v72CodeActivationToggle').click(timeout=20000)
+                  await page.wait_for_timeout(1200)
+                  async def state():
+                      return await page.evaluate("""()=>{
+                        const c=document.querySelector('#v72CodeActivationContent');
+                        const host=c?.querySelector('.host');
+                        const button=document.querySelector('#v144CodePay');
+                        const vis=e=>!!e&&getComputedStyle(e).display!=='none'&&getComputedStyle(e).visibility!=='hidden'&&e.getBoundingClientRect().height>0;
+                        return {hostVisible:vis(host),buttonVisible:vis(button),serverPaid:document.documentElement.dataset.formulaServerPaid}
+                      }""")
+                  results['unpaidWithForgedLocalStorage']=await state()
+                  assert not results['unpaidWithForgedLocalStorage']['hostVisible'], 'BYPASS: forged localStorage unlocked paid player'
+                  assert results['unpaidWithForgedLocalStorage']['buttonVisible'], 'Pay button missing when unpaid'
+                  payment_posts=[]
+                  async def payment(route):
+                      if route.request.method=='POST':
+                          payment_posts.append(json.loads(route.request.post_data or '{}'))
+                          await route.fulfill(status=200,content_type='application/json',body=json.dumps({'invoiceId':'mock_invoice_123','pageUrl':'https://pay.example.test/mock'}))
+                      else:
+                          await route.fulfill(status=200,content_type='application/json',body='{"invoiceId":"mock_invoice_123","status":"success","paid":true,"productId":"formula"}')
+                  await page.route('**/api/payment*',payment)
+                  await page.locator('#v144CodePay').click(timeout=15000)
+                  await page.wait_for_timeout(800)
+                  results['paymentPost']=payment_posts
+                  assert payment_posts and payment_posts[-1].get('productId')=='formula', 'Payment button did not send productId formula'
+                  # Server denies access even if client receives a successful invoice response.
+                  results['stillUnpaid']=await state()
+                  assert not results['stillUnpaid']['hostVisible'], 'Player opened before server entitlement verification'
+                  # Simulate verified server entitlement, without real money.
+                  await page.unroute('**/api/entitlement/formula*')
+                  async def entitlement_paid(route):
+                      await route.fulfill(status=200,content_type='application/json',body='{"paid":true}')
+                  await page.route('**/api/entitlement/formula*',entitlement_paid)
+                  await page.evaluate("""async()=>{const r=await fetch('/api/entitlement/formula',{credentials:'same-origin'});const d=await r.json();document.documentElement.dataset.formulaServerPaid=String(d.paid);document.dispatchEvent(new Event('soul-payment-granted'))}""")
+                  await page.wait_for_timeout(900)
+                  results['afterServerApproval']=await state()
+                  print('V323_TEST_RESULTS='+json.dumps(results,ensure_ascii=False))
+                  assert results['afterServerApproval']['hostVisible'], 'Verified server entitlement did not unlock activation'
+                  await browser.close()
+              server.shutdown()
+          asyncio.run(main())
+          PY
+          python /tmp/check_v323.py
