@@ -1,5 +1,6 @@
 name: V323 formula payment and security checks
 # Rerun against patched index.html after legacy gate removal
+# Rerun after b8e340c multi-gate patch
 on:
   push:
     branches: [language-testing]
