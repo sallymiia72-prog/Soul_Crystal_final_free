@@ -13276,7 +13276,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 document.addEventListener("DOMContentLoaded",()=>{
  const isUk=()=>document.documentElement.lang==="uk";
  const access=()=>{try{return JSON.parse(localStorage.getItem("soul_paid_entitlements_v144_live")||"{}")}catch(e){return{}}};
- const paid=id=>Boolean(access()[id]);
+ const paid=id=>id==='formula'?document.documentElement.dataset.formulaServerPaid==='true':Boolean(access()[id]);
  const qnum=id=>document.getElementById(id)?.textContent?.match(/\d+/)?.[0]||"1";
  const makeRitual=()=>{
    const box=document.createElement("div"); box.className="sc-activation-final";
@@ -15426,7 +15426,7 @@ html,body{max-width:100%;overflow-x:hidden}
    const fresh=b.cloneNode(true); b.replaceWith(fresh);
    fresh.addEventListener('click',e=>{
      let access={};try{access=JSON.parse(localStorage.getItem('soul_paid_entitlements_v144_live')||'{}')}catch{}
-     if(!access.formula)return; // unpaid click is intercepted by the live Monobank payment handler
+     if(!(document.documentElement.dataset.formulaServerPaid==='true'))return; // unpaid click is intercepted by Monobank
      e.preventDefault();e.stopImmediatePropagation();
      if(renderCanonicalReport()) setTimeout(()=>document.getElementById('matrixCanonicalReport')?.scrollIntoView({behavior:'smooth',block:'start'}),30);
    },true);
@@ -15509,7 +15509,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
 (()=>{
  const KEY='soul_paid_entitlements_v144_live';
  const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return{}}};
- const paid=id=>Boolean(read()[id]);
+ const paid=id=>id==='formula'?document.documentElement.dataset.formulaServerPaid==='true':Boolean(read()[id]);
  function sync(){
    // Purpose: the legacy preview modal must never be used by a client.
    const pbtn=document.getElementById('purposeSoulBuy');
@@ -15880,7 +15880,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
 (()=>{
  const KEY='soul_paid_entitlements_v144_live';
  const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return{}}};
- const paid=id=>Boolean(read()[id]);
+ const paid=id=>id==='formula'?document.documentElement.dataset.formulaServerPaid==='true':Boolean(read()[id]);
  const uk=()=>document.documentElement.lang==='uk';
  const RU=['ЛИЧНЫЙ КРИСТАЛЛ ДУШИ','ВИБРАЦИОННЫЙ КОД ДУШИ','СВЯЗЬ С ВЫСШИМ Я','КРИСТАЛЬНАЯ МАНДАЛА','МЕДИТАЦИЯ «РАЗГОВОР С ДУШОЙ»'];
  const UA=['ОСОБИСТИЙ КРИСТАЛ ДУШІ','ВІБРАЦІЙНИЙ КОД ДУШІ','КОНТАКТ ЗІ СВОЇМ ВИЩИМ Я','КРИСТАЛІЧНА МАНДАЛА','МЕДИТАЦИЯ «РАЗГОВОР С ДУШОЙ»'];
@@ -15933,7 +15933,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
 <script id="v76-from-v75-only-fixes-script">
 (()=>{
  const KEY='soul_paid_entitlements_v144_live';
- const isPaid=()=>{try{return !!JSON.parse(localStorage.getItem(KEY)||'{}').formula}catch(e){return false}};
+ const isPaid=()=>document.documentElement.dataset.formulaServerPaid==='true';
  let opened=false;
  function paidBox(){return document.getElementById('purposePaidContentV2')}
  function closePaid(){const b=paidBox();if(!b)return;b.classList.remove('v76-open-paid');b.hidden=true}
