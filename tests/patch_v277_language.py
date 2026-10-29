@@ -83,10 +83,25 @@ uk:"Натискай на грані Кристала, щоб почути їх�
 "ПРОВЕРИТЬ":{uk:"ПЕРЕВІРИТИ",en:"CHECK"},
 "ВВЕДИ МЕСТО, КОТОРОЕ ХОЧЕШЬ ПРОВЕРИТЬ":{uk:"ВВЕДИ МІСЦЕ, ЯКЕ ХОЧЕШ ПЕРЕВІРИТИ",en:"ENTER A PLACE TO CHECK"}
 };
+// Screenshot-specific complete instruction fragments and labels.
+Object.assign(dict,{
+"ВВЕДИТЕ ДАТУ РОЖДЕНИЯ":{uk:"ВВЕДІТЬ ДАТУ НАРОДЖЕННЯ",en:"ENTER YOUR DATE OF BIRTH"},
+"1. РАСЧЁТ ВИБРАЦИОННОЙ МАТРИЦЫ":{uk:"1. РОЗРАХУНОК ВІБРАЦІЙНОЇ МАТРИЦІ",en:"1. VIBRATIONAL MATRIX CALCULATION"},
+"Введите дату рождения и нажмите «Рассчитать». Активатор рассчитает Вибрационную матрицу — Ваши 12 энергетических аспектов Души по сферам реализации.":{uk:"Введіть дату народження та натисніть «Розрахувати». Активатор розрахує Вібраційну матрицю — ваші 12 енергетичних аспектів Душі за сферами реалізації.",en:"Enter your date of birth and tap Calculate. The Activator will calculate your Vibrational Matrix — your Soul’s 12 energetic aspects across areas of realization."},
+"Нажимая на каждую кнопку, вы получите краткое описание своей энергии в соответствующей сфере.":{uk:"Натискаючи на кожну кнопку, ви отримаєте короткий опис своєї енергії у відповідній сфері.",en:"Tap each button to see a brief description of your energy in the corresponding area."},
+"Полное описание доступно по кнопке под матрицей.":{uk:"Повний опис доступний за кнопкою під матрицею.",en:"The full description is available via the button below the matrix."},
+"— показывает особенности взаимодействия двух Душ и задачу их союза.":{uk:"— показує особливості взаємодії двох Душ і завдання їхнього союзу.",en:"— shows how two Souls interact and the purpose of their union."},
+"— показывает основную задачу года и каждого из 12 периодов.":{uk:"— показує головне завдання року та кожного з 12 періодів.",en:"— shows the main task for the year and each of its 12 periods."},
+"Я не создаю для человека новую личность. Я помогаю ему увидеть, почувствовать и проявить ту уникальность, которая уже заложена в нём.":{uk:"Я не створюю для людини нову особистість. Я допомагаю їй побачити, відчути та проявити унікальність, яка вже закладена в ній.",en:"I do not create a new personality for a person. I help them see, feel, and express the uniqueness already within them."},
+"All of this can be revealed with just one key — a person’s date of birth.":{uk:"І все це можна розкрити, маючи лише один ключ — дату народження людини.",en:"All of this can be revealed with just one key — a person’s date of birth."},
+"I do not create a new personality for a person. I help them see, feel and express the uniqueness that is already within them.":{uk:"Я не створюю для людини нову особистість. Я допомагаю їй побачити, відчути та проявити унікальність, яка вже закладена в ній.",en:"I do not create a new personality for a person. I help them see, feel and express the uniqueness that is already within them."},
+"↑ COLLAPSE FUNCTIONS":{uk:"↑ ЗГОРНУТИ ФУНКЦІЇ",en:"↑ COLLAPSE FUNCTIONS"},
+"— показывает основную задачу yeara и каждого из 12 периодов.":{uk:"— показує головне завдання року та кожного з 12 періодів.",en:"— shows the main task for the year and each of its 12 periods."}
+});
 const originals=Object.keys(dict).sort((a,b)=>b.length-a.length);
 const replacements=new Map();
 for(const original of originals){replacements.set(original,original);for(const v of Object.values(dict[original]))replacements.set(v,original);}
-function lang(){const a=document.querySelector('#soulLanguageSwitcher [data-lang].active,#soulLanguageSwitcher [data-lang][aria-pressed="true"]');return a?.getAttribute('data-lang')||window.SoulI18n?.language||'ru';}
+function lang(){const a=document.querySelector('#soulLanguageSwitcher [data-lang].active,#soulLanguageSwitcher [data-lang][aria-pressed="true"],#soulLanguageSwitcher [data-lang][aria-selected="true"]');return a?.getAttribute('data-lang')||window.SoulI18n?.language||'ru';}
 let busy=false;
 function repair(){
  if(busy)return;busy=true;
