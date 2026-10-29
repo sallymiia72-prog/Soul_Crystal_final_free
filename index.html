@@ -12787,6 +12787,16 @@ if(downloadSoulAmulet) downloadSoulAmulet.addEventListener("click",downloadPurpo
     if(!["ru","uk","en"].includes(lang))return;
     const map=lang==="uk"?UK:(lang==="en"?EN:RU);
     translateTree(document.body,map);active=lang;localStorage.setItem("soul_language",lang);document.documentElement.lang=lang;
+    // Canonical locale owner for result-group labels: set directly, without reverse lookup.
+    const groupLabels={ru:['БЛОК ИНФОРМАЦИИ','БЛОК АКТИВАЦИИ'],uk:['БЛОК ІНФОРМАЦІЇ','БЛОК АКТИВАЦІЇ'],en:['INFORMATION SECTION','ACTIVATION SECTION']};
+    const applyGroupLabels=()=>{
+      for(const [i,cls] of ['sc-main-group-info','sc-main-group-tools'].entries()){
+        const label=document.querySelector('.'+cls+' > span:first-child');
+        if(label && label.textContent!==groupLabels[active][i])label.textContent=groupLabels[active][i];
+      }
+    };
+    applyGroupLabels();queueMicrotask(applyGroupLabels);
+    setTimeout(applyGroupLabels,200);setTimeout(applyGroupLabels,900);
     if(typeof window.scRefreshLanguage==="function")queueMicrotask(()=>window.scRefreshLanguage());
     document.querySelectorAll("#soulLanguageSwitcher [data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
     if(typeof window.renderEnergyOfDay==="function")window.renderEnergyOfDay();
@@ -12802,6 +12812,20 @@ if(downloadSoulAmulet) downloadSoulAmulet.addEventListener("click",downloadPurpo
     }
   }
   Object.assign(EN,{"ФУНКЦИИ АКТИВАТОРА":"ACTIVATOR FUNCTIONS","Активатор раскрывает Вибрационную матрицу — 12 врождённых энергетических аспектов Души по сферам реализации.":"The Activator reveals the Vibrational Matrix — 12 innate energetic aspects of the Soul across the spheres of realization.","БЛОК ИНФОРМАЦИИ":"INFORMATION","РАСКРЫТЬ ПРЕДНАЗНАЧЕНИЕ ДУШИ":"DISCOVER YOUR SOUL PURPOSE","УЗНАТЬ О СВОЕЙ РОЛИ В ОТНОШЕНИЯХ":"DISCOVER YOUR ROLE IN RELATIONSHIPS","УЗНАТЬ ЗАДАЧУ ДУШИ НА ТЕКУЩИЙ ПЕРИОД":"DISCOVER YOUR SOUL’S TASK FOR THE CURRENT PERIOD","ОТКРЫТЬ ГЕОГРАФИЮ ДУШИ":"DISCOVER YOUR SOUL GEOGRAPHY","БЛОК АКТИВАЦИИ":"ACTIVATION TOOLS","АКТИВИРОВАТЬ ЛИЧНЫЙ КРИСТАЛЛ ДУШИ":"ACTIVATE YOUR PERSONAL SOUL CRYSTAL","АКТИВИРОВАТЬ ВИБРАЦИОННЫЙ КОД ДУШИ":"ACTIVATE YOUR SOUL VIBRATIONAL CODE","УСТАНОВИТЬ КОНТАКТ С ВЫСШИМ Я":"CONNECT WITH YOUR HIGHER SELF","ПОЛУЧИТЬ КРИСТАЛЬНУЮ МАНДАЛУ":"GET YOUR CRYSTALLINE MANDALA","МЕДИТАЦИЯ «РАЗГОВОР С ДУШОЙ»":"MEDITATION “CONVERSATION WITH THE SOUL”","И всё это можно раскрыть, имея лишь один ключ —":"All of this can be revealed with just one key —","дату рождения человека":"a person’s date of birth","Я не создаю для человека новую личность. Я помогаю ему увидеть, почувствовать и проявить ту уникальность, которая уже заложена в нём.":"I do not create a new personality for a person. I help them see, feel and express the uniqueness that is already within them.","↑ СВЕРНУТЬ ФУНКЦИИ":"↑ COLLAPSE FUNCTIONS","ОТКРЫТЬ АКТИВАТОР":"OPEN ACTIVATOR","ABOUT THE “SOUL CRYSTAL” METHOD":"ABOUT THE SOUL CRYSTAL METHOD","Введи свою":"Enter your","дату рождения":"DATE OF BIRTH","и получи описание твоих личных энергий по 12 сферам реализации":"and receive a description of your personal energies across 12 spheres of realization","Дата рождения":"Date of Birth","ДД.ММ.ГГГГ":"DD.MM.YYYY","Рассчитать":"Calculate","ВИБРАЦИОННАЯ МАТРИЦА":"VIBRATIONAL MATRIX"});
+  Object.assign(UK, {
+    "БЛОК ИНФОРМАЦИИ":"БЛОК ІНФОРМАЦІЇ",
+    "БЛОК АКТИВАЦИИ":"БЛОК АКТИВАЦІЇ",
+    "INFORMATION":"БЛОК ІНФОРМАЦІЇ",
+    "ACTIVATION TOOLS":"БЛОК АКТИВАЦІЇ",
+    "INFORMATION SECTION":"БЛОК ІНФОРМАЦІЇ",
+    "ACTIVATION SECTION":"БЛОК АКТИВАЦІЇ"
+  });
+  Object.assign(EN, {
+    "БЛОК ИНФОРМАЦИИ":"INFORMATION SECTION",
+    "БЛОК АКТИВАЦИИ":"ACTIVATION SECTION",
+    "БЛОК ІНФОРМАЦІЇ":"INFORMATION SECTION",
+    "БЛОК АКТИВАЦІЇ":"ACTIVATION SECTION"
+  });
   window.SoulI18n={setLanguage,get language(){return active},UK,EN};
   window.soulPick=(ru,uk,en)=>active==="uk"?uk:(active==="en"?(en||ru):ru);
   document.addEventListener("DOMContentLoaded",()=>{
@@ -13293,7 +13317,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 <script>
-  Object.assign(UK,{"Главное отличие":"Головна відмінність","Главный принцип метода":"Головний принцип методу","Главное отличие «Кристалла Души» от классической нумерологии":"Головна відмінність «Кристала Душі» від класичної нумерології","← Вернуться к разделам":"← Повернутися до розділів","ТВОЙ SOUL VIBRATIONAL CODE":"ТВІЙ ВІБРАЦІЙНИЙ КОД ДУШІ","Активация кода Души":"Активація коду Душі","Медитация для сонастройки с твоим Кристаллом Души":"Медитація для співналаштування з твоїм Кристалом Душі"});
+  Object.assign(window.SoulI18n.UK,{"Главное отличие":"Головна відмінність","Главный принцип метода":"Головний принцип методу","Главное отличие «Кристалла Души» от классической нумерологии":"Головна відмінність «Кристала Душі» від класичної нумерології","← Вернуться к разделам":"← Повернутися до розділів","ТВОЙ SOUL VIBRATIONAL CODE":"ТВІЙ ВІБРАЦІЙНИЙ КОД ДУШІ","Активация кода Души":"Активація коду Душі","Медитация для сонастройки с твоим Кристаллом Души":"Медитація для співналаштування з твоїм Кристалом Душі"});
 </script>
 <style id="sc-paid-structure-v2-style">
 .sc-paid-gate-v2{margin:24px auto;max-width:620px;padding:22px;border:1px solid rgba(246,205,114,.32);border-radius:24px;background:linear-gradient(180deg,rgba(26,8,49,.96),rgba(17,8,36,.96));text-align:center}
@@ -15541,7 +15565,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
 }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{wireSupport();fixTopAndSupport();setTimeout(fixTopAndSupport,350);setTimeout(fixTopAndSupport,1200);setTimeout(fixTopAndSupport,2500)},{once:true}); else {wireSupport();fixTopAndSupport();}
  document.addEventListener('click',e=>{if(e.target.closest?.('#soulLanguageSwitcher'))setTimeout(fixTopAndSupport,180)},true);
- new MutationObserver(()=>{fixLabels();fixGuide();fixTopAndSupport()}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+ new MutationObserver(()=>{fixTopAndSupport()}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 })();
 </script>
 <script id="sc-v144-client-final-gates">
