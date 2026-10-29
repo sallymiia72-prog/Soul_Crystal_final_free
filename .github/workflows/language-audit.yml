@@ -1,4 +1,4 @@
-name: Language browser audit (isolated)
+name: Full language browser audit (RU UA EN)
 on:
   push:
     branches: [language-testing]
