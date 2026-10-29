@@ -61,6 +61,8 @@ with sync_playwright() as p:
    }
  }""")
  report["startupScrollY"]=page.evaluate("() => window.scrollY")
+ report["startupScrollDiagnostics"]=page.evaluate("""() => ({hash:location.hash,activeElement:document.activeElement?.outerHTML.slice(0,300),scrollRestoration:history.scrollRestoration,scrollingElement:document.scrollingElement?.tagName,scrollingElementTop:document.scrollingElement?.scrollTop,bodyTop:document.body.scrollTop,topElements:[...document.querySelectorAll("body *")].filter(e=>{const r=e.getBoundingClientRect();return r.top>=-10&&r.top<=30&&r.height>20}).slice(0,8).map(e=>({tag:e.tagName,id:e.id,cls:String(e.className).slice(0,100)}))})""")
+ print("STARTUP SCROLL DIAGNOSTIC",json.dumps(report["startupScrollDiagnostics"],ensure_ascii=False),flush=True)
  page.screenshot(path=str(out/"initial.png"))
  for id in ["dayEnergyShell","dayEnergyToggle","sc220-method-menu"]:
   e=page.locator("#"+id)
