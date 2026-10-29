@@ -4,6 +4,7 @@ on:
     branches: [language-testing]
     paths:
       - 'tests/language_audit.py'
+      - 'tests/content_language_audit.py'
       - 'tests/activator_sections_audit.py'
       - 'tests/activator_journey_audit.py'
       - 'tests/patch_v277_language.py'
@@ -28,12 +29,14 @@ jobs:
       - run: TEST_HTML=index-language-fixed.html python tests/language_audit.py
       - run: TEST_HTML=index-language-fixed.html python tests/activator_sections_audit.py
       - run: TEST_HTML=index-language-fixed.html python tests/activator_journey_audit.py
+      - run: TEST_HTML=index-language-fixed.html python tests/content_language_audit.py
       - run: python tests/visual_mobile_audit.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: language-audit-report
           path: |
+            content-language-results/
             language-test-results/
             activator-test-results/
             activator-journey-results/
