@@ -1,0 +1,40 @@
+name: V323 fix SC320 final override
+on:
+  push:
+    branches: [language-testing]
+    paths: ['.github/workflows/v323-fix-sc320-final-gate.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: language-testing
+      - name: Fix SC320 final gate to require server entitlement
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html');s=p.read_text(encoding='utf-8')
+          start=s.find('<script id="sc320-formula-gate-final">')
+          assert start>=0, 'SC320 final gate missing'
+          end=s.find('</script>',start)
+          assert end>start, 'SC320 script not closed'
+          part=s[start:end]
+          old="const hasAccess=()=>{try{return !!JSON.parse(localStorage.getItem(KEY)||'{}').formula}catch(e){return false}};"
+          new="const hasAccess=()=>document.documentElement.dataset.formulaServerPaid==='true';"
+          assert part.count(old)==1, 'Expected legacy SC320 localStorage gate not found exactly once'
+          part=part.replace(old,new)
+          s=s[:start]+part+s[end:]
+          p.write_text(s,encoding='utf-8')
+          print('SC320 final gate now requires server entitlement')
+          PY
+      - name: Commit on test branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "V323 fix SC320 final localStorage override"
+          git push origin HEAD:language-testing
