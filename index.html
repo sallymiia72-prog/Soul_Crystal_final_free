@@ -19681,7 +19681,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script id="sc320-formula-gate-final">
 (()=>{
  const KEY='soul_paid_entitlements_v144_live';
- const hasAccess=()=>{try{return !!JSON.parse(localStorage.getItem(KEY)||'{}').formula}catch(e){return false}};
+ const hasAccess=()=>document.documentElement.dataset.formulaServerPaid==='true';
  function sync(){
   const c=document.getElementById('v72CodeActivationContent');if(!c)return;
   const p=hasAccess();const host=c.querySelector('.host');
