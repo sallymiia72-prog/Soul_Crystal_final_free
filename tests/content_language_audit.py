@@ -21,8 +21,9 @@ async def main():
    await page.wait_for_timeout(1300)
    items=await page.evaluate("""() => [...document.querySelectorAll('h1,h2,h3,h4,p,li,button,a,summary,label')].filter(e=>!e.closest('script,style,template')).map(e=>({text:(e.innerText||e.textContent||'').trim().replace(/\\s+/g,' ').slice(0,400),id:e.closest('[id]')?.id||'',visible:!!e.getClientRects().length})).filter(x=>x.text.length>=8 && x.text.length<=400)""")
    # Signals requiring human review; Cyrillic in English is a strong signal, not a proof.
-   suspicious=[x for x in items if (lang=='en' and re.search('[А-Яа-яЁёІіЇїЄєҐґ]',x['text'])) or (lang=='ru' and re.search('[ІіЇїЄєҐґ]',x['text']))]
-   results.append({'lang':lang,'total':len(items),'suspect_count':len(suspicious),'suspects':suspicious[:150],'mandala':[x for x in items if x['id']=='mandalaOffer'][:45]})
+   visible_items=[x for x in items if x['visible']]
+   suspicious=[x for x in visible_items if (lang=='en' and re.search('[А-Яа-яЁёІіЇїЄєҐґ]',x['text'])) or (lang=='ru' and re.search('[ІіЇїЄєҐґ]',x['text']))]
+   results.append({'lang':lang,'total':len(items),'suspect_count':len(suspicious),'suspects':suspicious[:150],'hidden_language_versions':len(items)-len(visible_items),'mandala':[x for x in items if x['id']=='mandalaOffer'][:45]})
   await browser.close()
  server.shutdown()
  (OUT/'report.json').write_text(json.dumps(results,ensure_ascii=False,indent=2))
