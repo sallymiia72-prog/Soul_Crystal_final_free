@@ -34,5 +34,24 @@ html body #sc220-method-menu .sc220-method-links>button[data-sc220-panel]{font-s
 }
 </style>"""
     html = html.replace("</head>", mobile_css+"</head>", 1)
+# The forecast toggle receives an inline 62px height from legacy startup code.
+# A scoped runtime correction must use the same inline !important priority.
+fix_id = "sc-forecast-height-runtime-fix"
+if fix_id not in html:
+    runtime = """<script id="sc-forecast-height-runtime-fix">
+(function(){
+ function fix(){
+  var el=document.getElementById('dayEnergyToggle');
+  if(!el || !window.matchMedia('(max-width:600px)').matches)return;
+  ['height','min-height','max-height'].forEach(function(p){el.style.setProperty(p,'50px','important')});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix);
+ else fix();
+ window.addEventListener('load',fix);
+ setTimeout(fix,250);
+})();
+</script>"""
+    if "</body>" not in html: raise SystemExit("Missing body closing tag")
+    html = html.replace("</body>",runtime+"</body>",1)
 target.write_text(html, encoding="utf-8")
 print(f"Created {target} ({target.stat().st_size} bytes) from unmodified index.html")
