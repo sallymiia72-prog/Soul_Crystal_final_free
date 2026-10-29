@@ -8775,7 +8775,45 @@ shell.style.setProperty("--day-rgb",rgb);
 <p>И главный вопрос здесь один:</p>
 <p class="mandala-highlight">✨ ГОТОВ ЛИ ТЫ ЖИТЬ В СОГЛАСИИ СО СВОЕЙ ДУШОЙ И СТАТЬ СОБОЙ?</p>
 </div>
-<div class="mandala-guide">
+<div class="mandala-guide sc-mandala-localized" data-sc-mandala-locale="ru">
+<h4>💜 КРИСТАЛЛИЧЕСКАЯ МАНДАЛА ПОМОГАЕТ ТЕБЕ:</h4>
+<ul class="mandala-benefits">
+<li>гармонизировать внутреннее состояние;</li>
+<li>восстановить энергию и равновесие;</li>
+<li>сосредоточить внимание;</li>
+<li>настроиться на собственное желание;</li>
+<li>ясно видеть желаемый результат.</li>
+</ul>
+<h4>🎵 СТАТИЧНОЕ ИЗОБРАЖЕНИЕ ИЛИ ЖИВАЯ МАНДАЛА?</h4>
+<p><strong>Изображение Кристаллической Мандалы</strong> раскрывает числовой код даты рождения через цвет и геометрию граней. Это цветовая распаковка твоего индивидуального кода.</p>
+<p><strong>Живая Кристаллическая Мандала</strong> соединяет образ, движение и звучание. Её звук передаёт энергии Души в соответствии с числовым кодом даты рождения и помогает мгновенно сонастроиться с камертоном твоей Души.</p>
+<p><strong>Лучше иметь обе версии:</strong> изображение поддерживает постоянный визуальный контакт с энергиями, а Живая Мандала помогает войти в глубокую сонастройку через движение и звучание.</p>
+<h4>💎 КАК ПОЛЬЗОВАТЬСЯ?</h4>
+<p>Установи изображение Мандалы как обои на телефон, чтобы поддерживать связь с ней и настраиваться на резонанс своей Души.</p>
+<p>Утром или во время медитации используй Живую Мандалу с её движением и звучанием для более глубокой сонастройки.</p>
+<p>Скачай шаблон Мандалы для раскрашивания и раскрась его, ориентируясь на цвета граней своего Кристалла. Ты создашь произведение искусства своими руками.</p>
+<p class="mandala-highlight">Твоя дата. Твой узор. Твоё звучание.</p>
+</div>
+<div class="mandala-guide sc-mandala-localized" data-sc-mandala-locale="ua">
+<h4>💜 КРИСТАЛІЧНА МАНДАЛА ДОПОМАГАЄ ТОБІ:</h4>
+<ul class="mandala-benefits">
+<li>гармонізувати внутрішній стан;</li>
+<li>відновити енергію та рівновагу;</li>
+<li>зосередити увагу;</li>
+<li>налаштуватися на власне бажання;</li>
+<li>чітко бачити бажаний результат.</li>
+</ul>
+<h4>🎵 СТАТИЧНЕ ЗОБРАЖЕННЯ ЧИ ЖИВА МАНДАЛА?</h4>
+<p><strong>Зображення Кристалічної Мандали</strong> розкриває числовий код дати народження через колір і геометрію граней. Це кольорове розкриття твого індивідуального коду.</p>
+<p><strong>Жива Кристалічна Мандала</strong> поєднує образ, рух і звучання. Її звук передає енергії Душі відповідно до числового коду дати народження й допомагає миттєво співналаштуватися з камертоном твоєї Душі.</p>
+<p><strong>Найкраще мати обидві версії:</strong> зображення підтримує постійний візуальний контакт з енергіями, а Жива Мандала допомагає досягти глибокого співналаштування через рух і звучання.</p>
+<h4>💎 ЯК КОРИСТУВАТИСЯ?</h4>
+<p>Установи зображення Мандали як шпалери на телефон, щоб підтримувати зв’язок із нею та налаштовуватися на резонанс своєї Душі.</p>
+<p>Уранці або під час медитації використовуй Живу Мандалу з її рухом і звучанням для глибшого співналаштування.</p>
+<p>Завантаж шаблон Мандали для розфарбовування й розфарбуй його, орієнтуючись на кольори граней свого Кристала. Ти створиш витвір мистецтва власноруч.</p>
+<p class="mandala-highlight">Твоя дата. Твій візерунок. Твоє звучання.</p>
+</div>
+<div class="mandala-guide sc-mandala-localized" data-sc-mandala-locale="en">
 <h4>💜 THE CRYSTALLINE MANDALA HELPS YOU:</h4>
 <ul class="mandala-benefits">
 <li>harmonize your inner state;</li>
@@ -13213,6 +13251,7 @@ if(downloadSoulAmulet) downloadSoulAmulet.addEventListener("click",downloadPurpo
   document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkPending(true)});
   document.addEventListener("focus",()=>checkPending(true));
   document.addEventListener("click",event=>{
+    if(event.target.closest?.("#supportProject,.consult-offer.v78-contact-block"))return;
     const button=event.target.closest?.(paidSelector);
     if(!button)return;
     const productId=productFor(button);
@@ -13276,7 +13315,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 document.addEventListener("DOMContentLoaded",()=>{
  const isUk=()=>document.documentElement.lang==="uk";
  const access=()=>{try{return JSON.parse(localStorage.getItem("soul_paid_entitlements_v144_live")||"{}")}catch(e){return{}}};
- const paid=id=>id==='formula'?document.documentElement.dataset.formulaServerPaid==='true':Boolean(access()[id]);
+ const paid=id=>Boolean(access()[id]);
  const qnum=id=>document.getElementById(id)?.textContent?.match(/\d+/)?.[0]||"1";
  const makeRitual=()=>{
    const box=document.createElement("div"); box.className="sc-activation-final";
@@ -15426,7 +15465,7 @@ html,body{max-width:100%;overflow-x:hidden}
    const fresh=b.cloneNode(true); b.replaceWith(fresh);
    fresh.addEventListener('click',e=>{
      let access={};try{access=JSON.parse(localStorage.getItem('soul_paid_entitlements_v144_live')||'{}')}catch{}
-     if(!(document.documentElement.dataset.formulaServerPaid==='true'))return; // unpaid click is intercepted by Monobank
+     if(!access.formula)return; // unpaid click is intercepted by the live Monobank payment handler
      e.preventDefault();e.stopImmediatePropagation();
      if(renderCanonicalReport()) setTimeout(()=>document.getElementById('matrixCanonicalReport')?.scrollIntoView({behavior:'smooth',block:'start'}),30);
    },true);
@@ -15509,7 +15548,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
 (()=>{
  const KEY='soul_paid_entitlements_v144_live';
  const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return{}}};
- const paid=id=>id==='formula'?document.documentElement.dataset.formulaServerPaid==='true':Boolean(read()[id]);
+ const paid=id=>Boolean(read()[id]);
  function sync(){
    // Purpose: the legacy preview modal must never be used by a client.
    const pbtn=document.getElementById('purposeSoulBuy');
@@ -15794,7 +15833,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
 </style>
 <script id="v72-clean-final-js">
 (function(){
- const paid=()=>document.documentElement.dataset.formulaServerPaid==='true';
+ const paid=()=>{try{return !!JSON.parse(localStorage.getItem('soul_paid_entitlements_v144_live')||'{}').formula}catch(e){return false}};
  const review=()=>!!window.SOUL_AUTHOR_REVIEW;
  function cleanNav(){
    document.querySelectorAll('.soul-transform-note').forEach(e=>{const box=e.closest('.soul-copy'); if(box&&box.children.length===1) box.remove(); else e.remove();});
@@ -15880,7 +15919,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
 (()=>{
  const KEY='soul_paid_entitlements_v144_live';
  const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return{}}};
- const paid=id=>id==='formula'?document.documentElement.dataset.formulaServerPaid==='true':Boolean(read()[id]);
+ const paid=id=>Boolean(read()[id]);
  const uk=()=>document.documentElement.lang==='uk';
  const RU=['ЛИЧНЫЙ КРИСТАЛЛ ДУШИ','ВИБРАЦИОННЫЙ КОД ДУШИ','СВЯЗЬ С ВЫСШИМ Я','КРИСТАЛЬНАЯ МАНДАЛА','МЕДИТАЦИЯ «РАЗГОВОР С ДУШОЙ»'];
  const UA=['ОСОБИСТИЙ КРИСТАЛ ДУШІ','ВІБРАЦІЙНИЙ КОД ДУШІ','КОНТАКТ ЗІ СВОЇМ ВИЩИМ Я','КРИСТАЛІЧНА МАНДАЛА','МЕДИТАЦИЯ «РАЗГОВОР С ДУШОЙ»'];
@@ -15933,7 +15972,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
 <script id="v76-from-v75-only-fixes-script">
 (()=>{
  const KEY='soul_paid_entitlements_v144_live';
- const isPaid=()=>document.documentElement.dataset.formulaServerPaid==='true';
+ const isPaid=()=>{try{return !!JSON.parse(localStorage.getItem(KEY)||'{}').formula}catch(e){return false}};
  let opened=false;
  function paidBox(){return document.getElementById('purposePaidContentV2')}
  function closePaid(){const b=paidBox();if(!b)return;b.classList.remove('v76-open-paid');b.hidden=true}
@@ -17020,9 +17059,7 @@ html.sc-article-reading #dayEnergyShell{display:none!important}
 })();
 </script>
 <style id="v144-author-only-cleanup">
-/* Author workspace: client-facing support/contact controls are not needed. */
-html body #supportProject,
-html body .consult-offer{display:none!important}
+/* Client: support and contact controls must remain visible. */
 </style>
 <script id="v144-author-export-final">
 (()=>{
@@ -18748,6 +18785,14 @@ const exactOverrides={
  ua:{'SOUL PURPOSE':'ПРИЗНАЧЕННЯ ДУШІ','Calculate':'Розрахувати'},
  en:{'Рассчитать':'Calculate','Розрахувати':'Calculate'}
 };
+// Canonical headings: restore RU/UA from either English or another locale.
+for(const [ru,ua,en] of [
+ ['БЛОК ИНФОРМАЦИИ','БЛОК ІНФОРМАЦІЇ','INFORMATION SECTION'],
+ ['БЛОК АКТИВАЦИИ','БЛОК АКТИВАЦІЇ','ACTIVATION SECTION']
+]){
+ for(const [lang,target] of [['ru',ru],['ua',ua],['en',en]])
+  for(const variant of [ru,ua,en])exactOverrides[lang][variant]=target;
+}
 const buttons=['DISCOVER YOUR SOUL PURPOSE','DISCOVER YOUR ROLE IN RELATIONSHIPS','DISCOVER YOUR SOUL’S TASK FOR THE CURRENT PERIOD','DISCOVER YOUR SOUL GEOGRAPHY'];
 const ukButtons=['РОЗКРИЙ ПРИЗНАЧЕННЯ СВОЄЇ ДУШІ','ДІЗНАЙСЯ ПРО СВОЮ РОЛЬ У СТОСУНКАХ','ДІЗНАЙСЯ ЗАВДАННЯ ДУШІ НА ПОТОЧНИЙ ПЕРІОД','ВІДКРИЙ ГЕОГРАФІЮ СВОЄЇ ДУШІ'];
 const ruButtons=['РАСКРОЙ ПРЕДНАЗНАЧЕНИЕ СВОЕЙ ДУШИ','УЗНАЙ СВОЮ РОЛЬ В ОТНОШЕНИЯХ','УЗНАЙ ЗАДАЧУ ДУШИ НА ТЕКУЩИЙ ПЕРИОД','ОТКРОЙ ГЕОГРАФИЮ СВОЕЙ ДУШИ'];
@@ -18827,7 +18872,7 @@ function apply(){
  try{
   const lang=locale(),walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;
   while(node=walk.nextNode()){
-   if(node.parentElement?.closest('script,style,textarea,code,[contenteditable="true"]'))continue;
+   if(node.parentElement?.closest('script,style,textarea,code,[contenteditable="true"],[data-sc-mandala-locale]'))continue;
    const old=node.nodeValue,next=translateValue(old,lang);if(old!==next)node.nodeValue=next;
   }
   for(const el of document.querySelectorAll('input[placeholder],textarea[placeholder]')){
@@ -19678,27 +19723,112 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 #v72CodeActivationContent #v144CodePay[hidden]{display:none!important;}
 #v72CodeActivationContent .host.v144-locked,#v72CodeActivationContent .host.sc302-unpaid{display:none!important;}
 </style>
-<script id="sc320-formula-gate-final">
+
+<style id="sc-verified-group-headings">
+#resultsSection>.sc-main-group-toggle{
+ width:calc(100% - 40px)!important;max-width:650px!important;
+ min-height:112px!important;height:auto!important;
+ margin:32px auto 0!important;padding:22px 56px!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ text-align:center!important;box-sizing:border-box!important;position:relative!important;
+}
+#resultsSection>.sc-main-group-toggle>span:first-child{display:block!important;flex:1 1 auto!important;text-align:center!important;}
+#resultsSection>.sc-main-group-toggle>.sc-main-group-arrow{position:absolute!important;right:24px!important;top:50%!important;transform:translateY(-50%)!important;}
+@media(max-width:700px){#resultsSection>.sc-main-group-toggle{width:calc(100% - 48px)!important;min-height:106px!important;padding:20px 48px!important;}}
+</style>
+<script id="sc-pair-access-consistency">
 (()=>{
- const KEY='soul_paid_entitlements_v144_live';
- const hasAccess=()=>document.documentElement.dataset.formulaServerPaid==='true';
- function sync(){
-  const c=document.getElementById('v72CodeActivationContent');if(!c)return;
-  const p=hasAccess();const host=c.querySelector('.host');
-  let b=document.getElementById('v144CodePay');
-  if(!b){b=document.createElement('button');b.id='v144CodePay';b.type='button';c.insertBefore(b,host||null)}
-  if(b.parentElement!==c)c.insertBefore(b,host||null);
-  b.hidden=p;
-  const lang=(document.documentElement.lang||'ru').toLowerCase();
-  b.textContent=lang==='en'?'GET SOUL CODE ACTIVATION · €10 / 500 UAH':lang==='uk'?'ОТРИМАТИ АКТИВАЦІЮ КОДУ ДУШІ · 10 € / 500 грн':'ПОЛУЧИТЬ АКТИВАЦИЮ КОДА ДУШИ · 10 € / 500 грн';
-  if(host){host.hidden=!p;host.classList.toggle('v144-locked',!p);host.classList.toggle('sc302-unpaid',!p);host.style.setProperty('display',p?'block':'none','important')}
-  c.querySelectorAll('.sc-act-player,audio.track').forEach(el=>{el.hidden=!p;if(!p&&el.pause)el.pause()});
+ const AUTHOR=false;
+ const clientLocal=location.protocol==='file:'||location.protocol==='content:';
+ function apply(){
+  const c=document.getElementById('v72CodeActivationContent');
+  if(c){
+   const unlocked=AUTHOR||document.documentElement.dataset.formulaServerPaid==='true';
+   const b=document.getElementById('v144CodePay'),host=c.querySelector('.host');
+   if(b){b.hidden=unlocked;b.style.setProperty('display',unlocked?'none':'block','important');}
+   if(host){host.hidden=!unlocked;host.classList.toggle('v144-locked',!unlocked);host.classList.toggle('sc302-unpaid',!unlocked);host.style.setProperty('display',unlocked?'block':'none','important');}
+   c.querySelectorAll('.sc-act-player,audio.track').forEach(x=>{x.hidden=!unlocked;if(!unlocked&&typeof x.pause==='function')x.pause()});
+  }
+  if(!AUTHOR&&clientLocal){
+   const dlg=document.getElementById('paidPreviewDialog');
+   if(dlg?.open){dlg.close();}
+  }
  }
- function start(){sync();setTimeout(sync,200);setTimeout(sync,1200)}
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
- document.addEventListener('click',e=>{if(e.target.closest('#v72CodeActivationToggle,#soulLanguageSwitcher'))setTimeout(sync,60)},true);
- document.addEventListener('soul-payment-granted',()=>setTimeout(sync,30));
- setInterval(sync,1200);
+ function init(){
+  if(AUTHOR){window.SOUL_AUTHOR_REVIEW=true;document.documentElement.dataset.formulaServerPaid='true';}
+  if(!AUTHOR&&clientLocal){
+   // Local HTML cannot verify paid entitlements. Never show paid preview as a free demo.
+   try{localStorage.removeItem('soul_paid_entitlements_v144_live')}catch(e){}
+  }
+  apply();setTimeout(apply,150);setTimeout(apply,1000);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+ document.addEventListener('soul-payment-granted',()=>setTimeout(apply,0));
+ document.addEventListener('click',e=>{if(e.target.closest('#v72CodeActivationToggle,#soulLanguageSwitcher'))setTimeout(apply,80)},true);
+ setInterval(apply,1200);
+})();
+</script>
+
+<!-- SC 2026-10-29: spacing and last two CTA translations only -->
+<style id="sc-support-contact-spacing-20261029">
+/* Both gaps: Activation → Support and Support → Contact = 32px. */
+#activator #supportProject {
+  margin: 32px auto 0 !important;
+}
+#activator .consult-offer.v78-contact-block {
+  margin: 32px auto 32px !important;
+}
+</style>
+
+
+<script id="sc-support-single-i18n-20261029">
+(()=>{
+ const section=document.getElementById('supportProject');
+ if(!section)return;
+ const lang=()=>{const l=(document.documentElement.lang||'ru').toLowerCase();return l.startsWith('en')?'en':l.startsWith('uk')?'uk':'ru'};
+ const strings={
+  ru:['ПОДДЕРЖАТЬ ПРОЕКТ','ФИНАНСОВАЯ ПОДДЕРЖКА','ПОДДЕРЖКА В РАСПРОСТРАНЕНИИ И ПРОДВИЖЕНИИ','СВЯЗАТЬСЯ С АВТОРОМ','Поддерживая развитие «Кристалла Души», вы вносите свой вклад в развитие человечества.','С большой благодарностью принимаем ваше посильное участие в развитии нашего проекта.','Ваше участие — вклад в развитие проекта и развитие человечества.','Условия по взаимовыгодному сотрудничеству для блогеров и других заинтересованных лиц в виде информационного партнерства и других способов продвижения этого проекта согласовываются лично с автором.'],
+  uk:['ПІДТРИМАТИ ПРОЄКТ','ФІНАНСОВА ПІДТРИМКА','ПІДТРИМКА В ПОШИРЕННІ ТА ПРОСУВАННІ','ЗВ’ЯЗАТИСЯ З АВТОРКОЮ','Підтримуючи розвиток «Кристала Душі», ви робите свій внесок у розвиток людства.','З великою вдячністю приймаємо вашу посильну участь у розвитку нашого проєкту.','Ваша участь — внесок у розвиток проєкту та розвиток людства.','Умови взаємовигідної співпраці для блогерів та інших зацікавлених осіб у вигляді інформаційного партнерства та інших способів просування цього проєкту узгоджуються особисто з автором.'],
+  en:['SUPPORT THE PROJECT','FINANCIAL SUPPORT','SUPPORT WITH SHARING AND PROMOTION','CONTACT THE AUTHOR','By supporting the development of Soul Crystal, you contribute to the development of humanity.','We gratefully welcome any contribution you can make to the development of our project.','Your participation contributes to the development of the project and of humanity.','Terms of mutually beneficial cooperation with bloggers and other interested parties, including information partnerships and other ways of promoting this project, are agreed upon directly with the author.']
+ };
+ let busy=false;
+ function set(el,value){if(el&&el.textContent!==value)el.textContent=value}
+ function sync(){if(busy)return;busy=true;try{
+  const t=strings[lang()];set(section.querySelector('.support-main'),t[0]);
+  const choices=section.querySelectorAll('.support-choice');set(choices[0],t[1]);set(choices[1],t[2]);
+  const contact=document.querySelector('.consult-offer.v78-contact-block .v79-contact-toggle');set(contact,t[3]);
+  const notes=section.querySelectorAll('.support-note');
+  const points0=notes[0]?.querySelectorAll('.v57-point')||[];
+  const points1=notes[1]?.querySelectorAll('.v57-point')||[];
+  [points0[0],points0[1],points1[0],points1[1]].forEach((el,i)=>{
+   if(!el)return;const strong=el.querySelector('strong');
+   if(strong){set(strong,t[4+i]);}else set(el,'◆ '+t[4+i]);
+  });
+  set(notes[1]?.querySelector('.v57-contact'),'→ '+t[3]);
+ }finally{busy=false}}
+ const observer=new MutationObserver(sync);
+ observer.observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+ observer.observe(section,{childList:true,subtree:true,characterData:true});
+ const contact=document.querySelector('.consult-offer.v78-contact-block');if(contact)observer.observe(contact,{childList:true,subtree:true});
+ sync();
+ document.addEventListener('click',e=>{if(e.target.closest('#soulLanguageSwitcher,[data-lang]'))queueMicrotask(sync)},true);
+})();
+</script>
+<style id="sc-mandala-locale-isolated-css">
+#mandalaOffer .sc-mandala-localized { display:none !important; }
+#mandalaOffer .sc-mandala-localized[data-sc-mandala-locale="ru"] { display:block !important; }
+</style>
+<script id="sc-mandala-locale-isolated">
+(()=>{'use strict';
+ const style=document.getElementById('sc-mandala-locale-isolated-css');
+ function apply(){
+  const v=String(window.SoulI18n?.language||'ru').toLowerCase();
+  const lang=v==='uk'?'ua':(['ru','ua','en'].includes(v)?v:'ru');
+  if(style)style.textContent='#mandalaOffer .sc-mandala-localized{display:none!important}#mandalaOffer .sc-mandala-localized[data-sc-mandala-locale="'+lang+'"]{display:block!important}';
+ }
+ document.addEventListener('click',e=>{if(e.target.closest('#soulLanguageSwitcher')){queueMicrotask(apply);requestAnimationFrame(apply);setTimeout(apply,150)}},true);
+ document.addEventListener('DOMContentLoaded',apply);
+ apply();
 })();
 </script>
 </body></html>
