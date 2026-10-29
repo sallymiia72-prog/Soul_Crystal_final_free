@@ -23,7 +23,9 @@ with sync_playwright() as p:
   page.locator(f'#soulLanguageSwitcher [data-lang="{lang}"]').click()
   page.wait_for_timeout(1200)
   labels=page.evaluate("""() => [...document.querySelectorAll('button,summary,[role="button"]')].map(e=>({text:(e.textContent||'').trim().replace(/\\s+/g,' '),id:e.id,visible:!!e.getClientRects().length})).filter(x=>x.text)""")
-  report.append({'language':lang,'labels':labels})
+  diagnostic=page.evaluate("""() => ({selected:document.querySelector('#soulLanguageSwitcher [data-lang].active')?.outerHTML,language:window.SoulI18n?.language,groups:[...document.querySelectorAll('.sc-main-group-info,.sc-main-group-tools')].map(e=>({html:e.outerHTML.slice(0,900),text:e.textContent.trim(),visible:!!e.getClientRects().length}))})""")
+  report.append({'language':lang,'labels':labels,'diagnostic':diagnostic})
+  print('DIAGNOSTIC',lang,json.dumps(diagnostic,ensure_ascii=False),flush=True)
  browser.close()
 server.shutdown()
 out=Path('content-language-results');out.mkdir(exist_ok=True)
@@ -34,4 +36,7 @@ for r in report:
  for key,expected in checks[lang].items():
   matched=[t for t in labels if expected in t]
   print(' ',key,expected,'found',bool(matched),flush=True)
-  assert matched,f'{lang}: expected {key} label {expected!r} not found'
+  if not matched: print('MISSING',lang,key,expected,flush=True)
+
+missing=[(r['language'],key,expected) for r in report for key,expected in checks[r['language']].items() if not any(expected in x['text'] for x in r['labels'])]
+assert not missing, f'Untranslated result headings: {missing}'
