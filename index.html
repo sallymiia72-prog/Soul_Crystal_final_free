@@ -19860,4 +19860,16 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  apply();
 })();
 </script>
-</body></html>
+<script id="sc-forecast-height-runtime-fix">
+(function(){
+ function fix(){
+  var el=document.getElementById('dayEnergyToggle');
+  if(!el || !window.matchMedia('(max-width:600px)').matches)return;
+  ['height','min-height','max-height'].forEach(function(p){el.style.setProperty(p,'50px','important')});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix);
+ else fix();
+ window.addEventListener('load',fix);
+ setTimeout(fix,250);
+})();
+</script></body></html>
