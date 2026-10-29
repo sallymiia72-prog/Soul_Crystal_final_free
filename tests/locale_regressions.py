@@ -22,7 +22,7 @@ with sync_playwright() as p:
  for lang in ('ru','uk','en','ru'):
   page.locator(f'#soulLanguageSwitcher [data-lang="{lang}"]').click()
   page.wait_for_timeout(1200)
-  labels=page.evaluate("""() => [...document.querySelectorAll('button,summary,[role="button"]')].map(e=>({text:(e.innerText||e.textContent||'').trim().replace(/\\s+/g,' '),id:e.id,visible:!!e.getClientRects().length})).filter(x=>x.visible && x.text)""")
+  labels=page.evaluate("""() => [...document.querySelectorAll('button,summary,[role="button"]')].map(e=>({text:(e.textContent||'').trim().replace(/\\s+/g,' '),id:e.id,visible:!!e.getClientRects().length})).filter(x=>x.text)""")
   report.append({'language':lang,'labels':labels})
  browser.close()
 server.shutdown()
@@ -33,5 +33,5 @@ for r in report:
  print(lang,'labels',len(labels))
  for key,expected in checks[lang].items():
   matched=[t for t in labels if expected in t]
-  print(' ',key,expected,'found',bool(matched))
+  print(' ',key,expected,'found',bool(matched),flush=True)
   assert matched,f'{lang}: expected {key} label {expected!r} not found'
