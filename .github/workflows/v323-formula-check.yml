@@ -61,7 +61,7 @@ jobs:
                   async def payment(route):
                       if route.request.method=='POST':
                           payment_posts.append(json.loads(route.request.post_data or '{}'))
-                          await route.fulfill(status=200,content_type='application/json',body=json.dumps({'invoiceId':'mock_invoice_123','pageUrl':'https://pay.example.test/mock'}))
+                          await route.fulfill(status=200,content_type='application/json',body=json.dumps({'invoiceId':'mock_invoice_123','pageUrl':'#mock-payment'}))
                       else:
                           await route.fulfill(status=200,content_type='application/json',body='{"invoiceId":"mock_invoice_123","status":"success","paid":true,"productId":"formula"}')
                   await page.route('**/api/payment*',payment)
