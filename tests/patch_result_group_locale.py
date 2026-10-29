@@ -1,6 +1,6 @@
 """Patch the ORIGINAL language dictionaries, not a competing late translator."""
 from pathlib import Path
-p=Path('index-language-fixed.html')
+p=Path('index.html')
 s=p.read_text(encoding='utf-8')
 needle='  window.SoulI18n={setLanguage,get language(){return active},UK,EN};'
 assert s.count(needle)==1, 'Main language controller signature changed'
