@@ -15794,7 +15794,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
 </style>
 <script id="v72-clean-final-js">
 (function(){
- const paid=()=>{try{return !!JSON.parse(localStorage.getItem('soul_paid_entitlements_v144_live')||'{}').formula}catch(e){return false}};
+ const paid=()=>document.documentElement.dataset.formulaServerPaid==='true';
  const review=()=>!!window.SOUL_AUTHOR_REVIEW;
  function cleanNav(){
    document.querySelectorAll('.soul-transform-note').forEach(e=>{const box=e.closest('.soul-copy'); if(box&&box.children.length===1) box.remove(); else e.remove();});
