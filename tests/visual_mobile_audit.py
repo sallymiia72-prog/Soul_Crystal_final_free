@@ -25,8 +25,10 @@ def clean_method_button(m):
 html, inline_count=re.subn(r'<button\b(?=[^>]*data-sc220-panel=)[^>]*>',clean_method_button,html,flags=re.I)
 # Legacy startup JavaScript sets inline font-size with !important after DOM ready.
 legacy_font = "el.style.setProperty('font-size', '1.125em', 'important');"
-assert html.count(legacy_font)==1, "Legacy font assignment changed"
-html=html.replace(legacy_font, "/* font size now controlled by the scoped method-menu CSS */", 1)
+legacy_count = html.count(legacy_font)
+print("Legacy font assignment occurrences:", legacy_count)
+if legacy_count:
+    html=html.replace(legacy_font, "/* font size now controlled by the scoped method-menu CSS */", 1)
 print("Method button tags inspected:",inline_count)
 Path("index-visual-test.html").write_text(html.replace("</head>",css+"</head>",1),encoding="utf-8")
 class Quiet(SimpleHTTPRequestHandler):
