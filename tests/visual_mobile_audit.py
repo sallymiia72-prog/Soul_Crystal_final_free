@@ -3,7 +3,7 @@ import json, os, threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from playwright.sync_api import sync_playwright
 
-src=Path("index-language-fixed.html")
+src=Path("index.html")
 html=src.read_text(encoding="utf-8")
 css="""<style id="v278-mobile-test">
 @media(max-width:600px){
