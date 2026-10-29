@@ -11,6 +11,7 @@ on:
       - 'tests/activator_journey_audit.py'
       - 'tests/patch_v277_language.py'
       - 'tests/visual_mobile_audit.py'
+      - 'tests/production_visual_audit.py'
       - '.github/workflows/language-audit.yml'
       - 'index.html'
   workflow_dispatch:
@@ -44,6 +45,7 @@ jobs:
       - run: TEST_HTML=index.html python tests/locale_regressions.py
       - run: TEST_HTML=index.html python tests/content_language_audit.py
       - run: python tests/visual_mobile_audit.py
+      - run: python tests/production_visual_audit.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -54,3 +56,4 @@ jobs:
             activator-test-results/
             activator-journey-results/
             visual-audit-results/
+            production-visual-results/
