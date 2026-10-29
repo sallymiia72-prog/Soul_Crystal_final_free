@@ -56,7 +56,17 @@ if fix_id not in html:
 
 # Screenshot-confirmed residual locale defects, corrected at runtime after legacy renderers.
 locale_fix_id = "sc-screenshot-locale-fix"
-if locale_fix_id not in html:
+# Refresh the already-injected locale script whenever the dictionary changes.
+import re
+html, old_style_count = re.subn(
+    r'<style id="sc-screenshot-locale-style">[\s\S]*?</style>\s*',
+    '', html, count=1)
+html, old_script_count = re.subn(
+    r'<script id="sc-screenshot-locale-fix">[\s\S]*?</script>\s*',
+    '', html, count=1)
+if old_style_count != old_script_count:
+    raise SystemExit('Partial locale patch found; refusing unsafe replacement')
+if True:
     patch = r'''<style id="sc-screenshot-locale-style">
 @media(max-width:600px){
 .sc-main-group-tools button,.sc-main-group-tools [role="button"],.sc-main-group-tools .sc-activation-btn{box-sizing:border-box!important;max-width:100%!important}
