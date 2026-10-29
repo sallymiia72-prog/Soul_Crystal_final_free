@@ -42,7 +42,21 @@ with sync_playwright() as p:
  page=browser.new_page(viewport={"width":390,"height":844},device_scale_factor=1)
  page.on("pageerror",lambda e:report["errors"].append(str(e)))
  page.goto("http://127.0.0.1:8765/index-visual-test.html",wait_until="domcontentloaded",timeout=90000)
+ # Record scroll changes and their JavaScript callers before any audit interaction.
+ page.add_init_script("""(() => {
+   window.__scrollTrace=[];
+   const save=(kind,extra={})=>window.__scrollTrace.push({kind,at:Math.round(performance.now()),y:scrollY,hash:location.hash,active:document.activeElement?.id||document.activeElement?.tagName,...extra});
+   addEventListener('scroll',()=>save('scroll'),{passive:true});
+   for(const method of ['scrollTo','scrollBy']){
+     const original=window[method].bind(window);
+     window[method]=function(...args){save(method,{args:String(args),stack:new Error().stack?.slice(0,600)});return original(...args)};
+   }
+   addEventListener('DOMContentLoaded',()=>save('DOMContentLoaded'));
+   addEventListener('load',()=>save('load'));
+ })()""")
  page.wait_for_timeout(1500)
+ report["scrollTrace"]=page.evaluate("() => window.__scrollTrace||[]")
+ print("SCROLL TRACE",json.dumps(report["scrollTrace"],ensure_ascii=False),flush=True)
  # Apply the candidate production fix at the element level after legacy startup code.
  # This isolates whether the remaining 30.03px comes from the cascade or from browser scaling.
  page.evaluate("""() => {
