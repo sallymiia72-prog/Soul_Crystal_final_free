@@ -1,0 +1,40 @@
+name: Patch V323 legacy activation gate on testing branch
+on:
+  push:
+    branches: [language-testing]
+    paths: ['.github/workflows/v323-fix-legacy-gate.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: language-testing
+      - name: Replace remaining legacy localStorage activation gate
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          old="const paid=()=>{try{return !!JSON.parse(localStorage.getItem('soul_paid_entitlements_v144_live')||'{}').formula}catch(e){return false}};"
+          new="const paid=()=>document.documentElement.dataset.formulaServerPaid==='true';"
+          if old not in s and new not in s: raise SystemExit('Expected V323 legacy gate not found; refusing to change file')
+          count=s.count(old)
+          if count>1: raise SystemExit('Unexpected repeated gate; refusing to change file')
+          if count:
+              s=s.replace(old,new,1)
+              p.write_text(s,encoding='utf-8')
+          print('Replaced legacy activation gate:',count)
+          PY
+      - name: Commit only if patch changed file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "V323: remove remaining localStorage activation gate"
+            git push origin HEAD:language-testing
+          fi
