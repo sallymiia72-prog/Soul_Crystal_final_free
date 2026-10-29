@@ -60,6 +60,7 @@ with sync_playwright() as p:
      t.style.setProperty('margin','0','important');
    }
  }""")
+ report["startupScrollY"]=page.evaluate("() => window.scrollY")
  page.screenshot(path=str(out/"initial.png"))
  for id in ["dayEnergyShell","dayEnergyToggle","sc220-method-menu"]:
   e=page.locator("#"+id)
@@ -83,7 +84,6 @@ with sync_playwright() as p:
  return {font:cs.fontSize,styleFont:e.style.getPropertyValue('font-size'),stylePriority:e.style.getPropertyPriority('font-size'),selectorMatches:e.matches('html body button[data-sc220-panel]'),viewportMatch:matchMedia('(max-width:600px)').matches,styleCount:styles.length,auditStyles:styles.filter(x=>x.id==='v278-mobile-test').map(x=>({length:x.textContent.length,sheet:!!x.sheet,cssRules:x.sheet?.cssRules.length})),rect:{width:r.width,height:r.height},ancestor:e.parentElement?.className};
  }""")
  print("FONT ROOT CAUSE",json.dumps(report["fontRootCause"],ensure_ascii=False),flush=True)
- report["startupScrollY"]=page.evaluate("() => window.scrollY")
  report["viewport"]=page.evaluate("()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,scrollY:scrollY})")
  browser.close()
 server.shutdown()
