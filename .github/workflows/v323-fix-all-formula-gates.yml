@@ -1,0 +1,44 @@
+name: V323 close remaining formula localStorage gates
+on:
+  push:
+    branches: [language-testing]
+    paths: ['.github/workflows/v323-fix-all-formula-gates.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: language-testing
+      - name: Replace legacy formula gates
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          gate="document.documentElement.dataset.formulaServerPaid==='true'"
+          patterns=[
+            ("const paid=()=>{try{return !!JSON.parse(localStorage.getItem('soul_paid_entitlements_v144_live')||'{}').formula}catch(e){return false}};", "const paid=()=>"+gate+";"),
+            ("const isPaid=()=>{try{return !!JSON.parse(localStorage.getItem(KEY)||'{}').formula}catch(e){return false}};", "const isPaid=()=>"+gate+";"),
+            ("const paid=id=>Boolean(read()[id]);", "const paid=id=>id==='formula'?"+gate+":Boolean(read()[id]);"),
+            ("const paid=id=>Boolean(access()[id]);", "const paid=id=>id==='formula'?"+gate+":Boolean(access()[id]);"),
+            ("if(!access.formula)return; // unpaid click is intercepted by the live Monobank payment handler", "if(!("+gate+"))return; // unpaid click is intercepted by Monobank"),
+          ]
+          counts={}
+          for old,new in patterns:
+            counts[old[:45]]=s.count(old)
+            if old in s:s=s.replace(old,new)
+          print('REPLACEMENTS',counts)
+          assert sum(counts.values())>=3, 'Unexpected V323 source; aborting'
+          assert "const paid=()=>{try{return !!JSON.parse(localStorage.getItem('soul_paid_entitlements_v144_live')" not in s
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit test branch only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || (git commit -m "Close remaining formula localStorage gates in V323" && git push origin HEAD:language-testing)
