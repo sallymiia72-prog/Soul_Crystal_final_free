@@ -1,0 +1,81 @@
+name: Formula Worker payment contract (no real charges)
+on:
+  push:
+    branches: [language-testing]
+    paths: ['.github/workflows/formula-worker-contract-check.yml', 'cloudflare/worker.mjs']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  worker-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test Worker using mocked Monobank and private storage
+        run: |
+          cat > /tmp/test-worker.mjs <<'JS'
+          import assert from 'node:assert/strict';
+          import { pathToFileURL } from 'node:url';
+          import { resolve } from 'node:path';
+          const {default:worker}=await import(pathToFileURL(resolve('cloudflare/worker.mjs')));
+          const entries=new Map();
+          const KV={
+            async put(k,v){entries.set(k,JSON.parse(v))},
+            async get(k){return entries.get(k)||null}
+          };
+          let reference='', invoiceId='test_invoice_123456', tokenCalls=0;
+          const originalFetch=globalThis.fetch;
+          globalThis.fetch=async(url,opts={})=>{
+            if(String(url).includes('/invoice/create')){
+              tokenCalls++;
+              assert.equal(opts.headers['X-Token'],'fake-test-token');
+              const payload=JSON.parse(opts.body);
+              assert.equal(payload.amount,50000);
+              reference=payload.merchantPaymInfo.reference;
+              return Response.json({invoiceId,pageUrl:'https://pay.example.test/invoice'});
+            }
+            if(String(url).includes('/invoice/status')){
+              return Response.json({invoiceId,reference,status:'success',amount:50000,ccy:980});
+            }
+            throw Error('Unexpected fetch '+url);
+          };
+          const env={
+            MONO_TOKEN:'fake-test-token',
+            PAYMENT_SESSIONS:KV,
+            FORMULA_PRIVATE:{async get(key){return {body:new TextEncoder().encode('mock-'+key)}}},
+            ASSETS:{fetch:async()=>new Response('asset')}
+          };
+          const url='https://example.test';
+          const req=(path,options={})=>new Request(url+path,options);
+          const unauth=await worker.fetch(req('/api/entitlement/formula'),env);
+          assert.equal((await unauth.json()).paid,false);
+          const denied=await worker.fetch(req('/api/private/formula-audio/t0.mp3'),env);
+          assert.equal(denied.status,403);
+          const create=await worker.fetch(req('/api/payment',{method:'POST',headers:{'content-type':'application/json','origin':url},body:JSON.stringify({productId:'formula'})}),env);
+          assert.equal(create.status,200);
+          const claim=create.headers.get('set-cookie').split(';')[0];
+          assert.ok(claim.startsWith('sc_invoice_claim='));
+          assert.equal(tokenCalls,1);
+          const withoutClaim=await worker.fetch(req('/api/payment?invoiceId='+invoiceId),env);
+          assert.equal(withoutClaim.status,403);
+          const check=await worker.fetch(req('/api/payment?invoiceId='+invoiceId,{headers:{cookie:claim}}),env);
+          const result=await check.json();
+          assert.equal(result.paid,true);
+          assert.equal(result.productId,'formula');
+          const session=check.headers.get('set-cookie').split(';')[0];
+          const entitled=await worker.fetch(req('/api/entitlement/formula',{headers:{cookie:session}}),env);
+          assert.equal((await entitled.json()).paid,true);
+          const audio=await worker.fetch(req('/api/private/formula-audio/t0.mp3',{headers:{cookie:session}}),env);
+          assert.equal(audio.status,200);
+          assert.equal(await audio.text(),'mock-t0.mp3');
+          const other=await worker.fetch(req('/api/private/formula-audio/not-allowed.mp3',{headers:{cookie:session}}),env);
+          assert.equal(other.status,404);
+          const noKV=await worker.fetch(req('/api/payment',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({productId:'formula'})}),{...env,PAYMENT_SESSIONS:undefined});
+          assert.equal(noKV.status,503);
+          globalThis.fetch=originalFetch;
+          console.log('PASS: invoice, ownership, session, entitlement, private audio, missing KV');
+          JS
+          node /tmp/test-worker.mjs
