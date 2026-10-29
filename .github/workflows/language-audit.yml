@@ -6,6 +6,7 @@ on:
       - 'tests/language_audit.py'
       - 'tests/content_language_audit.py'
       - 'tests/locale_regressions.py'
+      - 'tests/patch_result_group_locale.py'
       - 'tests/activator_sections_audit.py'
       - 'tests/activator_journey_audit.py'
       - 'tests/patch_v277_language.py'
@@ -27,6 +28,7 @@ jobs:
       - run: pip install playwright==1.55.0
       - run: python -m playwright install --with-deps chromium
       - run: python tests/patch_v277_language.py
+      - run: python tests/patch_result_group_locale.py
       - run: TEST_HTML=index-language-fixed.html python tests/language_audit.py
       - run: TEST_HTML=index-language-fixed.html python tests/activator_sections_audit.py
       - run: TEST_HTML=index-language-fixed.html python tests/activator_journey_audit.py
