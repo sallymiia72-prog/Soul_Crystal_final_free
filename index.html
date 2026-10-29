@@ -19872,4 +19872,58 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  window.addEventListener('load',fix);
  setTimeout(fix,250);
 })();
+</script><style id="sc-screenshot-locale-style">
+@media(max-width:600px){
+.sc-main-group-tools button,.sc-main-group-tools [role="button"],.sc-main-group-tools .sc-activation-btn{box-sizing:border-box!important;max-width:100%!important}
+.sc-main-group-tools button{white-space:normal!important;overflow-wrap:anywhere!important;word-break:normal!important;line-height:1.16!important}
+}
+</style>
+<script id="sc-screenshot-locale-fix">
+(function(){
+const dict={
+"Нажимай на грани Кристалла, чтобы услышать их звучание.":{
+uk:"Натискай на грані Кристала, щоб почути їхнє звучання.",en:"Tap the Crystal facets to hear their sound."},
+"КРИСТАЛЬНАЯ МАНДАЛА":{uk:"КРИСТАЛІЧНА МАНДАЛА",en:"CRYSTALLINE MANDALA"},
+"Живая Мандала со звучанием":{uk:"Жива Мандала зі звучанням",en:"Living Mandala with Sound"},
+"Полный комплект мандал":{uk:"Повний комплект мандал",en:"Complete Mandala Set"},
+"ПРЕДНАЗНАЧЕНИЕ ДУШИ":{uk:"ПРИЗНАЧЕННЯ ДУШІ",en:"SOUL PURPOSE"},
+"РАСКРОЙ ПРЕДНАЗНАЧЕНИЕ СВОЕЙ ДУШИ":{uk:"РОЗКРИЙ ПРИЗНАЧЕННЯ СВОЄЇ ДУШІ",en:"DISCOVER YOUR SOUL PURPOSE"},
+"УЗНАЙ СВОЮ РОЛЬ В ОТНОШЕНИЯХ":{uk:"ДІЗНАЙСЯ ПРО СВОЮ РОЛЬ У СТОСУНКАХ",en:"DISCOVER YOUR ROLE IN RELATIONSHIPS"},
+"ОТКРОЙ ГЕОГРАФИЮ СВОЕЙ ДУШИ":{uk:"ВІДКРИЙ ГЕОГРАФІЮ СВОЄЇ ДУШІ",en:"EXPLORE YOUR SOUL GEOGRAPHY"},
+"АКТИВИРУЙ СВОЙ ЛИЧНЫЙ КРИСТАЛЛ ДУШИ":{uk:"АКТИВУЙ СВІЙ ОСОБИСТИЙ КРИСТАЛ ДУШІ",en:"ACTIVATE YOUR PERSONAL SOUL CRYSTAL"},
+"МЕДИТАЦИЯ «РАЗГОВОР С ДУШОЙ»":{uk:"МЕДИТАЦІЯ «РОЗМОВА З ДУШЕЮ»",en:"MEDITATION: CONVERSATION WITH THE SOUL"},
+"Введи дату рождения партнёра, чтобы узнать звёздное происхождение ваших Душ.":{uk:"Введи дату народження партнера, щоб дізнатися зоряне походження ваших Душ.",en:"Enter your partner's birth date to discover the stellar origins of your Souls."},
+"И всё это можно раскрыть, имея лишь один ключ — дату рождения человека.":{uk:"І все це можна розкрити, маючи лише один ключ — дату народження людини.",en:"All of this can be revealed with just one key — a person's date of birth."},
+"СВЕРНУТЬ ФУНКЦИИ":{uk:"ЗГОРНУТИ ФУНКЦІЇ",en:"COLLAPSE FEATURES"},
+"ПРОВЕРИТЬ":{uk:"ПЕРЕВІРИТИ",en:"CHECK"},
+"ВВЕДИ МЕСТО, КОТОРОЕ ХОЧЕШЬ ПРОВЕРИТЬ":{uk:"ВВЕДИ МІСЦЕ, ЯКЕ ХОЧЕШ ПЕРЕВІРИТИ",en:"ENTER A PLACE TO CHECK"}
+};
+const originals=Object.keys(dict).sort((a,b)=>b.length-a.length);
+const replacements=new Map();
+for(const original of originals){replacements.set(original,original);for(const v of Object.values(dict[original]))replacements.set(v,original);}
+function lang(){const a=document.querySelector('#soulLanguageSwitcher [data-lang].active,#soulLanguageSwitcher [data-lang][aria-pressed="true"]');return a?.getAttribute('data-lang')||window.SoulI18n?.language||'ru';}
+let busy=false;
+function repair(){
+ if(busy)return;busy=true;
+ try{
+ const l=lang();const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+ let n;while(n=walker.nextNode()){
+  const p=n.parentElement;if(!p||p.closest('script,style,textarea,option,svg'))continue;
+  const value=n.nodeValue;const trimmed=value.trim();if(!trimmed)continue;
+  let original=replacements.get(trimmed);
+  if(!original){for(const s of originals){if(trimmed.includes(s)){original=s;break;}}}
+  if(!original)continue;
+  const target=l==='ru'?original:(dict[original][l]||original);
+  let next;
+  if(trimmed===original||replacements.get(trimmed)===original)next=target;
+  else next=value.replace(original,target);
+  if(next!==value)n.nodeValue=next;
+ }
+ }finally{busy=false;}
+}
+let scheduled=false;
+function schedule(){if(scheduled)return;scheduled=true;setTimeout(()=>{scheduled=false;repair();},60);}
+const start=()=>{repair();new MutationObserver(schedule).observe(document.body,{subtree:true,childList:true,characterData:true});document.querySelector('#soulLanguageSwitcher')?.addEventListener('click',()=>{schedule();setTimeout(repair,500);},true);};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
 </script></body></html>
