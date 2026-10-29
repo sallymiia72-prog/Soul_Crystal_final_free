@@ -89,3 +89,5 @@ jobs:
           asyncio.run(main())
           PY
           python /tmp/check_v323.py
+
+# Verification after SC320 final override patch 07d037f
