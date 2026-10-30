@@ -108,10 +108,37 @@ Object.assign(dict,{
 "↑ COLLAPSE FUNCTIONS":{uk:"↑ ЗГОРНУТИ ФУНКЦІЇ",en:"↑ COLLAPSE FUNCTIONS"},
 "— показывает основную задачу yeara и каждого из 12 периодов.":{uk:"— показує головне завдання року та кожного з 12 періодів.",en:"— shows the main task for the year and each of its 12 periods."}
 });
+
+// Exact screenshot-confirmed source variants and fragments in independently rendered nodes.
+Object.assign(dict,{
+"ВВЕДИТЕ ДАТУ РОЖДЕНИЯ":{uk:"ВВЕДІТЬ ДАТУ НАРОДЖЕННЯ",en:"ENTER YOUR DATE OF BIRTH"},
+"Введіть дату народження":{uk:"Введіть дату народження",en:"Enter your date of birth"},
+"Введите дату рождения":{uk:"Введіть дату народження",en:"Enter your date of birth"},
+"и нажмите «Рассчитать».":{uk:"і натисніть «Розрахувати».",en:"and tap Calculate."},
+"Активатор рассчитает":{uk:"Активатор розрахує",en:"The Activator will calculate"},
+"Вибрационную матрицу":{uk:"Вібраційну матрицю",en:"the Vibrational Matrix"},
+"Ваши 12 энергетических аспектов Души по сферам реализации.":{uk:"ваші 12 енергетичних аспектів Душі за сферами реалізації.",en:"your Soul’s 12 energetic aspects across areas of realization."},
+"Нажимая на каждую кнопку, вы получите краткое описание своей энергии в соответствующей сфере.":{uk:"Натискаючи кожну кнопку, ви отримаєте короткий опис своєї енергії у відповідній сфері.",en:"Tap each button to see a brief description of your energy in the corresponding area."},
+"Полное описание доступно по кнопке под матрицей.":{uk:"Повний опис доступний за кнопкою під матрицею.",en:"The full description is available via the button below the matrix."},
+"УЗНАТЬ СВОЮ РОЛЬ В ОТНОШЕНИЯХ":{uk:"ДІЗНАЙСЯ ПРО СВОЮ РОЛЬ У СТОСУНКАХ",en:"DISCOVER YOUR ROLE IN RELATIONSHIPS"},
+"РАСКРОЙ ПРЕДНАЗНАЧЕНИЕ СВОЕЙ ДУШИ":{uk:"РОЗКРИЙ ПРИЗНАЧЕННЯ СВОЄЇ ДУШІ",en:"DISCOVER YOUR SOUL PURPOSE"},
+"УЗНАЙ ЗАДАЧУ ДУШИ НА ТЕКУЩИЙ ПЕРИОД":{uk:"ДІЗНАЙСЯ ПРО ЗАВДАННЯ ДУШІ НА ПОТОЧНИЙ ПЕРІОД",en:"DISCOVER YOUR SOUL’S TASK FOR THE CURRENT PERIOD"},
+"ОТКРОЙ ГЕОГРАФИЮ СВОЕЙ ДУШИ":{uk:"ВІДКРИЙ ГЕОГРАФІЮ СВОЄЇ ДУШІ",en:"EXPLORE YOUR SOUL GEOGRAPHY"},
+"— показывает особенности взаимодействия двух Душ и задачу их союза.":{uk:"— показує особливості взаємодії двох Душ і завдання їхнього союзу.",en:"— shows how two Souls interact and the purpose of their union."},
+"— показывает основную задачу года и каждого из 12 периодов.":{uk:"— показує головне завдання року та кожного з 12 періодів.",en:"— shows the main task for the year and each of its 12 periods."},
+"И всё это можно раскрыть, имея лишь один ключ —":{uk:"І все це можна розкрити, маючи лише один ключ —",en:"All of this can be revealed with just one key —"},
+"дату народження людини.":{uk:"дату народження людини.",en:"a person’s date of birth."},
+"Я не создаю для человека новую личность.":{uk:"Я не створюю для людини нову особистість.",en:"I do not create a new personality for a person."},
+"Я помогаю ему увидеть, почувствовать и проявить ту уникальность, которая уже заложена в нём.":{uk:"Я допомагаю їй побачити, відчути та проявити унікальність, яка вже закладена в ній.",en:"I help them see, feel, and express the uniqueness already within them."},
+"Я не создаю для человека новую личность. Я помогаю ему увидеть, почувствовать и проявить ту уникальность, которая уже заложена в нём.":{uk:"Я не створюю для людини нову особистість. Я допомагаю їй побачити, відчути та проявити унікальність, яка вже закладена в ній.",en:"I do not create a new personality for a person. I help them see, feel, and express the uniqueness already within them."},
+"Твоё предназначение проявится после расчёта.":{uk:"Твоє призначення проявиться після розрахунку.",en:"Your Soul purpose will appear after calculation."},
+"ПРЕДНАЗНАЧЕНИЕ ДУШИ":{uk:"ПРИЗНАЧЕННЯ ДУШІ",en:"SOUL PURPOSE"},
+"In the full version, you receive an interpretation of your individual energies to understand what can guide you on the path of fulfilling your Soul purpose, together with an activation meditation for attunement with your Soul Crystal and for initiating the process of realization.":{uk:"У повній версії ви отримаєте тлумачення своїх індивідуальних енергій і медитацію активації для співналаштування з Кристалом Душі та початку реалізації призначення.",en:"In the full version, you receive an interpretation of your individual energies and an activation meditation to attune to your Soul Crystal and begin fulfilling your purpose."}
+});
 const originals=Object.keys(dict).sort((a,b)=>b.length-a.length);
 const replacements=new Map();
 for(const original of originals){replacements.set(original,original);for(const v of Object.values(dict[original]))replacements.set(v,original);}
-function lang(){const a=document.querySelector('#soulLanguageSwitcher [data-lang].active,#soulLanguageSwitcher [data-lang][aria-pressed="true"],#soulLanguageSwitcher [data-lang][aria-selected="true"]');return a?.getAttribute('data-lang')||window.SoulI18n?.language||'ru';}
+function lang(){const a=document.querySelector('#soulLanguageSwitcher [data-lang].active,#soulLanguageSwitcher [data-lang][aria-pressed="true"],#soulLanguageSwitcher [data-lang][aria-selected="true"]');const raw=a?.getAttribute('data-lang')||window.SoulI18n?.language||'ru';return raw==='ua'?'uk':raw;}
 let busy=false;
 function repair(){
  if(busy)return;busy=true;
