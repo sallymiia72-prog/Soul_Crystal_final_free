@@ -26,8 +26,8 @@ with sync_playwright() as p:
   diagnostic=page.evaluate("""() => ({selected:document.querySelector('#soulLanguageSwitcher [data-lang].active')?.outerHTML,language:window.SoulI18n?.language,groups:[...document.querySelectorAll('.sc-main-group-info,.sc-main-group-tools')].map(e=>({html:e.outerHTML.slice(0,900),text:e.textContent.trim(),visible:!!e.getClientRects().length}))})""")
   # Fail on screenshot-confirmed untranslated phrases in rendered text.
   visible_text=page.evaluate("""() => [...document.querySelectorAll('body *')].filter(e=>e.getClientRects().length && !e.children.length && !e.closest('script,style')).map(e=>e.textContent||'').join(' ')""")
-  forbidden={'uk':['ВВЕДИТЕ ДАТУ РОЖДЕНИЯ','Нажимая на каждую кнопку','Полное описание доступно','Я не создаю для человека','All of this can be revealed'],
-             'en':['ВВЕДИТЕ ДАТУ РОЖДЕНИЯ','РАСЧЁТ ВИБРАЦИОННОЙ МАТРИЦЫ','Нажимая на каждую кнопку','Полное описание доступно','УЗНАТЬ СВОЮ РОЛЬ В ОТНОШЕНИЯХ']} .get(lang,[])
+  forbidden={'uk':['ВВЕДИТЕ ДАТУ РОЖДЕНИЯ','Нажимая на каждую кнопку','Полное описание доступно','Я не создаю для человека','All of this can be revealed','ПРЕДНАЗНАЧЕНИЕ ДУШИ','Твоё предназначение проявится после расчёта','In the full version, you receive','РАСКРОЙ ПРЕДНАЗНАЧЕНИЕ','УЗНАЙ СВОЮ РОЛЬ В ОТНОШЕНИЯХ','УЗНАЙ ЗАДАЧУ ДУШИ','ОТКРОЙ ГЕОГРАФИЮ'],
+             'en':['ВВЕДИТЕ ДАТУ РОЖДЕНИЯ','РАСЧЁТ ВИБРАЦИОННОЙ МАТРИЦЫ','Нажимая на каждую кнопку','Полное описание доступно','УЗНАТЬ СВОЮ РОЛЬ В ОТНОШЕНИЯХ','ПРЕДНАЗНАЧЕНИЕ ДУШИ','Твоё предназначение проявится после расчёта','РАСКРОЙ ПРЕДНАЗНАЧЕНИЕ','УЗНАЙ ЗАДАЧУ ДУШИ']} .get(lang,[])
   leaks=[x for x in forbidden if x in visible_text]
   assert not leaks, f'Screenshot-confirmed locale leakage {lang}: {leaks}'
   report.append({'language':lang,'labels':labels,'diagnostic':diagnostic})
