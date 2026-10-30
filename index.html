@@ -19953,6 +19953,20 @@ Object.assign(dict,{
 "Дату народження людини.":{uk:"дату народження людини.",en:"a person's date of birth."},
 "In the full version, you receive an interpretation of your individual energies to understand what can guide you on the path of fulfilling your Soul purpose, together with an activation meditation for attunement with your Soul Crystal and for initiating the process of realization.":{uk:"У повній версії ви отримаєте тлумачення індивідуальних енергій та медитацію активації для співналаштування з Кристалом Душі й початку реалізації призначення.",en:"In the full version, you receive an interpretation of your individual energies and an activation meditation to attune to your Soul Crystal and begin fulfilling your purpose."}
 });
+// Restore complete locale coverage for screenshot-confirmed sections.
+Object.assign(dict,{
+"БЛОК ИНФОРМАЦИИ":{uk:"БЛОК ІНФОРМАЦІЇ",en:"INFORMATION SECTION"},
+"БЛОК АКТИВАЦИИ":{uk:"БЛОК АКТИВАЦІЇ",en:"ACTIVATION SECTION"},
+"1. РАСЧЁТ ВИБРАЦИОННОЙ МАТРИЦЫ":{uk:"1. РОЗРАХУНОК ВІБРАЦІЙНОЇ МАТРИЦІ",en:"1. VIBRATIONAL MATRIX CALCULATION"},
+"Enter your date of birth и нажмите «Рассчитать». Активатор рассчитает Вибрационную матрицу — Ваши 12 энергетических аспектов Души по сферам реализации.":{uk:"Введіть дату народження та натисніть «Розрахувати». Активатор розрахує Вібраційну матрицю — ваші 12 енергетичних аспектів Душі за сферами реалізації.",en:"Enter your date of birth and select Calculate. The Activator calculates your Vibrational Matrix — your Soul’s 12 energetic aspects across areas of realization."},
+"Существует три разновидности партнёрства:":{uk:"Існує три різновиди партнерства:",en:"There are three types of partnership:"},
+"КАРМИЧЕСКИЕ ПАРТНЁРЫ":{uk:"КАРМІЧНІ ПАРТНЕРИ",en:"KARMIC PARTNERS"},
+"РОДСТВЕННЫЕ ДУШИ":{uk:"СПОРІДНЕНІ ДУШІ",en:"KINDRED SOULS"},
+"БЛИЗНЕЦОВЫЕ ПЛАМЁНА":{uk:"БЛИЗНЮКОВІ ПОЛУМ’Я",en:"TWIN FLAMES"},
+"Введи дату рождения партнёра, чтобы узнать звёздное происхождение ваших Душ.":{uk:"Введи дату народження партнера, щоб дізнатися зоряне походження ваших Душ.",en:"Enter your partner’s birth date to discover your Souls’ stellar origins."},
+"Дата рождения партнёра":{uk:"Дата народження партнера",en:"Partner’s date of birth"},
+"ВВЕДИТЕ ДАТУ РОЖДЕНИЯ":{uk:"ВВЕДІТЬ ДАТУ НАРОДЖЕННЯ",en:"ENTER YOUR DATE OF BIRTH"}
+});
 const originals=Object.keys(dict).sort((a,b)=>b.length-a.length);
 const replacements=new Map();
 for(const original of originals){replacements.set(original,original);for(const v of Object.values(dict[original]))replacements.set(v,original);}
