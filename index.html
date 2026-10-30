@@ -19914,6 +19914,12 @@ Object.assign(dict,{
 "— показывает основную задачу yeara и каждого из 12 периодов.":{uk:"— показує головне завдання року та кожного з 12 періодів.",en:"— shows the main task for the year and each of its 12 periods."}
 });
 
+// Complete text-node translations: no partial sentence replacement.
+Object.assign(dict,{
+"И всё это можно раскрыть, имея лишь один ключ — дату рождения человека.":{uk:"І все це можна розкрити, маючи лише один ключ — дату народження людини.",en:"All of this can be revealed with just one key — a person's date of birth."},
+"Я не создаю для человека новую личность. Я помогаю ему увидеть, почувствовать и проявить ту уникальность, которая уже заложена в нём.":{uk:"Я не створюю для людини нову особистість. Я допомагаю їй побачити, відчути та проявити унікальність, яка вже закладена в ній.",en:"I do not create a new personality for a person. I help them see, feel, and express the uniqueness already within them."},
+"Enter your date of birth и нажмите «Рассчитать». Активатор рассчитает Вибрационную матрицу — Ваши 12 энергетических аспектов Души по сферам реализации.":{uk:"Введіть дату народження та натисніть «Розрахувати». Активатор розрахує Вібраційну матрицю — ваші 12 енергетичних аспектів Душі за сферами реалізації.",en:"Enter your date of birth and select Calculate. The Activator calculates your Vibrational Matrix — your Soul’s 12 energetic aspects across areas of realization."}
+});
 // Exact screenshot-confirmed source variants and fragments in independently rendered nodes.
 Object.assign(dict,{
 "ВВЕДИТЕ ДАТУ РОЖДЕНИЯ":{uk:"ВВЕДІТЬ ДАТУ НАРОДЖЕННЯ",en:"ENTER YOUR DATE OF BIRTH"},
@@ -19980,13 +19986,13 @@ function repair(){
   const p=n.parentElement;if(!p||p.closest('script,style,textarea,option,svg'))continue;
   const value=n.nodeValue;const trimmed=value.trim();if(!trimmed)continue;
   let original=replacements.get(trimmed);
-  if(!original){for(const s of originals){if(trimmed.includes(s)){original=s;break;}}}
-  if(!original){for(const [variant,source] of replacements){if(variant.length>18&&trimmed.includes(variant)){original=source;break;}}}
+  // Only replace a complete text node. Partial substitutions previously
+  // produced mixed-language sentences and changed unrelated dynamic content.
   if(!original)continue;
   const target=l==='ru'?original:(dict[original][l]||original);
-  let next;
-  if(trimmed===original||replacements.get(trimmed)===original)next=target;
-  else {let found=original;for(const [variant,source] of replacements){if(source===original&&value.includes(variant)){found=variant;break;}}next=value.replace(found,target);}
+  const leading=value.match(/^\\s*/)?.[0]||'';
+  const trailing=value.match(/\\s*$/)?.[0]||'';
+  const next=leading+target+trailing;
   if(next!==value)n.nodeValue=next;
  }
  }finally{busy=false;}
