@@ -19940,6 +19940,19 @@ Object.assign(dict,{
 "ПРЕДНАЗНАЧЕНИЕ ДУШИ":{uk:"ПРИЗНАЧЕННЯ ДУШІ",en:"SOUL PURPOSE"},
 "In the full version, you receive an interpretation of your individual energies to understand what can guide you on the path of fulfilling your Soul purpose, together with an activation meditation for attunement with your Soul Crystal and for initiating the process of realization.":{uk:"У повній версії ви отримаєте тлумачення своїх індивідуальних енергій і медитацію активації для співналаштування з Кристалом Душі та початку реалізації призначення.",en:"In the full version, you receive an interpretation of your individual energies and an activation meditation to attune to your Soul Crystal and begin fulfilling your purpose."}
 });
+// Correct actual visible text, including independently rendered content and mixed-language nodes.
+Object.assign(dict,{
+"ВВЕДИТЕ ДАТУ РОЖДЕНИЯ":{uk:"ВВЕДІТЬ ДАТУ НАРОДЖЕННЯ",en:"ENTER YOUR DATE OF BIRTH"},
+"ПРЕДНАЗНАЧЕНИЕ ДУШИ":{uk:"ПРИЗНАЧЕННЯ ДУШІ",en:"SOUL PURPOSE"},
+"Твоё предназначение проявится после расчёта.":{uk:"Твоє призначення з’явиться після розрахунку.",en:"Your Soul purpose will appear after calculation."},
+"УЗНАЙ СВОЮ РОЛЬ В ОТНОШЕНИЯХ":{uk:"ДІЗНАЙСЯ ПРО СВОЮ РОЛЬ У СТОСУНКАХ",en:"DISCOVER YOUR ROLE IN RELATIONSHIPS"},
+"РАСКРОЙ ПРЕДНАЗНАЧЕНИЕ СВОЕЙ ДУШИ":{uk:"РОЗКРИЙ ПРИЗНАЧЕННЯ СВОЄЇ ДУШІ",en:"DISCOVER YOUR SOUL PURPOSE"},
+"УЗНАЙ ЗАДАЧУ ДУШИ НА ТЕКУЩИЙ ПЕРИОД":{uk:"ДІЗНАЙСЯ ПРО ЗАВДАННЯ ДУШІ НА ПОТОЧНИЙ ПЕРІОД",en:"DISCOVER YOUR SOUL’S TASK FOR THE CURRENT PERIOD"},
+"ОТКРОЙ ГЕОГРАФИЮ СВОЕЙ ДУШИ":{uk:"ВІДКРИЙ ГЕОГРАФІЮ СВОЄЇ ДУШІ",en:"EXPLORE YOUR SOUL GEOGRAPHY"},
+"ВВЕДИТЕ ДАТУ РОЖДЕНИЯ":{uk:"ВВЕДІТЬ ДАТУ НАРОДЖЕННЯ",en:"ENTER YOUR DATE OF BIRTH"},
+"Дату народження людини.":{uk:"дату народження людини.",en:"a person's date of birth."},
+"In the full version, you receive an interpretation of your individual energies to understand what can guide you on the path of fulfilling your Soul purpose, together with an activation meditation for attunement with your Soul Crystal and for initiating the process of realization.":{uk:"У повній версії ви отримаєте тлумачення індивідуальних енергій та медитацію активації для співналаштування з Кристалом Душі й початку реалізації призначення.",en:"In the full version, you receive an interpretation of your individual energies and an activation meditation to attune to your Soul Crystal and begin fulfilling your purpose."}
+});
 const originals=Object.keys(dict).sort((a,b)=>b.length-a.length);
 const replacements=new Map();
 for(const original of originals){replacements.set(original,original);for(const v of Object.values(dict[original]))replacements.set(v,original);}
@@ -19954,11 +19967,12 @@ function repair(){
   const value=n.nodeValue;const trimmed=value.trim();if(!trimmed)continue;
   let original=replacements.get(trimmed);
   if(!original){for(const s of originals){if(trimmed.includes(s)){original=s;break;}}}
+  if(!original){for(const [variant,source] of replacements){if(variant.length>18&&trimmed.includes(variant)){original=source;break;}}}
   if(!original)continue;
   const target=l==='ru'?original:(dict[original][l]||original);
   let next;
   if(trimmed===original||replacements.get(trimmed)===original)next=target;
-  else next=value.replace(original,target);
+  else {let found=original;for(const [variant,source] of replacements){if(source===original&&value.includes(variant)){found=variant;break;}}next=value.replace(found,target);}
   if(next!==value)n.nodeValue=next;
  }
  }finally{busy=false;}
