@@ -3,6 +3,7 @@ const MONO_API = "https://api.monobank.ua/api/merchant";
 
 const PRODUCTS = Object.freeze({
   solar: { code: "SOLAR", amount: 50000, name: "Соляр Душі — 12 місяців", displayPrice: "10 €" },
+  meditation: { code: "MEDITATION", amount: 50000, name: "Медитація «Розмова з Душею»", displayPrice: "10 €" },
   formula: { code: "FORMULA", amount: 50000, name: "Повне розшифрування 12 енергій / Вібраційний код Душі", displayPrice: "10 €" },
   higher: { code: "HIGHER", amount: 50000, name: "Вище Я — розшифрування та активація", displayPrice: "10 €" },
   geography: { code: "GEOGRAPHY", amount: 25000, name: "Географія Душі — найкраще місце на поточний період", displayPrice: "5 €" },
