@@ -8623,7 +8623,7 @@ shell.style.setProperty("--day-rgb",rgb);
 <p class="solar-year-copy" id="solarYearCopy"></p>
 <div class="solar-periods-offer-card">
 <button aria-label="Запустить часы двенадцати месяцев" class="solar-year-clock" id="solarYearClock" type="button"><span aria-hidden="true" class="solar-clock-face"></span><span class="solar-clock-number n12">12</span><span class="solar-clock-number n3">3</span><span class="solar-clock-number n6">6</span><span class="solar-clock-number n9">9</span><span aria-hidden="true" class="solar-clock-hand"></span></button>
-<div class="solar-periods-offer-title">ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 MONTHS</div>
+<div class="solar-periods-offer-title">ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 МЕСЯЦЕВ</div>
 <p>Each period reveals its energy, task, opportunities, key accents, recommendation, and focus.</p>
 <button class="solar-year-buy" id="solarYearBuy" type="button">ОТКРЫТЬ ВСЕ 12 ПЕРИОДОВ · 10 €</button>
 <div class="solar-author-hint">Режим автора: кнопка раскрывает весь платный блок без оплаты</div>
@@ -9177,7 +9177,7 @@ function renderEnergyOfDay(){
 }
 
 const SOLAR_YEAR_SHORT={
-  1:"This period brings a new impulse, stronger inner support, and an active beginning. It is important to act more boldly and turn intentions into concrete steps.",
+  1:"Этот период приносит новый импульс, укрепляет внутреннюю опору и открывает время активных начинаний. Важно действовать смелее и превращать намерения в конкретные шаги.",
   2:"Этот период раскрывает взаимодействие, отношения и обмен. Результат приходит через сотрудничество, чувствительность и умение создавать взаимную поддержку.",
   3:"Этот период связан со знаниями, обучением и расширением понимания. Хорошее время для систематизации опыта и передачи того, что уже стало твоей силой.",
   4:"Этот период несёт вдохновение и обновление. Важно замечать новые идеи и давать творческому импульсу форму в реальных делах.",
@@ -9701,7 +9701,7 @@ function renderSolarYear(day,month){
   const solarEnglish=solarIsEn(),solarUkrainian=solarIsUk();
   const solarLabels=[
     [".solar-cover-kicker","SOUL SOLAR","СОЛЯР ДУШІ","СОЛЯР ДУШИ"],
-    [".solar-periods-offer-title","YOUR PERSONAL 12-MONTH PATH","ПЕРСОНАЛЬНИЙ МАРШРУТ НА 12 МІСЯЦІВ","ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 MONTHS"],
+    [".solar-periods-offer-title","YOUR PERSONAL 12-MONTH PATH","ПЕРСОНАЛЬНИЙ МАРШРУТ НА 12 МІСЯЦІВ","ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 МЕСЯЦЕВ"],
     ["#solarYearBuy","UNLOCK ALL 12 PERIODS · €10","ВІДКРИТИ ВСІ 12 ПЕРІОДІВ · 10 €","ОТКРЫТЬ ВСЕ 12 ПЕРИОДОВ · 10 €"],
     [".life-cycle-kicker","YOUR GREATER LIFE PATH","ТВІЙ ВЕЛИКИЙ ЖИТТЄВИЙ МАРШРУТ","ТВОЙ БОЛЬШОЙ ЖИЗНЕННЫЙ МАРШРУТ"],
     [".life-cycle-title","12-YEAR CYCLE","12-РІЧНИЙ ЦИКЛ","12-ЛЕТНИЙ ЦИКЛ"],
@@ -10855,7 +10855,7 @@ function solarPdfCover(day,month,s){
   ctx.textAlign='center';ctx.fillStyle='#a87922';ctx.font='700 24px Arial, sans-serif';ctx.fillText(uk?'КРИСТАЛ ДУШІ':'КРИСТАЛЛ ДУШИ',450,100);
   solarPdfDrawCrystal(ctx,450,225,.82);
   ctx.fillStyle='#2d2740';ctx.font='900 56px Arial, sans-serif';ctx.fillText(uk?'СОЛЯР ДУШІ':'СОЛЯР ДУШИ',450,370);
-  ctx.fillStyle='#7e5d20';ctx.font='700 23px Arial, sans-serif';ctx.fillText(uk?'ПЕРСОНАЛЬНИЙ МАРШРУТ НА 12 МІСЯЦІВ':'ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 MONTHS',450,414);
+  ctx.fillStyle='#7e5d20';ctx.font='700 23px Arial, sans-serif';ctx.fillText(uk?'ПЕРСОНАЛЬНИЙ МАРШРУТ НА 12 МІСЯЦІВ':'ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 МЕСЯЦЕВ',450,414);
   ctx.strokeStyle='rgba(181,133,34,.55)';ctx.beginPath();ctx.moveTo(190,445);ctx.lineTo(710,445);ctx.stroke();
   ctx.fillStyle='#352f43';ctx.font='800 28px Arial, sans-serif';ctx.fillText(solarPeriodText(day,month,s.startYear,s.endYear),450,497);
   ctx.fillStyle=e.hex;ctx.font='900 42px Arial, sans-serif';ctx.fillText(`${s.value} — ${solarTr(e.name)}`,450,552);
@@ -12187,7 +12187,7 @@ if(downloadSoulAmulet) downloadSoulAmulet.addEventListener("click",downloadPurpo
     "Краткая характеристика":"Коротка характеристика",
     "Рекомендуемые камни и минералы":"Рекомендовані камені й мінерали",
     "Цвет, камни и минералы":"Колір, камені й мінерали",
-    "ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 MONTHS":"ПЕРСОНАЛЬНИЙ МАРШРУТ НА 12 МІСЯЦІВ",
+    "ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 МЕСЯЦЕВ":"ПЕРСОНАЛЬНИЙ МАРШРУТ НА 12 МІСЯЦІВ",
     "Each period reveals its energy, task, opportunities, key accents, recommendation, and focus.":"Кожен період розкриває свою енергію, завдання, можливості, важливі акценти, рекомендацію та фокус.",
     "Режим автора: кнопка раскрывает весь платный блок без оплаты":"Режим авторки: кнопка відкриває весь платний блок без оплати",
     "РЕЖИМ АВТОРА · ВСЕ ПЕРИОДЫ ОТКРЫТЫ":"РЕЖИМ АВТОРКИ · УСІ ПЕРІОДИ ВІДКРИТО",
@@ -12931,7 +12931,7 @@ if(downloadSoulAmulet) downloadSoulAmulet.addEventListener("click",downloadPurpo
   const CERT_UK={
     "ЛИЧНЫЙ КРИСТАЛЛ ДУШИ":"ОСОБИСТИЙ КРИСТАЛ ДУШІ","ФОРМУЛА ДУШИ":"ФОРМУЛА ДУШІ","ТВОЁ ВЫСШЕЕ Я":"ТВОЄ ВИЩЕ Я","ВЫСШЕЕ Я":"ВИЩЕ Я",
     "СОДЕРЖАНИЕ":"ЗМІСТ","ВИБРАЦИОННАЯ МАТРИЦА":"ВІБРАЦІЙНА МАТРИЦЯ","Дата рождения":"Дата народження","ДУХОВНЫЙ УРОВЕНЬ":"ДУХОВНИЙ РІВЕНЬ","МЕНТАЛЬНЫЙ УРОВЕНЬ":"МЕНТАЛЬНИЙ РІВЕНЬ","ЭМОЦИОНАЛЬНЫЙ УРОВЕНЬ":"ЕМОЦІЙНИЙ РІВЕНЬ","ФИЗИЧЕСКИЙ УРОВЕНЬ":"ФІЗИЧНИЙ РІВЕНЬ","12 СФЕР РЕАЛИЗАЦИИ":"12 СФЕР РЕАЛІЗАЦІЇ",
-    "ПРЕДНАЗНАЧЕНИЕ ТЕКУЩЕГО ЦИКЛА":"ПРИЗНАЧЕННЯ ПОТОЧНОГО ЦИКЛУ","ПРЕДНАЗНАЧЕНИЕ ТЕКУЩЕГО ГОДА":"ПРИЗНАЧЕННЯ ПОТОЧНОГО РОКУ","12 ЛЕТ ПОМОГАЮТ РАСКРЫТЬ ГЛАВНУЮ ЭНЕРГИЮ И ЗАДАЧИ ПЕРИОДА":"12 РОКІВ ДОПОМАГАЮТЬ РОЗКРИТИ ГОЛОВНУ ЕНЕРГІЮ Й ЗАВДАННЯ ПЕРІОДУ","12 MONTHS РАСКРЫВАЮТ ГЛАВНУЮ ЭНЕРГИЮ ГОДА":"12 МІСЯЦІВ РОЗКРИВАЮТЬ ГОЛОВНУ ЕНЕРГІЮ РОКУ",
+    "ПРЕДНАЗНАЧЕНИЕ ТЕКУЩЕГО ЦИКЛА":"ПРИЗНАЧЕННЯ ПОТОЧНОГО ЦИКЛУ","ПРЕДНАЗНАЧЕНИЕ ТЕКУЩЕГО ГОДА":"ПРИЗНАЧЕННЯ ПОТОЧНОГО РОКУ","12 ЛЕТ ПОМОГАЮТ РАСКРЫТЬ ГЛАВНУЮ ЭНЕРГИЮ И ЗАДАЧИ ПЕРИОДА":"12 РОКІВ ДОПОМАГАЮТЬ РОЗКРИТИ ГОЛОВНУ ЕНЕРГІЮ Й ЗАВДАННЯ ПЕРІОДУ","12 МЕСЯЦЕВ РАСКРЫВАЮТ ГЛАВНУЮ ЭНЕРГИЮ ГОДА":"12 МІСЯЦІВ РОЗКРИВАЮТЬ ГОЛОВНУ ЕНЕРГІЮ РОКУ",
     "ГЛАВНОЕ ЗНАЧЕНИЕ":"ГОЛОВНЕ ЗНАЧЕННЯ","ЗА ЧТО ОТВЕЧАЕТ":"ЗА ЩО ВІДПОВІДАЄ","КАК ПРОЯВЛЯЕТСЯ КОНТАКТ":"ЯК ПРОЯВЛЯЄТЬСЯ КОНТАКТ","ИМЯ БОГА":"ІМ’Я БОГА","КЛЮЧ ИМЕНИ":"КЛЮЧ ІМЕНІ","РЕКОМЕНДАЦИИ":"РЕКОМЕНДАЦІЇ","АФФИРМАЦИЯ":"АФІРМАЦІЯ","МЕДИТАЦИЯ НА ИМЯ БОГА":"МЕДИТАЦІЯ НА ІМ’Я БОГА",
     "АКТИВАЦИЯ ЭНЕРГИИ":"АКТИВАЦІЯ ЕНЕРГІЇ","СИЛЬНЫЕ СТОРОНЫ":"СИЛЬНІ СТОРОНИ","ТЕНЕВЫЕ ПРОЯВЛЕНИЯ":"ТІНЬОВІ ПРОЯВИ","КАК РАСКРЫТЬ ЭТУ ЭНЕРГИЮ":"ЯК РОЗКРИТИ ЦЮ ЕНЕРГІЮ","ПРАКТИКА":"ПРАКТИКА","КАМНИ И МИНЕРАЛЫ":"КАМЕНІ Й МІНЕРАЛИ",
     "КАКОЕ КАЧЕСТВО РАСКРЫВАЕТСЯ":"ЯКА ЯКІСТЬ РОЗКРИВАЄТЬСЯ","ЭНЕРГИЯ ГОДА":"ЕНЕРГІЯ РОКУ","ЗАДАЧА ГОДА":"ЗАВДАННЯ РОКУ","ВОЗМОЖНОСТИ":"МОЖЛИВОСТІ","ОБРАТИ ВНИМАНИЕ":"ЗВЕРНИ УВАГУ","РЕКОМЕНДАЦИЯ":"РЕКОМЕНДАЦІЯ","К КАКОМУ РЕЗУЛЬТАТУ НУЖНО ПРИЙТИ":"ДО ЯКОГО РЕЗУЛЬТАТУ ПОТРІБНО ПРИЙТИ","АСПЕКТ ПРЕДНАЗНАЧЕНИЯ":"АСПЕКТ ПРИЗНАЧЕННЯ"
@@ -15504,7 +15504,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
    // Purpose: the legacy preview modal must never be used by a client.
    const pbtn=document.getElementById('purposeSoulBuy');
    const pc=document.getElementById('purposePaidContentV2');
-   if(pbtn){pbtn.onclick=null;pbtn.textContent=document.documentElement.lang==='uk'?'ОТРИМАТИ ПОВНЕ РОЗШИФРУВАННЯ · 20 €':'ПОЛУЧИТЬ ПОЛНУЮ РАСШИФРОВКУ · 20 €';}
+   if(pbtn){pbtn.onclick=null;pbtn.textContent=document.documentElement.lang==='uk'?'ОТРИМАТИ ПОВНЕ РОЗШИФРУВАННЯ · 10 €':'ПОЛУЧИТЬ ПОЛНУЮ РАСШИФРОВКУ · 10 €';}
    if(pc)pc.hidden=!paid('formula');
    // Matrix report must not exist visibly before a verified formula entitlement.
    const mr=document.getElementById('matrixCanonicalReport');
@@ -16808,7 +16808,7 @@ html.sc-article-reading #dayEnergyShell{display:none!important}
    const h=document.querySelector('#v72CodeActivationContent .host .sc-act-head h3');if(h)h.textContent=c.med;
    const intro=document.querySelector('#v72CodeActivationContent .v144-meditation-intro');if(intro)intro.textContent=c.intro;
    const b=document.getElementById('v144CodePay');if(b)b.textContent=c.pay;
-   const crystalPay=document.getElementById('scwPayBtn');if(crystalPay)crystalPay.textContent=document.documentElement.lang==='en'?'GET THE FULL INTERPRETATION · €20':isUk()?'ОТРИМАТИ ПОВНЕ РОЗШИФРУВАННЯ · 20 €':'ПОЛУЧИТЬ ПОЛНУЮ РАСШИФРОВКУ · 20 €';
+   const crystalPay=document.getElementById('scwPayBtn');if(crystalPay)crystalPay.textContent=document.documentElement.lang==='en'?'GET THE FULL INTERPRETATION · €20':isUk()?'ОТРИМАТИ ПОВНЕ РОЗШИФРУВАННЯ · 10 €':'ПОЛУЧИТЬ ПОЛНУЮ РАСШИФРОВКУ · 10 €';
  }
  function syncVisual(){
    const src=document.getElementById('formulaDynamicSvg'),wrap=document.querySelector('#v72CodeActivationContent .dynamic-code');if(!src||!wrap)return;
@@ -17307,7 +17307,7 @@ html.sc-article-reading #dayEnergyShell{display:none!important}
   "Дата рождения партнёра":"Partner’s Date of Birth",
   "ОПРЕДЕЛИТЬ РОДСТВО ДУШ":"DISCOVER SOUL KINSHIP",
   "СОЛЯР ДУШИ":"SOUL SOLAR",
-  "ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 MONTHS":"YOUR PERSONAL 12-MONTH PATH",
+  "ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 МЕСЯЦЕВ":"YOUR PERSONAL 12-MONTH PATH",
   "ОТКРЫТЬ ВСЕ 12 ПЕРИОДОВ · 10 €":"UNLOCK ALL 12 PERIODS · €10",
   "СОХРАНИТЬ МОЙ СОЛЯР В PDF":"SAVE MY SOUL SOLAR AS PDF",
   "ТВОЙ БОЛЬШОЙ ЖИЗНЕННЫЙ МАРШРУТ":"YOUR GREATER LIFE PATH",
@@ -19825,4 +19825,105 @@ function apply(){
 function boot(){apply();document.addEventListener('click',function(e){if(e.target.closest('[data-lang],[data-language],.lang-switch,.language-switch,.sc-lang-switch,.lang-btn,.sc-lang-btn')){setTimeout(apply,80);setTimeout(apply,350);setTimeout(apply,850);}},true);setInterval(apply,1600);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
-</script></body></html>
+</script>
+<script id="sc-purpose-offer-language-fix-20261102">
+(function(){
+'use strict';
+const translations={
+ ru:'В полной версии ты получаешь расшифровку своих индивидуальных энергий, чтобы понять, что может направлять тебя на пути реализации предназначения Души, а также активационную медитацию для сонастройки с Кристаллом Души и запуска процесса реализации.',
+ ua:'У повній версії ти отримуєш розшифрування своїх індивідуальних енергій, щоб зрозуміти, що може спрямовувати тебе на шляху реалізації призначення Душі, а також активаційну медитацію для співналаштування з Кристалом Душі та початку процесу реалізації.',
+ en:'In the full version, you receive an interpretation of your individual energies to understand what can guide you on the path of fulfilling your Soul purpose, together with an activation meditation for attunement with your Soul Crystal and for initiating the process of realization.'
+};
+function language(){const active=document.querySelector('#soulLanguageSwitcher button.active[data-lang]');const code=(active?.dataset.lang||document.documentElement.lang||'ru').toLowerCase();return code==='uk'||code==='ua'?'ua':code.startsWith('en')?'en':'ru';}
+function apply(){const p=document.querySelector('.purpose-offer p');if(!p)return;const value=translations[language()];if(p.textContent.trim()!==value)p.textContent=value;}
+function boot(){apply();const sw=document.getElementById('soulLanguageSwitcher');if(sw){sw.addEventListener('click',()=>{setTimeout(apply,0);setTimeout(apply,120);setTimeout(apply,500);});new MutationObserver(apply).observe(sw,{attributes:true,subtree:true,attributeFilter:['class']});}new MutationObserver(apply).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
+<script id="sc-20261102-locale-and-client-gate">
+(()=>{
+const strings={
+ru:{geo:'Выбери точку на Земле — где ты находишься сейчас или куда хотел бы отправиться. Активатор определит дом меридиана и покажет, какая энергия твоей Души активируется в этом месте.',hint:'ВВЕДИ МЕСТО, КОТОРОЕ ХОЧЕШЬ ПРОВЕРИТЬ',placeholder:'Например: Санремо, Ницца, Майами…',check:'ПРОВЕРИТЬ',best:'УЗНАТЬ ЛУЧШЕЕ МЕСТО НА ТЕКУЩИЙ ПЕРИОД · 5 €',clock:'12 МЕСЯЦЕВ',route:'ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 МЕСЯЦЕВ',routeDesc:'Каждый период раскрывает свою энергию, задачу, возможности, ключевые акценты, рекомендации и фокус.',map:'КАРТА ГЕОГРАФИИ ДУШИ',tap:'НАЖМИ НА ТОЧКУ НА КАРТЕ',gate:'Медитация доступна после подтверждения оплаты. Запуск без оплаты заблокирован.',gateButton:'ОПЛАТА МЕДИТАЦИИ · 20 €'},
+uk:{geo:'Обери точку на Землі — де ти зараз або куди хотів би вирушити. Активатор визначить дім меридіана й покаже, яка енергія твоєї Душі активується в цьому місці.',hint:'ВВЕДИ МІСЦЕ, ЯКЕ ХОЧЕШ ПЕРЕВІРИТИ',placeholder:'Наприклад: Санремо, Ніцца, Маямі…',check:'ПЕРЕВІРИТИ',best:'ДІЗНАТИСЯ НАЙКРАЩЕ МІСЦЕ НА ПОТОЧНИЙ ПЕРІОД · 5 €',clock:'12 МІСЯЦІВ',route:'ПЕРСОНАЛЬНИЙ МАРШРУТ НА 12 МІСЯЦІВ',routeDesc:'Кожен період розкриває свою енергію, завдання, можливості, ключові акценти, рекомендації та фокус.',map:'КАРТА ГЕОГРАФІЇ ДУШІ',tap:'НАТИСНИ НА ТОЧКУ НА МАПІ',gate:'Медитація доступна після підтвердження оплати. Запуск без оплати заблоковано.',gateButton:'ОПЛАТА МЕДИТАЦІЇ · 20 €'},
+en:{geo:'Choose a point on Earth — where you are now or where you would like to go. The Activator will determine the meridian house and show which energy of your Soul is activated in that location.',hint:'ENTER A PLACE TO CHECK',placeholder:'For example: Sanremo, Nice, Miami…',check:'CHECK',best:'FIND THE BEST PLACE FOR THE CURRENT PERIOD · 5 €',clock:'12 MONTHS',route:'YOUR PERSONAL 12-MONTH JOURNEY',routeDesc:'Each period reveals its energy, task, opportunities, key accents, recommendation, and focus.',map:'SOUL GEOGRAPHY MAP',tap:'TAP A POINT ON THE MAP',gate:'Meditation requires confirmed payment. Starting without payment is blocked.',gateButton:'PAY FOR MEDITATION · 20 €'}};
+const mandala={
+ru:['💜 КРИСТАЛЬНАЯ МАНДАЛА ПОМОГАЕТ ТЕБЕ:',['гармонизировать внутреннее состояние;','восстанавливать энергию и равновесие;','сосредоточивать внимание;','настраиваться на собственное желание;','сохранять ясное видение желаемого результата.'],'🎵 СТАТИЧНОЕ ИЗОБРАЖЕНИЕ ИЛИ ЖИВАЯ МАНДАЛА?',['Изображение Кристальной мандалы раскрывает числовой код твоей даты рождения через цвет и геометрию граней. Это визуальное раскрытие индивидуального кода.','Живая Кристальная мандала объединяет изображение, движение и звук. Её звучание передаёт энергии Души в соответствии с числовым кодом даты рождения, помогая настроиться на резонанс Души.','Лучше иметь обе версии: изображение поддерживает постоянную визуальную связь с энергиями, а Живая мандала помогает глубже настроиться через движение и звук.'],'💎 КАК ИСПОЛЬЗОВАТЬ?',['Установи изображение мандалы как обои телефона, чтобы сохранять связь с ней и настраиваться на резонанс своей Души.','Утром или во время медитации используй Живую мандалу с движением и звуком для более глубокой настройки.','Скачай шаблон мандалы для раскрашивания и раскрась его в цвета граней своего Кристалла. Так ты создашь произведение своими руками.'],'Твоя дата. Твой узор. Твой звук.'],
+uk:['💜 КРИСТАЛЬНА МАНДАЛА ДОПОМАГАЄ ТОБІ:',['гармонізувати внутрішній стан;','відновлювати енергію та рівновагу;','зосереджувати увагу;','налаштовуватися на власне бажання;','зберігати чітке бачення бажаного результату.'],'🎵 СТАТИЧНЕ ЗОБРАЖЕННЯ ЧИ ЖИВА МАНДАЛА?',['Зображення Кристальної мандали розкриває числовий код твоєї дати народження через колір і геометрію граней. Це візуальне розкриття індивідуального коду.','Жива Кристальна мандала поєднує зображення, рух і звук. Її звучання передає енергії Душі відповідно до числового коду дати народження, допомагаючи налаштуватися на резонанс Душі.','Найкраще мати обидві версії: зображення підтримує постійний візуальний зв’язок з енергіями, а Жива мандала допомагає глибше налаштуватися через рух і звук.'],'💎 ЯК ВИКОРИСТОВУВАТИ?',['Встанови зображення мандали як шпалери телефона, щоб зберігати зв’язок із нею та налаштовуватися на резонанс своєї Душі.','Уранці або під час медитації використовуй Живу мандалу з рухом і звуком для глибшого налаштування.','Завантаж шаблон мандали для розфарбовування та розфарбуй його в кольори граней свого Кристала. Так ти створиш витвір власними руками.'],'Твоя дата. Твій візерунок. Твій звук.']};
+let busy=false;
+function apply(){if(busy)return;busy=true;try{
+const l=(document.documentElement.lang||'ru').slice(0,2).toLowerCase();const lang=strings[l]||strings.ru;
+const set=(sel,v)=>{const e=document.querySelector(sel);if(e&&e.textContent!==v)e.textContent=v};
+set('.sunplace-intro',lang.geo);set('.sunplace-location-label',lang.hint);set('#sunPlaceCheckBtn',lang.check);set('#sunPlaceBestBuy',lang.best);
+const input=document.querySelector('#sunPlaceDetail input[type=text]');if(input)input.placeholder=lang.placeholder;
+const map=document.querySelector('.sunplace-map-wrap');if(map){const t=map.querySelector('img');if(t)t.alt=lang.map;}
+const route=[...document.querySelectorAll('*')].filter(e=>e.children.length===0&&/ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 МЕСЯЦЕВ|ПЕРСОНАЛЬНИЙ МАРШРУТ НА 12 MONTHS/.test(e.textContent||''));for(const e of route)e.textContent=lang.route;
+let style=document.getElementById('sc-20261102-clock');if(!style){style=document.createElement('style');style.id='sc-20261102-clock';document.head.appendChild(style)}style.textContent='.solar-clock-face::after{content:'+JSON.stringify(lang.clock)+'!important}';
+const guide=document.querySelector('.mandala-guide');if(guide&&mandala[l]){const d=mandala[l];const hs=guide.querySelectorAll('h4'),lis=guide.querySelectorAll('li'),ps=guide.querySelectorAll('p');[0,1,2].forEach((i)=>{if(hs[i])hs[i].textContent=[d[0],d[2],d[4]][i]});lis.forEach((e,i)=>{if(d[1][i])e.textContent=d[1][i]});ps.forEach((e,i)=>{if(i<3)e.textContent=d[3][i];else if(i<6)e.textContent=d[5][i-3];else if(i===6)e.textContent=d[6]})}
+// Safety: prevent the client-side Infinity ritual player from launching without a verified server entitlement.
+// There is no verified Infinity entitlement endpoint in the deployed Worker; do not fake successful payment.
+const player=document.querySelector('.sc-activation-final .sc-act-player');if(player&&!document.documentElement.hasAttribute('data-sc-author')){
+player.querySelectorAll('button.control').forEach(b=>{b.disabled=true;b.setAttribute('aria-disabled','true');b.style.pointerEvents='none'});
+let notice=player.querySelector('.sc-20261102-gate');if(!notice){notice=document.createElement('p');notice.className='sc-20261102-gate';notice.style.cssText='color:#ffe1a0;font-size:15px;line-height:1.5;margin:12px auto';player.appendChild(notice)}notice.textContent=lang.gate;
+}
+}finally{busy=false}}
+function schedule(){if(busy)return;clearTimeout(schedule.t);schedule.t=setTimeout(apply,100)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{apply();new MutationObserver(schedule).observe(document.documentElement,{attributes:true,attributeFilter:['lang'],subtree:false});});else{apply();new MutationObserver(schedule).observe(document.documentElement,{attributes:true,attributeFilter:['lang'],subtree:false});}
+document.addEventListener('click',e=>{if(e.target.closest?.('[data-lang],.lang-btn,.language-btn'))setTimeout(apply,150)},true);
+})();
+</script>
+
+
+
+
+<style id="sc-20261102-final-safety">
+/* Never expose paid activation player in public client build. */
+html body #v72CodeActivationContent .sc-act-player,
+html body #v72CodeActivationContent .sc-activation-final .sc-act-player{display:none!important}
+html[lang="ru"] .solar-clock-face::after{content:"12 МЕСЯЦЕВ"!important}
+html[lang="uk"] .solar-clock-face::after{content:"12 МІСЯЦІВ"!important}
+html[lang="en"] .solar-clock-face::after{content:"12 MONTHS"!important}
+</style>
+<script id="sc-20261102-final-text-fix">
+(()=>{
+const solarText={ru:'Каждый период раскрывает свою энергию, задачи, возможности, ключевые акценты и рекомендации.',uk:'Кожен період розкриває свою енергію, завдання, можливості, ключові акценти та рекомендації.',en:'Each period reveals its energy, task, opportunities, key accents, recommendation, and focus.'};
+function update(){const lang=document.documentElement.lang==='uk'?'uk':document.documentElement.lang==='en'?'en':'ru';
+const title=document.querySelector('.solar-periods-offer-title');if(title)title.textContent=lang==='ru'?'ПЕРСОНАЛЬНЫЙ МАРШРУТ НА 12 МЕСЯЦЕВ':lang==='uk'?'ПЕРСОНАЛЬНИЙ МАРШРУТ НА 12 МІСЯЦІВ':'YOUR PERSONAL 12-MONTH PATH';
+const paragraph=document.querySelector('.solar-periods-offer-card p');if(paragraph)paragraph.textContent=solarText[lang];
+const purpose=document.getElementById('purposeSoulBuy');if(purpose)purpose.textContent=lang==='ru'?'ПОЛУЧИТЬ ПОЛНУЮ РАСШИФРОВКУ · 10 €':lang==='uk'?'ОТРИМАТИ ПОВНЕ РОЗШИФРУВАННЯ · 10 €':'GET THE FULL INTERPRETATION · €10';
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',update);else update();
+new MutationObserver(()=>setTimeout(update,0)).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+document.addEventListener('click',e=>{if(e.target.closest?.('[data-lang],.lang-btn,.language-btn'))setTimeout(update,300)},true);
+
+})();
+</script>
+
+
+
+
+<style id="sc-20261102-formula-button-stable">
+#v72CodeActivationContent:not([hidden]) #v144CodePay.sc-formula-stable{
+ display:block!important;visibility:visible!important;opacity:1!important;
+ pointer-events:auto!important;width:min(94%,560px)!important;
+ margin:18px auto 16px!important;
+}
+#v72CodeActivationContent[hidden] #v144CodePay.sc-formula-stable{display:none!important}
+</style>
+
+
+
+<script id="sc-20261102-payment-button-once">
+(()=>{
+'use strict';
+function repair(){
+ const panel=document.getElementById('v72CodeActivationContent');
+ const button=document.getElementById('v144CodePay');
+ if(!panel||!button)return;
+ if(button.parentElement!==panel)panel.insertBefore(button,panel.querySelector('.host')||null);
+ button.classList.add('sc-formula-stable');
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',repair,{once:true});
+else repair();
+})();
+</script>
+</body></html>
