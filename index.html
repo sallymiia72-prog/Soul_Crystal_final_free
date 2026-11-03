@@ -10570,8 +10570,8 @@ function updateHigherSelfCompact(fullValue){
 
   const info=LEVELS.find(x=>value>=x.min && value<=x.max) || null;
   if(info){
-    if(levelNode) levelNode.textContent=uk?info.ukName:info.name;
-    if(meaningNode) meaningNode.textContent=uk?info.ukMeaning:info.meaning;
+    if(levelNode) levelNode.textContent=window.SoulI18n?.language==="en"?["Physical Level","Astral Level","Mental Level","Causal Level","Buddhic Plane","Atmic Level"][LEVELS.indexOf(info)]:uk?info.ukName:info.name;
+    if(meaningNode) meaningNode.textContent=window.SoulI18n?.language==="en"?["The Higher Self acts through physical experience, the body and practical life.","The Higher Self communicates through emotions, dreams and relationships.","The Higher Self manifests through thinking, knowledge, awareness and understanding the patterns of life.","The Higher Self guides through choices, responsibility and cause and effect.","The Higher Self reveals spiritual intuition and direct understanding of truth.","The Higher Self manifests through unity with the Source and higher purpose."][LEVELS.indexOf(info)]:uk?info.ukMeaning:info.meaning;
     const x=higherSelfCoordinates(value);
     if(coordinatesNode)coordinatesNode.textContent=`${x.center.name} · ${x.centerNumber}-${uk?"й енергоцентр":"й энергоцентр"}`;
     if(combinedNode)combinedNode.textContent=higherSelfCombinedTextLocalized(value);
@@ -10648,9 +10648,9 @@ function render(){
     const hsCard=document.getElementById("higherSelfCard");
     if(hsCard) hsCard.style.setProperty("--hs-level-color",hsColors[l?.name]||"#c78bff");
     const levelNode=document.getElementById("level");
-    if(levelNode) levelNode.textContent=l?(window.SoulI18n?.language==="uk"?l.ukName:l.name):(window.SoulI18n?.language==="uk"?"Поза шкалою 1–72":"Вне шкалы 1–72");
+    if(levelNode) levelNode.textContent=l?(window.SoulI18n?.language==="en"?["Physical Level","Astral Level","Mental Level","Causal Level","Buddhic Plane","Atmic Level"][LEVELS.indexOf(l)]:window.SoulI18n?.language==="uk"?l.ukName:l.name):(window.SoulI18n?.language==="en"?"Outside the 1–72 range":window.SoulI18n?.language==="uk"?"Поза шкалою 1–72":"Вне шкалы 1–72");
     const meaningEl=document.getElementById("meaning");
-    if(meaningEl) meaningEl.textContent=l?(window.SoulI18n?.language==="uk"?l.ukMeaning:l.meaning):"";
+    if(meaningEl) meaningEl.textContent=l?(window.SoulI18n?.language==="en"?["The Higher Self acts through physical experience, the body and practical life.","The Higher Self communicates through emotions, dreams and relationships.","The Higher Self manifests through thinking, knowledge, awareness and understanding the patterns of life.","The Higher Self guides through choices, responsibility and cause and effect.","The Higher Self reveals spiritual intuition and direct understanding of truth.","The Higher Self manifests through unity with the Source and higher purpose."][LEVELS.indexOf(l)]:window.SoulI18n?.language==="uk"?l.ukMeaning:l.meaning):"";
     const matrixStage=document.getElementById("matrixSection");
     const resultTargets=[
       document.getElementById("solarYearShell"),
@@ -15808,7 +15808,7 @@ html[lang="ru"] .solar-clock-face::after{content:"12 MONTHS"!important}
    const tools=document.getElementById('scToolsGroup'), source=document.querySelector('#purposePaidContentV2 .sc-activation-final'); if(!tools||!source)return;
    document.getElementById('v65CodeActivationOffer')?.remove();
    let offer=document.getElementById('v72CodeActivationOffer');
-   if(!offer){offer=document.createElement('article');offer.id='v72CodeActivationOffer';offer.innerHTML='<button id="v72CodeActivationToggle" type="button" aria-expanded="false"><span class="sun">☀</span><span class="title">АКТИВАЦИЯ КОДА ДУШИ</span><span class="arrow">⌄</span></button><div id="v72CodeActivationContent" hidden><p class="note v140-code-note"></p><div class="dynamic-code"></div><div class="host"></div></div>';const crystal=[...tools.querySelectorAll('article')].find(a=>/АКТИВИРУЙ СВОЙ ЛИЧНЫЙ|АКТИВУЙ СВІЙ ОСОБИСТИЙ/i.test(a.textContent||''));if(crystal)crystal.insertAdjacentElement('afterend',offer);else tools.prepend(offer)}
+   if(!offer){offer=document.createElement('article');offer.id='v72CodeActivationOffer';offer.innerHTML='<button id="v72CodeActivationToggle" type="button" aria-expanded="false"><span class="sun">☀</span><span class="title">АКТИВИРОВАТЬ ВИБРАЦИОННЫЙ КОД ДУШИ</span><span class="arrow">⌄</span></button><div id="v72CodeActivationContent" hidden><p class="note v140-code-note"></p><div class="dynamic-code"></div><div class="host"></div></div>';const crystal=[...tools.querySelectorAll('article')].find(a=>/АКТИВИРУЙ СВОЙ ЛИЧНЫЙ|АКТИВУЙ СВІЙ ОСОБИСТИЙ/i.test(a.textContent||''));if(crystal)crystal.insertAdjacentElement('afterend',offer);else tools.prepend(offer)}
    const host=offer.querySelector('.host'); if(!host.dataset.loaded){['.sc-act-head','.sc-act-player','audio.track'].forEach(sel=>source.querySelectorAll(sel).forEach(n=>host.appendChild(n)));host.dataset.loaded='1'}
    const svg=document.getElementById('formulaDynamicSvg'),wrap=offer.querySelector('.dynamic-code'); if(svg&&wrap&&!wrap.querySelector('svg')){const clone=svg.cloneNode(true);clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach((e,i)=>e.id='v72dyn'+i);wrap.appendChild(clone)}
    const sync=()=>{const s=document.getElementById('formulaDynamicSvg'),c=wrap.querySelector('svg');if(!s||!c)return;const st=[s.querySelector('#formulaLive1'),s.querySelector('#formulaLive2'),s.querySelector('#formulaLive3')],ct=[...c.querySelectorAll('text.fd-num')];st.forEach((x,i)=>{if(x&&ct[i])ct[i].textContent=x.textContent});['--formula-left','--formula-center','--formula-right'].forEach(k=>c.style.setProperty(k,getComputedStyle(s).getPropertyValue(k)))};sync();setTimeout(sync,400);setTimeout(sync,1200);
@@ -19770,11 +19770,11 @@ guideObserver.observe(guide,{subtree:true,childList:true,characterData:true});
 'use strict';
 // One existing targeted locale synchronizer, expanded rather than layered.
 const labels={
- ru:['ВВЕДИТЕ ДАТУ РОЖДЕНИЯ','Рассчитать','БЛОК ИНФОРМАЦИИ','БЛОК АКТИВАЦИИ','РАСКРОЙ ПРЕДНАЗНАЧЕНИЕ СВОЕЙ ДУШИ','УЗНАЙ СВОЮ РОЛЬ В ОТНОШЕНИЯХ','УЗНАЙ ЗАДАЧУ ДУШИ НА ТЕКУЩИЙ ПЕРИОД','ОТКРОЙ ГЕОГРАФИЮ СВОЕЙ ДУШИ'],
- uk:['ВВЕДІТЬ ДАТУ НАРОДЖЕННЯ','Розрахувати','БЛОК ІНФОРМАЦІЇ','БЛОК АКТИВАЦІЇ','РОЗКРИЙ ПРИЗНАЧЕННЯ СВОЄЇ ДУШІ','ДІЗНАЙСЯ ПРО СВОЮ РОЛЬ У СТОСУНКАХ','ДІЗНАЙСЯ ЗАВДАННЯ ДУШІ НА ПОТОЧНИЙ ПЕРІОД','ВІДКРИЙ ГЕОГРАФІЮ СВОЄЇ ДУШІ'],
- en:['ENTER YOUR DATE OF BIRTH','Calculate','INFORMATION SECTION','ACTIVATION SECTION','DISCOVER YOUR SOUL PURPOSE','DISCOVER YOUR ROLE IN RELATIONSHIPS','DISCOVER YOUR SOUL’S TASK FOR THE CURRENT PERIOD','DISCOVER YOUR SOUL GEOGRAPHY']
+ ru:['ВВЕДИТЕ ДАТУ РОЖДЕНИЯ','Рассчитать','БЛОК ИНФОРМАЦИИ','БЛОК АКТИВАЦИИ','РАСКРОЙ ПРЕДНАЗНАЧЕНИЕ СВОЕЙ ДУШИ','УЗНАЙ СВОЮ РОЛЬ В ОТНОШЕНИЯХ','УЗНАЙ ЗАДАЧУ ДУШИ НА ТЕКУЩИЙ ПЕРИОД','ОТКРОЙ ГЕОГРАФИЮ СВОЕЙ ДУШИ','УСТАНОВИ СВЯЗЬ С ВЫСШИМ Я','АКТИВИРОВАТЬ ВИБРАЦИОННЫЙ КОД ДУШИ'],
+ uk:['ВВЕДІТЬ ДАТУ НАРОДЖЕННЯ','Розрахувати','БЛОК ІНФОРМАЦІЇ','БЛОК АКТИВАЦІЇ','РОЗКРИЙ ПРИЗНАЧЕННЯ СВОЄЇ ДУШІ','ДІЗНАЙСЯ ПРО СВОЮ РОЛЬ У СТОСУНКАХ','ДІЗНАЙСЯ ЗАВДАННЯ ДУШІ НА ПОТОЧНИЙ ПЕРІОД','ВІДКРИЙ ГЕОГРАФІЮ СВОЄЇ ДУШІ','ВСТАНОВИ ЗВ’ЯЗОК ІЗ ВИЩИМ Я','АКТИВУВАТИ ВІБРАЦІЙНИЙ КОД ДУШІ'],
+ en:['ENTER YOUR DATE OF BIRTH','Calculate','INFORMATION SECTION','ACTIVATION SECTION','DISCOVER YOUR SOUL PURPOSE','DISCOVER YOUR ROLE IN RELATIONSHIPS','DISCOVER YOUR SOUL’S TASK FOR THE CURRENT PERIOD','DISCOVER YOUR SOUL GEOGRAPHY','CONNECT WITH YOUR HIGHER SELF','ACTIVATE YOUR SOUL VIBRATIONAL CODE']
 };
-const selectors=['.sc242-birth-label','#calculate','.sc-main-group-info > span:first-child','.sc-main-group-tools > span:first-child','#purposeSoulToggle .purpose-toggle-title','#soulmateOffer .next-offer-title','#solarYearToggle .solar-year-toggle-title','#sunPlaceToggle .sunplace-toggle-title'];
+const selectors=['.sc242-birth-label','#calculate','.sc-main-group-info > span:first-child','.sc-main-group-tools > span:first-child','#purposeSoulToggle .purpose-toggle-title','#soulmateOffer .next-offer-title','#solarYearToggle .solar-year-toggle-title','#sunPlaceToggle .sunplace-toggle-title','#higherSelfRevealToggle > span:nth-of-type(2)','#v72CodeActivationToggle > .title'];
 let pending=false,working=false;
 function current(){return document.querySelector('#soulLanguageSwitcher button.active[data-lang]')?.dataset.lang||'ru';}
 function apply(){
@@ -19926,4 +19926,82 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 else repair();
 })();
 </script>
+<style id="sc-20261102-activation-label-fit">
+/* Only the first purple activation button: prevent English text clipping. */
+.next-offer-toggle{min-width:0!important;display:flex!important;align-items:center!important;gap:8px!important}
+.next-offer-toggle > .next-offer-title{min-width:0!important;flex:1 1 auto!important;font-size:clamp(12px,3.15vw,19px)!important;line-height:1.16!important;white-space:normal!important;overflow-wrap:break-word!important}.next-offer-toggle > .next-offer-arrow{flex:0 0 auto!important}
+#higherSelfRevealToggle{min-width:0!important}
+#higherSelfRevealToggle > span:not(.unified-crystal-icon):not(.func-live-wave){white-space:normal!important}
+</style>
+
+<style id="sc-20261103-consistent-locale">
+/* Matrix labels use the actual selected language, even when legacy scripts leave html.lang stale. */
+html.sc-current-ru .sc-matrix-lang,html.sc-current-uk .sc-matrix-lang,html.sc-current-en .sc-matrix-lang{display:none!important}
+html.sc-current-ru .sc-matrix-ru,html.sc-current-uk .sc-matrix-uk,html.sc-current-en .sc-matrix-en{display:inline!important}
+/* Fit the long title in the first purple activation button without touching other buttons. */
+#scwRevealToggle, #crystalRevealToggle{min-width:0!important}
+#scwRevealToggle span:not([aria-hidden]),#crystalRevealToggle span:not([aria-hidden]){font-size:clamp(12px,3.1vw,18px)!important;line-height:1.16!important;white-space:normal!important;overflow-wrap:anywhere!important}
+</style>
+
+<script id="sc-20261103-higher-locale-single-owner">(()=>{
+'use strict';
+const labels={ru:'УСТАНОВИ СВЯЗЬ С ВЫСШИМ Я',uk:'ВСТАНОВИ ЗВ’ЯЗОК ІЗ ВИЩИМ Я',en:'CONNECT WITH YOUR HIGHER SELF'};
+const names={ru:['Физический уровень','Астральный уровень','Ментальный уровень','Каузальный уровень','Будхиальный план','Атмический уровень'],uk:['Фізичний рівень','Астральний рівень','Ментальний рівень','Каузальний рівень','Будхічний план','Атмічний рівень'],en:['Physical Level','Astral Level','Mental Level','Causal Level','Buddhic Plane','Atmic Level']};
+const meanings={ru:['Высшее Я действует через материальный опыт, тело, жизненную устойчивость и освоение законов физического мира.','Высшее Я проявляется через чувства, эмоциональный отклик, сны и отношения.','Высшее Я проявляется через мышление, знания, осознанность и способность понимать закономерности жизни.','Высшее Я направляет через выбор, ответственность и понимание причин и следствий.','Высшее Я раскрывает духовную интуицию и непосредственное познание истины.','Высшее Я проявляется через единство с Источником и высшее предназначение.'],uk:['Вище Я діє через матеріальний досвід, тіло, життєву стійкість і пізнання законів фізичного світу.','Вище Я проявляється через почуття, сни та стосунки.','Вище Я проявляється через мислення, знання, усвідомленість і розуміння закономірностей життя.','Вище Я спрямовує через вибір, відповідальність і розуміння причин та наслідків.','Вище Я розкриває духовну інтуїцію та безпосереднє пізнання істини.','Вище Я проявляється через єдність із Джерелом і вище призначення.'],en:['The Higher Self acts through physical experience, the body and practical life.','The Higher Self communicates through emotions, dreams and relationships.','The Higher Self manifests through thinking, knowledge, awareness and understanding the patterns of life.','The Higher Self guides through choices, responsibility and cause and effect.','The Higher Self reveals spiritual intuition and direct understanding of truth.','The Higher Self manifests through unity with the Source and higher purpose.']};
+let selected=null;
+function lang(){const active=document.querySelector('#soulLanguageSwitcher [data-lang].active');const l=selected||active?.dataset.lang||window.SoulI18n?.language||document.documentElement.lang||'ru';return l==='ua'?'uk':(labels[l]?l:'ru')}
+function apply(){const l=lang(),btn=document.getElementById('higherSelfRevealToggle');if(btn){const span=[...btn.children].find(x=>x.tagName==='SPAN'&&!x.hasAttribute('aria-hidden'));if(span&&span.textContent!==labels[l])span.textContent=labels[l]}
+const value=Number(window.__currentHigherSelf);if(Number.isFinite(value)&&value>=1&&value<=72){const index=Math.floor((value-1)/12),level=document.getElementById('level'),meaning=document.getElementById('meaning');if(level&&level.textContent!==names[l][index])level.textContent=names[l][index];if(meaning&&meaning.textContent!==meanings[l][index])meaning.textContent=meanings[l][index]}}
+function init(){apply();const sw=document.getElementById('soulLanguageSwitcher');sw?.addEventListener('click',e=>{const b=e.target.closest('[data-lang]');if(!b)return;selected=b.dataset.lang==='ua'?'uk':b.dataset.lang;queueMicrotask(apply);setTimeout(apply,150);setTimeout(apply,500)},true);new MutationObserver(()=>{if(!selected)apply()}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();</script>
+<style id="sc-two-heading-fix-20261103">
+#higherSelfCard .hs-magic-title > span,.mandala-intro-text > h4:first-child{font-size:inherit!important}
+#higherSelfCard .hs-magic-title > span::after,.mandala-intro-text > h4:first-child::after{content:none!important}
+</style>
+<style id="sc-inner-buttons-unified-20261103">
+/* All nine inner menu buttons: same compact height and consistent icon/arrow alignment. */
+#scInfoGroup #purposeSoulToggle,#scInfoGroup .soulmate-offer > .next-offer-toggle,
+#scInfoGroup #solarYearToggle,#scInfoGroup #sunPlaceToggle,
+#scToolsGroup .report-offer > .next-offer-toggle,#scToolsGroup #higherSelfRevealToggle,
+#scToolsGroup .mandala-offer > .next-offer-toggle,
+#scToolsGroup #soulMeditationOffer > .next-offer-toggle,
+#scToolsGroup .formula-offer > .next-offer-toggle{
+ box-sizing:border-box!important;height:70px!important;min-height:70px!important;max-height:70px!important;
+ padding-top:7px!important;padding-bottom:7px!important;align-items:center!important;
+}
+#scInfoGroup .purpose-toggle-title,#scInfoGroup .next-offer-title,
+#scInfoGroup .solar-year-toggle-title,#scInfoGroup .sunplace-toggle-title,
+#scToolsGroup .next-offer-title{
+ min-width:0!important;white-space:normal!important;overflow-wrap:break-word!important;line-height:1.15!important;
+}
+</style>
+<script id="sc-20261103-headings-direct-translation">(()=>{
+'use strict';
+const dict={ru:['ВЫСШЕЕ','Я','🔯 КРИСТАЛЬНАЯ МАНДАЛА'],uk:['ВИЩЕ','Я','🔯 КРИСТАЛІЧНА МАНДАЛА'],en:['HIGHER','SELF','🔯 CRYSTALLINE MANDALA']};
+let selected=null;
+function current(){let active=document.querySelector('#soulLanguageSwitcher [data-lang].active');let l=selected||active?.dataset.lang||window.SoulI18n?.language||document.documentElement.lang||'ru';return l==='ua'?'uk':(dict[l]?l:'ru')}
+function apply(){let words=dict[current()];let title=document.querySelector('#higherSelfCard .hs-magic-title');if(title){let first=[...title.childNodes].find(n=>n.nodeType===3);if(first&&first.nodeValue!==words[0])first.nodeValue=words[0];let span=title.querySelector('span');if(span&&span.textContent!==words[1])span.textContent=words[1]}
+let mandala=document.querySelector('.mandala-intro-text > h4:first-child');if(mandala&&mandala.textContent!==words[2])mandala.textContent=words[2]}
+function init(){apply();document.getElementById('soulLanguageSwitcher')?.addEventListener('click',e=>{let b=e.target.closest('[data-lang]');if(!b)return;selected=b.dataset.lang==='ua'?'uk':b.dataset.lang;queueMicrotask(apply);setTimeout(apply,150);setTimeout(apply,500)},true);
+let queued=false;}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();</script>
+
+
+<style id="sc-final-two-buttons-20261103">
+/* Blue button: use the same in-flow title as every other activation button. */
+#higherSelfRevealToggle{display:flex!important;align-items:center!important;position:relative!important;gap:10px!important}
+#higherSelfRevealToggle > span:nth-child(2){visibility:visible!important;position:static!important;display:block!important;flex:1 1 auto!important;min-width:0!important;max-width:none!important;white-space:normal!important;overflow-wrap:normal!important;text-align:left!important;font-size:clamp(13px,3.3vw,17px)!important;line-height:1.17!important;font-weight:800!important;}
+#higherSelfRevealToggle > span:nth-child(2)::before,#higherSelfRevealToggle > span:nth-child(2)::after{content:none!important;display:none!important}
+#higherSelfRevealToggle > .activation-tool-icon{flex:0 0 auto!important}
+#higherSelfRevealToggle > i{flex:0 0 auto!important;margin-left:auto!important}
+/* Date uses a separate line, leaving the calendar its own column. */
+#dayEnergyToggle{display:grid!important;grid-template-columns:minmax(0,1fr) 36px!important;align-items:center!important;column-gap:4px!important;padding:3px 8px!important}
+#dayEnergyToggle .day-energy-left,#dayEnergyToggle .day-energy-title-centered{min-width:0!important;width:100%!important}
+#dayEnergyToggle .day-energy-title-centered{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;gap:0!important}
+#dayEnergyToggle .day-energy-button-label{font-size:clamp(10px,2.55vw,13px)!important;white-space:normal!important;line-height:1.1!important;text-align:center!important}
+#dayEnergyButtonDate{font-size:clamp(13px,3.1vw,16px)!important;white-space:nowrap!important;line-height:1.1!important;letter-spacing:0!important}
+#dayEnergyToggle .day-energy-arrow{position:relative!important;inset:auto!important;transform:none!important;justify-self:center!important;width:34px!important;max-width:34px!important}
+</style>
 </body></html>
