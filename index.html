@@ -8003,16 +8003,16 @@ shell.style.setProperty("--day-rgb",rgb);
 <div class="day-energy-portal" hidden="" id="dayEnergyPortal"></div>
 <section class="day-mandala-section" id="dayMandalaSection" aria-label="Мандала дня">
   <h3 class="day-mandala-title" id="dayMandalaTitle">Мандала дня</h3>
-  <div class="day-mandala-frame-wrap"><iframe id="dayMandalaFrame" class="day-mandala-iframe" loading="lazy" title="Мандала дня" sandbox="allow-scripts allow-same-origin" aria-label="Кристаллическая мандала текущей даты"></iframe></div>
+  <div class="day-mandala-frame-wrap"><iframe id="dayMandalaFrame" class="day-mandala-iframe" tabindex="-1" loading="lazy" title="Мандала дня" sandbox="allow-scripts allow-same-origin" aria-label="Кристаллическая мандала текущей даты"></iframe></div>
   <p class="day-mandala-guide" id="dayMandalaGuide">Для лучшей настройки на высшие потоки информации смотрите на мандалу в течение одной-двух минут расфокусированным взглядом.</p>
+  <p class="day-mandala-affirmation" id="dayMandalaAffirmation">«Я открываюсь новым потокам Света и Знания этого дня».</p>
+  <button type="button" class="day-mandala-download-btn" id="dayMandalaDownloadBtn">Скачать мандалу дня</button>
   <div class="day-mandala-renewal" aria-label="Ежедневное энергетическое обновление">
     <h4 id="dayMandalaRenewalTitle">Ежедневное энергетическое обновление</h4>
     <p id="dayMandalaRenewalText">Каждый новый день приносит новое сочетание энергий и возможностей. Подобно тому как обновляется программное обеспечение, наше сознание может принимать новые вибрационные коды, расширяя восприятие и раскрывая новые возможности.</p>
     <p id="dayMandalaRenewalPurpose">Мандала дня помогает настроиться на эти потоки и осознанно встретить энергии нового дня.</p>
-    <p class="day-mandala-affirmation" id="dayMandalaAffirmation">«Я открываюсь новым потокам Света и Знания этого дня».</p>
     <p class="day-mandala-prerequisite" id="dayMandalaPrerequisite"><strong>Важно:</strong> Мандала дня не заменяет настройку на вашу индивидуальную Мандалу Души. Сначала необходимо настроиться на собственные вибрации, а затем открываться новым энергиям дня.</p>
   </div>
-  <button type="button" class="day-mandala-download-btn" id="dayMandalaDownloadBtn">Скачать мандалу дня</button>
 </section>
 </div>
 </div>
@@ -9055,7 +9055,56 @@ dialog#scwDialog::backdrop{background:rgba(2,4,12,.72)}
  overflow:hidden;background:#000c47;border-radius:18px;
  border:1px solid rgba(246,217,141,.48);box-shadow:0 7px 20px rgba(16,10,50,.25);
 }
-#dayEnergyShell .day-mandala-iframe{display:block;border:0;width:100%;height:100%;background:#000c47;}
+#dayEnergyShell .day-mandala-iframe{display:block;border:0;width:100%;height:100%;background:#000c47;pointer-events:none!important;}
+/* Forecast reading on mobile: avoid smooth-scroll queuing and background repaints. */
+@media (max-width:720px){
+  html:has(#dayEnergyShell.open),
+  html:has(#dayEnergyShell.open) body{scroll-behavior:auto!important;}
+  html:has(#dayEnergyShell.open) body *,
+  html:has(#dayEnergyShell.open) body *::before,
+  html:has(#dayEnergyShell.open) body *::after{animation-play-state:paused!important;}
+  #dayEnergyShell .day-energy-detail,
+  #dayEnergyShell .day-energy-card,
+  #dayEnergyShell .day-mandala-section{will-change:auto!important;}
+}
+/* The full forecast scrolls as one document. No nested scrolling or giant height animations. */
+#dayEnergyShell .day-energy-detail{
+  transition:none!important;
+  scroll-behavior:auto!important;
+  overscroll-behavior:auto!important;
+}
+#dayEnergyShell.open .day-energy-detail{
+  max-height:none!important;overflow:visible!important;
+  transform:none!important;opacity:1!important;
+}
+#dayEnergyShell .day-energy-card,
+#dayEnergyShell .day-mandala-section{
+  touch-action:pan-y pinch-zoom!important;
+  overscroll-behavior:auto!important;
+}
+/* Save PNG without leaving the current page when Android opens a local HTML file. */
+#scDayMandalaSaveOverlay[hidden]{display:none!important}
+#scDayMandalaSaveOverlay [hidden]{display:none!important}
+#scDayMandalaSaveOverlay{position:fixed!important;inset:0!important;z-index:2147483647!important;
+ background:rgba(10,9,36,.88);display:flex;align-items:center;justify-content:center;
+ padding:14px;box-sizing:border-box;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+#scDayMandalaSaveOverlay .sc-day-save-panel{position:relative;width:min(100%,480px);
+ max-height:calc(100dvh - 28px);overflow:auto;border-radius:19px;padding:18px 16px 17px;
+ background:#fbf3fc;border:1.5px solid #e3bc67;text-align:center;color:#302443;
+ box-shadow:0 18px 55px #0008;box-sizing:border-box;}
+#scDayMandalaSaveOverlay .sc-day-save-close{position:absolute;top:5px;right:8px;
+ width:36px;height:36px;display:grid;place-items:center;font-size:25px;
+ border:0;background:transparent;color:#56366a;cursor:pointer}
+#scDayMandalaSaveOverlay .sc-day-save-head{display:block;padding:0 30px 8px;
+ color:#087f85;font-size:20px;font-weight:750;}
+#scDayMandalaSaveOverlay .sc-day-save-img{display:block;width:min(100%,350px);
+ margin:6px auto 10px;border-radius:12px;background:#00104c;
+ -webkit-touch-callout:default;user-select:auto;-webkit-user-select:auto;touch-action:manipulation;}
+#scDayMandalaSaveOverlay .sc-day-save-message{font-size:15px;line-height:1.45;margin:9px auto!important;color:#3f315c;}
+#scDayMandalaSaveOverlay .sc-day-save-action{display:block;width:min(100%,370px);margin:12px auto 3px;
+ padding:12px 14px;border-radius:13px;border:1px solid #b9924e;background:#ffdf8e;
+ color:#332445;font-size:15px;font-weight:720;text-decoration:none;cursor:pointer;}
+
 #dayEnergyShell .day-mandala-guide{
  margin:14px auto 10px!important;max-width:480px;color:#3d3059!important;
  font-size:clamp(15px,3.8vw,18px)!important;line-height:1.55!important;
@@ -9074,17 +9123,19 @@ dialog#scwDialog::backdrop{background:rgba(2,4,12,.72)}
  font-size:clamp(15px,3.75vw,17px)!important;
  color:#3d3059!important;font-weight:400!important;
 }
-#dayEnergyShell .day-mandala-renewal .day-mandala-affirmation{
- margin:14px auto!important;padding:12px 9px;
- border-top:1px solid rgba(179,141,78,.28);
+#dayEnergyShell .day-mandala-affirmation{
+ margin:8px auto 12px!important;padding:10px 9px;
+ max-width:450px;border-top:1px solid rgba(179,141,78,.28);
  border-bottom:1px solid rgba(179,141,78,.28);
  font-weight:600!important;color:#5d3a87!important;
+ font-size:clamp(16px,4vw,19px)!important;line-height:1.46!important;
+ text-align:center;
 }
 #dayEnergyShell .day-mandala-renewal .day-mandala-prerequisite{
  font-size:clamp(14px,3.5vw,16px)!important;
 }
 #dayEnergyShell .day-mandala-download-btn{
- display:block;width:min(100%,420px);margin:0 auto 4px;padding:13px 18px;
+ display:block;width:min(100%,420px);margin:6px auto 18px;padding:13px 18px;
  border-radius:18px;border:1px solid rgba(228,198,116,.72);
  background:linear-gradient(110deg,#eec96b 0%,#fff1b0 47%,#dca744 100%);
  color:#24163b;font-size:15px;font-weight:800;letter-spacing:.02em;
@@ -9222,6 +9273,8 @@ function renderDayMandala(){
       .starfield{position:absolute!important}
       svg{width:100%!important;height:auto!important;display:block!important}
       ::-webkit-scrollbar{display:none!important}
+      /* The free day preview is static: fewer GPU effects and smooth mobile scrolling. */
+      .breath,.wheel,.core,.spark,.starfield,svg *{animation:none!important;transition:none!important}
       @media(prefers-reduced-motion:reduce){.breath,.wheel,.core{animation:none!important}}
     </style></head>`);
     frame.srcdoc=rawHtml;
@@ -9232,37 +9285,141 @@ function renderDayMandala(){
     if(wrap)wrap.hidden=true;
   }
 }
-async function downloadDayMandala(){
-  const frame=document.getElementById("dayMandalaFrame");
-  const btn=document.getElementById("dayMandalaDownloadBtn");
-  if(!frame||!btn)return;
-  const lang=window.SoulI18n?.language||'ru';
-  const messages={ru:'Не удалось сохранить мандалу. Откройте прогноз ещё раз и повторите попытку.',uk:'Не вдалося зберегти мандалу. Відкрийте прогноз ще раз і повторіть спробу.',en:'Could not save the mandala. Reopen the forecast and try again.'};
-  btn.disabled=true;
-  try{
-    const mandalaWindow=frame.contentWindow;
-    if(!mandalaWindow || typeof mandalaWindow.svgImage!=='function' || typeof mandalaWindow.paintWallpaper!=='function') throw new Error('Mandala not ready');
-    const img=await mandalaWindow.svgImage();
-    const canvas=document.createElement('canvas');
-    canvas.width=1080;canvas.height=2408;
-    mandalaWindow.paintWallpaper(canvas.getContext('2d'),canvas.width,canvas.height,img,0.5);
-    const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('PNG encoding failed')),'image/png'));
-    const url=URL.createObjectURL(blob);
-    const today=new Date();const pad=v=>String(v).padStart(2,'0');
-    const filename=`Mandala-Day-${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}.png`;
-    const link=document.createElement('a');link.href=url;link.download=filename;
-    document.body.appendChild(link);link.click();link.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),15000);
-  }catch(e){console.warn('Daily mandala PNG export failed',e);alert(messages[lang]||messages.ru);}
-  finally{btn.disabled=false;}
+// PNG for Android: prepare a compact image once, then save only from a REAL tap.
+// Avoid asynchronous synthetic downloads, which can navigate away from content:// HTML.
+const SC_DAY_MANDALA_EXPORT={iso:null,blob:null,url:null,promise:null};
+function scDayMandalaLang(){return window.SoulI18n?.language||'ru';}
+function scDayMandalaFileName(){
+  const d=new Date(),p=v=>String(v).padStart(2,'0');
+  return `Mandala-Day-${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}.png`;
 }
-document.addEventListener('click',function(ev){
-  const btn=ev.target.closest && ev.target.closest('#dayMandalaDownloadBtn');
-  if(btn){
-    ev.preventDefault();
-    downloadDayMandala();
+function scDayMandalaMessages(){
+  const all={
+    ru:{title:'Мандала дня',loading:'Подготавливаем изображение...',hold:'Чтобы сохранить в галерею, нажмите на изображение и удерживайте палец, затем выберите «Скачать изображение».',error:'Не удалось подготовить изображение. Закройте окно и попробуйте снова.',direct:'Скачать PNG',close:'Закрыть',share:'Поделиться или сохранить'},
+    uk:{title:'Мандала дня',loading:'Готуємо зображення...',hold:'Щоб зберегти в галерею, натисніть на зображення та утримуйте палець, потім виберіть «Завантажити зображення».',error:'Не вдалося підготувати зображення. Закрийте вікно й спробуйте знову.',direct:'Завантажити PNG',close:'Закрити',share:'Поділитися або зберегти'},
+    en:{title:'Mandala of the Day',loading:'Preparing the image...',hold:'To save to your gallery, press and hold the image and choose Download image.',error:'Could not prepare the image. Close this window and try again.',direct:'Download PNG',close:'Close',share:'Share or save'}
+  };
+  return all[scDayMandalaLang()]||all.ru;
+}
+function scDayMandalaDiscardOld(){
+  if(SC_DAY_MANDALA_EXPORT.url)URL.revokeObjectURL(SC_DAY_MANDALA_EXPORT.url);
+  Object.assign(SC_DAY_MANDALA_EXPORT,{blob:null,url:null,promise:null});
+}
+function scDayMandalaPrepare(){
+  const f=document.getElementById('dayMandalaFrame');
+  const iso=f?.dataset.dayMandalaIso;
+  if(!iso)return Promise.reject(new Error('Mandala has not loaded'));
+  if(SC_DAY_MANDALA_EXPORT.iso!==iso){scDayMandalaDiscardOld();SC_DAY_MANDALA_EXPORT.iso=iso;}
+  if(SC_DAY_MANDALA_EXPORT.blob)return Promise.resolve(SC_DAY_MANDALA_EXPORT);
+  if(SC_DAY_MANDALA_EXPORT.promise)return SC_DAY_MANDALA_EXPORT.promise;
+  SC_DAY_MANDALA_EXPORT.promise=(async()=>{
+    const w=f.contentWindow;
+    if(!w || typeof w.svgImage!=='function')throw new Error('Mandala image renderer not ready');
+    const img=await w.svgImage();
+    // Square PNG matches the visible mandala; significantly less RAM than 1080x2408 wallpaper.
+    const canvas=document.createElement('canvas');
+    canvas.width=900;canvas.height=900;
+    const c=canvas.getContext('2d',{alpha:false});
+    if(!c)throw new Error('Canvas unavailable');
+    const g=c.createRadialGradient(450,440,70,450,450,690);
+    g.addColorStop(0,'#001c70');g.addColorStop(.68,'#000e53');g.addColorStop(1,'#00062e');
+    c.fillStyle=g;c.fillRect(0,0,900,900);
+    let seed=2026;
+    for(let i=0;i<iso.length;i++)seed=((seed*31+iso.charCodeAt(i))>>>0);
+    function rand(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;}
+    for(let i=0;i<80;i++){
+      const x=rand()*900,y=rand()*900,r=.35+rand()*1.25;
+      c.fillStyle='rgba(255,237,175,'+(.24+rand()*.53).toFixed(3)+')';
+      c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill();
+    }
+    c.drawImage(img,0,0,900,900);
+    const blob=await new Promise((resolve,reject)=>canvas.toBlob(v=>v?resolve(v):reject(new Error('PNG export unavailable')),'image/png'));
+    SC_DAY_MANDALA_EXPORT.blob=blob;
+    SC_DAY_MANDALA_EXPORT.url=URL.createObjectURL(blob);
+    // Free large pixel buffers promptly on low-memory Android devices.
+    canvas.width=1;canvas.height=1;
+    return SC_DAY_MANDALA_EXPORT;
+  })().catch(e=>{SC_DAY_MANDALA_EXPORT.promise=null;throw e;});
+  return SC_DAY_MANDALA_EXPORT.promise;
+}
+function scDayMandalaLocalMode(){
+  return /^(file|content|about):$/.test(location.protocol);
+}
+function scDayMandalaSavePanel(){
+  let root=document.getElementById('scDayMandalaSaveOverlay');
+  if(root)return root;
+  root=document.createElement('div');root.id='scDayMandalaSaveOverlay';root.hidden=true;
+  root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');
+  root.innerHTML='<div class="sc-day-save-panel"><button type="button" class="sc-day-save-close" aria-label="Закрыть">×</button><strong class="sc-day-save-head"></strong><p class="sc-day-save-message"></p><img class="sc-day-save-img" alt="" hidden><a class="sc-day-save-action" hidden></a><button type="button" class="sc-day-save-action sc-day-save-share" hidden></button></div>';
+  document.body.appendChild(root);
+  root.querySelector('.sc-day-save-close').addEventListener('click',()=>root.hidden=true);
+  root.addEventListener('click',e=>{if(e.target===root)root.hidden=true});
+  document.addEventListener('keydown',e=>{if(!root.hidden&&e.key==='Escape')root.hidden=true});
+  root.querySelector('.sc-day-save-share').addEventListener('click',()=>scDayMandalaNativeShare().catch(()=>{}));
+  return root;
+}
+function scDayMandalaNativeShare(){
+  const s=SC_DAY_MANDALA_EXPORT;
+  const file=new File([s.blob],scDayMandalaFileName(),{type:'image/png'});
+  if(!navigator.canShare?.({files:[file]})||!navigator.share)return Promise.reject(new Error('Share not supported'));
+  return navigator.share({files:[file],title:scDayMandalaMessages().title});
+}
+function scDayMandalaOpenPreview(waiting=false){
+  const m=scDayMandalaMessages(),root=scDayMandalaSavePanel(),s=SC_DAY_MANDALA_EXPORT;
+  root.hidden=false;
+  root.querySelector('.sc-day-save-head').textContent=m.title;
+  const msg=root.querySelector('.sc-day-save-message');
+  const img=root.querySelector('.sc-day-save-img');
+  const a=root.querySelector('a.sc-day-save-action');
+  const share=root.querySelector('.sc-day-save-share');
+  msg.textContent=waiting?m.loading:m.hold;
+  img.hidden=waiting||!s.url;
+  if(!img.hidden){img.src=s.url;img.alt=m.title;}
+  // Download is offered only on ordinary HTTP(S) pages, not content:// previews.
+  a.hidden=waiting||!s.url||scDayMandalaLocalMode();
+  if(!a.hidden){a.href=s.url;a.download=scDayMandalaFileName();a.textContent=m.direct;}
+  share.hidden=true;share.textContent=m.share;
+  if(!waiting&&s.blob){
+    try{share.hidden=!(navigator.share && navigator.canShare?.({files:[new File([s.blob],scDayMandalaFileName(),{type:'image/png'})]}));}catch(e){share.hidden=true;}
   }
-});
+}
+function scDayMandalaDirectDownload(){
+  // Called synchronously from the button click: Chrome recognises the user gesture.
+  const s=SC_DAY_MANDALA_EXPORT;
+  const a=document.createElement('a');
+  a.href=s.url;a.download=scDayMandalaFileName();a.style.display='none';
+  document.body.appendChild(a);a.click();a.remove();
+}
+function scDayMandalaDownloadClick(event){
+  event.preventDefault();event.stopPropagation();
+  const s=SC_DAY_MANDALA_EXPORT;
+  if(s.blob&&s.url){
+    if(scDayMandalaLocalMode()){
+      try{
+        const f=new File([s.blob],scDayMandalaFileName(),{type:'image/png'});
+        if(navigator.canShare?.({files:[f]})&&navigator.share){
+          navigator.share({files:[f],title:scDayMandalaMessages().title}).catch(err=>{
+            if(err?.name!=='AbortError')scDayMandalaOpenPreview();
+          });return;
+        }
+      }catch(e){}
+      scDayMandalaOpenPreview(); // long-press save without leaving the page
+    }else{scDayMandalaDirectDownload();}
+    return;
+  }
+  scDayMandalaOpenPreview(true);
+  scDayMandalaPrepare().then(()=>scDayMandalaOpenPreview()).catch(e=>{
+    console.warn('Daily mandala export failed',e);
+    const m=scDayMandalaMessages(),root=scDayMandalaSavePanel();
+    root.querySelector('.sc-day-save-message').textContent=m.error;
+  });
+}
+// Do not render/export the PNG in the background during touch scrolling.
+// Start the export only after the download button is tapped.
+(function(){
+  const btn=document.getElementById('dayMandalaDownloadBtn');
+  if(btn)btn.addEventListener('click',scDayMandalaDownloadClick);
+})();
 
 function renderEnergyOfDay(){
   const uk=window.SoulI18n?.language==="uk";
