@@ -33,7 +33,7 @@
   "gate": {
     "buttonExists": true,
     "buttonVisible": true,
-    "buttonText": "ПОЛУЧИТЬ АКТИВАЦИЮ КОДА ДУШИ · 10 € / 500 грн",
+    "buttonText": "ПОЛУЧИТЬ АКТИВАЦИЮ КОДА ДУШИ · 10 €",
     "playerVisible": false,
     "access": null
   }
